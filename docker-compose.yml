@@ -1,9 +1,9 @@
 version: '3.3'
-services:         
-    database:
+services:
+    MGdb:
         image: "postgres:9.6.13"
         volumes:
             - ./.db/data:/var/lib/postgresql/data
+            - /tmp:/tmp/host
         ports:
-            - "5432:5432"
-    
+            - "54320:5432"
