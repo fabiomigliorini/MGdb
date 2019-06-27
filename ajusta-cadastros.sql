@@ -33,4 +33,3 @@ update tblusuario set senha = '$1$k8wt4L/C$/xxhrvZ2z4DroCR6dUszJ/', impressorama
 --limpa jobs
 delete from tbljobs;
 delete from tbljobsspa;
-  
