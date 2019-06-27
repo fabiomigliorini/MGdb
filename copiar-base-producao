@@ -1,0 +1,67 @@
+#!/bin/bash
+
+BASEDIR=$(dirname "$0")
+
+echo
+echo
+
+echo "DESCOBRINDO ULTIMO BACKUP (senha super@netuno)"
+BACKUP=$(ssh super@netuno.mgpapelaria.com.br "ls -1 -t /media/dm0/backup/postgres | head -1")
+if [ $? != 0 ] ; then
+  echo erro
+  exit
+fi
+echo $BACKUP
+echo
+echo
+
+echo "COPIANDO ULTIMO BACKUP (senha super@netuno)"
+rsync -avP super@netuno.mgpapelaria.com.br:/media/dm0/backup/postgres/$BACKUP /tmp/$BACKUP --progress
+if [ $? != 0 ] ; then
+  echo erro
+  exit
+fi
+echo
+echo
+
+echo "PARANDO CONTAINER"
+./$BASEDIR/stop
+if [ $? != 0 ] ; then
+  echo erro
+  exit
+fi
+echo
+echo
+
+echo "LIMPANDO CONTAINER (senha sudo maquina local)"
+sudo rm -rf ./$BASEDIR/.db
+if [ $? != 0 ] ; then
+  echo erro
+  exit
+fi
+echo
+echo
+
+echo "INICIANDO CONTAINER"
+./$BASEDIR/start
+if [ $? != 0 ] ; then
+  echo erro
+  exit
+fi
+echo
+echo
+
+echo "ESPERANDO 5 SEGUNDOS PARA CONTANER TERMINAR DE CARREGAR"
+sleep 5
+echo
+echo
+
+echo "VOLTANDO BACKUP"
+zcat /tmp/$BACKUP | psql -h localhost -p 54320 -U postgres
+echo
+echo
+
+echo "VOLTANDO BACKUP"
+psql mgsis -h localhost -p 54320 -U mgsis -f ./$BASEDIR/ajusta-cadastros.sql
+echo
+echo
