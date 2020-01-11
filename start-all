@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+cd ~/Docker/MGdb
+./start 
+cd ~/Docker/MGLara
+./start
+cd ~/Docker/MGsis
+./start
+cd ~/Docker/MGUplon
+./start
+cd ~/Docker/MGspa
+./start
+
+echo "Agora entre na Shell (./shell) e Levante o Quasar (quasar dev -m pwa)"
