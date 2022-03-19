@@ -27,7 +27,9 @@ with missing as (
 	GROUP BY c.conrelid, c.conname, c.confrelid
 	ORDER BY pg_catalog.pg_relation_size(c.conrelid) DESC
 )
-select 'CREATE INDEX idx_' || "constraint" || ' ON ' || "table" || ' (' || columns || '); ',* 
+select 'CREATE INDEX idx_' || "constraint" || ' ON ' || "table" || ' (' || columns || '); ',*
 from missing
 --where cast("constraint" as varchar) ilike '%estoque%'
+
+
 
