@@ -48,7 +48,10 @@ select
 from tblestoquemes 
 where saldoquantidade is null order by mes
 
-
+select 
+	codestoquemes, 
+	'curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes 
+from tmpestoquezerar t 
 -- 4) repetir o Passo 1 para pegar o codigo do mes correto
 
 

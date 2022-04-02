@@ -25,14 +25,18 @@ inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.
 inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
 inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2021-12-31' order by iq.mes desc limit 1) )
-where mes.mes <= '2018-12-31'
-and mes.saldoquantidade > 0
+WHERE p.inativo IS NOT null
+--where mes.mes <= '2018-12-31'
+--and mes.saldoquantidade > 0
+
 
 -- adiciona mes para zerar
 alter table tmpestoquezerar add codestoquemeszerar bigint
 
 -- seta valor pra coluna
 update tmpestoquezerar set codestoquemeszerar = nextval('tblestoquemes_codestoquemes_seq') where mes != '2021-12-01'
+
+update tmpestoquezerar set codestoquemeszerar = codestoquemes where mes = '2021-12-01'
 
 -- 2) Cria o Mes de dez/2021 caso nao exista
 insert into tblestoquemes (codestoquemes, codestoquesaldo, mes, codusuariocriacao, codusuarioalteracao, criacao, alteracao)
