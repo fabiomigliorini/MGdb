@@ -21,3 +21,11 @@ where nfpb.alteracao !=  nfpb.criacao
 and  nfpb.alteracao between '2022-03-04 00:00:00' and '2022-03-04 23:59:59'  
 and nf.codnaturezaoperacao = 00000016
 order by codfilial, emissao, numero, produto
+
+
+SELECT * FROM tblnegocio WHERE codnegocio = 2607671
+
+
+select * from tblestoqueverao t  where codbar ilike '%241942%' or codbar ilike '7897256222064' 
+
+

@@ -61,11 +61,13 @@ update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 w
 
 update tblnfeterceiroitem set complemento = (vprod * 1.5), margem = 40 where codnfeterceiro in (33950)
 
+update tblnfeterceiroitem set complemento = (vprod * 1.53344569070727), margem = 37 where codnfeterceiro in (38318)
+
 update tblnfeterceiroitem set complemento = vprod, margem = 37 where codnfeterceiro in (35948)
 
 update tblnfeterceiroitem set complemento = vprod * 2.02302837016504, margem = 40 where codnfeterceiro in (34983)
 
-update tblnfeterceiroitem set complemento = null, margem = 40 where codnfeterceiro in (34983)
+update tblnfeterceiroitem set complemento = null, margem = 37 where codnfeterceiro in (38150)
 
 update tblnfeterceiroitem set complemento = (vprod * 2), margem = 40 where codnfeterceiro in (35902)
 

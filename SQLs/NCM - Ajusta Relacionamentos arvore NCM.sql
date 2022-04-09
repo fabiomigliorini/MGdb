@@ -35,9 +35,13 @@ set codncmpai = (select n2.codncm from tblncm n2 where n2.ncm = substring(tblncm
 where codncmpai is null
 and char_length(ncm) > 1;
 
+/*
 update tblcest set codncm = null;
 
 update tblcest set codncm = (select n.codncm from tblncm n where n.ncm = tblcest.ncm);
 
 select * from tblncm where ncm = descricao order by ncm
 
+*/
+
+select * from tblncm order by criacao desc nulls last 

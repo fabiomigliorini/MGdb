@@ -6,6 +6,7 @@ left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado 
 and p.codpix is null
+and pc.codpixcob = 10032
 order by pc.criacao desc
 
 -- PIXCob concluidos
@@ -50,3 +51,8 @@ select t.valororiginal, pcs.pixcobstatus, t.criacao, t.solicitacaopagador
 from tblpixcob t
 inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
 order by t.criacao desc
+
+
+select * from tblpixcob where solicitacaopagador ilike '%2603831%'
+
+
