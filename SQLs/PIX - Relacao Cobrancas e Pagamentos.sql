@@ -1,12 +1,12 @@
 -- Forca reconsultar
-select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST''', pc.criacao, u.usuario, pc.valororiginal 
+select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H ''Accept: application/json'' --range 0-200', pc.criacao, u.usuario, pc.valororiginal 
  from tblpixcob pc
 left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado 
 and p.codpix is null
-and pc.codpixcob = 10032
+--and pc.codpixcob = 10032
 order by pc.criacao desc
 
 -- PIXCob concluidos
@@ -44,7 +44,12 @@ order by t.codpixcobstatus, 2 DESC
 update tblpixcob 
 set codpixcobstatus = 4
 where codpixcobstatus in (1, 3)
-and criacao + (expiracao || ' second')::interval < now() - '1 day'::interval
+and criacao + (expiracao || ' second')::interval < now() - '2 HOUR'::interval
+
+update tblpixcob 
+set codpixcobstatus = 4
+where codpixcob = :codpixcob 
+
 
 
 select t.valororiginal, pcs.pixcobstatus, t.criacao, t.solicitacaopagador 
