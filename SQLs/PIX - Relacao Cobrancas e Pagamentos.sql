@@ -1,12 +1,12 @@
 -- Forca reconsultar
-select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST''', pc.criacao, u.usuario, pc.valororiginal 
+select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H "Accept: application/json"', pc.criacao, u.usuario, pc.valororiginal 
  from tblpixcob pc
 left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado 
 and p.codpix is null
-and pc.codpixcob = 10032
+--and pc.codpixcob = 10032
 order by pc.criacao desc
 
 -- PIXCob concluidos
@@ -56,3 +56,4 @@ order by t.criacao desc
 select * from tblpixcob where solicitacaopagador ilike '%2603831%'
 
 
+select * from tblnegocioformapagamento t where codnegocio = :codnegocio 

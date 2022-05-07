@@ -81,9 +81,27 @@ select 'tblncm2022', false, count(*) from tblncm2022 t
 order by 1, 2
 
 
-select n.ncm, count(*), min(p.codproduto) 
+select n.ncm, count(*), min(p.codproduto), max(p.codproduto)
 from tblproduto p
 inner join tblncm n on (n.codncm = p.codncm)
 where n.inativo is not null
 and p.codtipoproduto  = 0
+and p.codtributacao = 3
+and p.inativo is null
 group by n.ncm
+order by 2 desc
+
+update tblproduto
+set codncm = (select n.codncm from tblncm n where n.ncm ilike trim(replace(:ncm_novo, '.', '')))
+, codcest = (select n.codcest from tblcest n where n.cest ilike trim(replace(:cest_novo, '.', '')) and trim(replace(:ncm_novo, '.', '')) ilike n.ncm || '%'), codtributacao = 3
+where codncm = (select n.codncm from tblncm n where n.ncm ilike trim(replace(:ncm_antigo, '.', '')))
+
+update tblproduto
+set codncm = (select n.codncm from tblncm n where n.ncm ilike trim(replace(:ncm_novo, '.', '')))
+where codncm = (select n.codncm from tblncm n where n.ncm ilike trim(replace(:ncm_antigo, '.', '')))
+and codtributacao = 1
+
+update tblproduto
+set codcest = (select n.codcest from tblcest n where n.cest ilike trim(replace(:cest_novo, '.', '')) and trim(replace(:ncm_novo, '.', '')) ilike n.ncm || '%')
+, codtributacao = 3
+where codncm = (select n.codncm from tblncm n where n.ncm ilike trim(replace(:ncm_novo, '.', '')))	

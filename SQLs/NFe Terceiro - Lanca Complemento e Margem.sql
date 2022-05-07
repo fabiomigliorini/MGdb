@@ -8,6 +8,8 @@ select sum(vprod) as prod, sum(ipivipi) as ipi, sum(complemento) as comlemento f
 
 update tblnfeterceiroitem set complemento = (vprod / 0.245) - vprod, margem = 90 where codnfeterceiro = 20214
 
+update tblnfeterceiroitem set MARGEM = 37 where codnfeterceiro = 38240
+
 
 UPDATE tblnegocio SET codnaturezaoperacao = (select codnaturezaoperacao from tblnaturezaoperacao where naturezaoperacao ilike 'transf%saida') where codnegocio = :codnegocio 
 

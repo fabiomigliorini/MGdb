@@ -10,6 +10,9 @@ where not processada
 and ativa
 order by criacao desc
 
+select count(*) from tblstonepretransacao t where not processada and ativa
+
+
 select count(*)
 from tblstonepretransacao t 
 where not processada 
@@ -39,7 +42,7 @@ where n.codnegociostatus = 2
 and coalesce(c.valorcartao, 0) + coalesce(p.valorpagamento, 0) > coalesce(n.valortotal, 0)
 --and n.codnegocio = 2381383
 
-select * from tblnegocioformapagamento t where codnegocio = 2449702
+select * from tblnegocioformapagamento t where codnegocio = :codnegocio 
 
 select * from tblnegocio t where codnegocio = 2449361
 

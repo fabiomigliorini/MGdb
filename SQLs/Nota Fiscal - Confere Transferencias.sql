@@ -49,7 +49,7 @@ emitidas as (
 select
 	e.valor as valor_e,
 	l.valor as valor_l,
-	coalesce(e.valor, 0) - coalesce(l.valor, 0) as valor_dif,
+	abs(coalesce(e.valor, 0) - coalesce(l.valor, 0)) as valor_dif,
 	coalesce(e.origem, l.origem) as origem,
 	coalesce(e.destino, l.destino) as destino,
 	e.natureza as natureza_e,
@@ -59,4 +59,4 @@ select
 	coalesce(e.qtd, 0) - coalesce(l.qtd, 0) as qtd_dif
 from emitidas e
 full outer join lancadas l on (l.origem = e.origem and l.destino = e.destino and l.codnaturezaoperacao = e.codnaturezaoperacaodevolucao)
-
+order by 3 desc
