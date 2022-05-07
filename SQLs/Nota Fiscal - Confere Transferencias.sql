@@ -3,7 +3,7 @@ update tblnotafiscal set numero = 0, emitida = true, nfechave = null where codno
 
 --select * from tblfilial
 
-select * from tblnaturezaoperacao t 
+select * from tblnaturezaoperacao t
 
 with lancadas as (
 	select

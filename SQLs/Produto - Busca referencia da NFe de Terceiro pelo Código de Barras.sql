@@ -1,4 +1,4 @@
-﻿select criacao, * from tblnfeterceiroitem where '7898563364140' in (cean, ceantrib) order by criacao desc nulls last
+﻿select criacao, * from tblnfeterceiroitem where '7898306089750' in (cean, ceantrib) order by criacao desc nulls last
 
 SKO341 ENV SACO SC KO 41 310X410 80G C/100
 

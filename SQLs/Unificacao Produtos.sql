@@ -8,14 +8,25 @@ where p.produto ilike '%scrity%11%16%'
 order by p.produto asc
 */
 
-update tblnegocioprodutobarra set codprodutobarra = 935393 where codprodutobarra in (10012736);
 
-update tblnotafiscalprodutobarra set codprodutobarra = 935393 where codprodutobarra in (10012736);
 
-update tblcupomfiscalprodutobarra set codprodutobarra = 935393 where codprodutobarra in (10012736);
+update tblnegocioprodutobarra set codprodutobarra = :codprodutobarranovo where codprodutobarra in (:codprodutobarraantigo);
 
-update tblnfeterceiroitem set codprodutobarra = 935393 where codprodutobarra in (10012736);
+update tblnotafiscalprodutobarra set codprodutobarra = :codprodutobarranovo where codprodutobarra in (:codprodutobarraantigo);
 
-select * from tblnegocioprodutobarra where codprodutobarra = 10022639
+update tblcupomfiscalprodutobarra set codprodutobarra = :codprodutobarranovo where codprodutobarra in (:codprodutobarraantigo);
 
-select * from tblnotafiscalprodutobarra where codprodutobarra = 475
+update tblnfeterceiroitem set codprodutobarra = :codprodutobarranovo where codprodutobarra in (:codprodutobarraantigo);
+
+DELETE FROM tblprodutobarra WHERE codprodutobarra IN (:codprodutobarraantigo);
+
+select * from tblnfeterceiroitem t where codnfeterceiro  = 38377
+
+select * from tblfilial t  where codfilial in (401, 402)
+
+
+select bit, * from tblncm where ncm = '85235190'
+
+select bit, * from tblncm where ncm = '84717040'
+
+

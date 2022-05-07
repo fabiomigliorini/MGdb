@@ -16,7 +16,7 @@
 -- update tblnfeterceiroitem set complemento = vprod, margem = 40 where codnfeterceiro = 30044
 
 --FOUR STAR / CW
-update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (37561, 37565)
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (38627)
 
 update tblnfeterceiroitem  set complemento = -4.8 where codnfeterceiroitem = 347981
 
@@ -71,6 +71,10 @@ update tblnfeterceiroitem set complemento = null, margem = 37 where codnfetercei
 
 update tblnfeterceiroitem set complemento = (vprod * 2), margem = 40 where codnfeterceiro in (35902)
 
+--GGB Plast
+update tblnfeterceiroitem set complemento = (vprod * 0.428562639), margem = 37 where codnfeterceiro in (38610)
+
+
 -- Multi Placas
 update tblnfeterceiroitem set complemento = (vprod * 9), margem = 40 where codnfeterceiro in (361592107)
 
@@ -95,5 +99,4 @@ select * from tblnfeterceiroitem nti where codnfeterceiro = 36343
 
 
 select * from tblnfeterceiroitem   where codnfeterceiroitem = 389620
-
 
