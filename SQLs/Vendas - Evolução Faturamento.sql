@@ -1,5 +1,5 @@
 ﻿select 
-	  date_trunc('month', lancamento) as mes 
+	  to_char(date_trunc('month', lancamento), 'YYYY-MM-DD') as mes 
 	, filial
 	/*
 	, pv.fantasia fantasiavendedor
@@ -15,7 +15,7 @@ left join tblpessoa p on (p.codpessoa = n.codpessoa)
 left join tblgrupocliente gc on (gc.codgrupocliente = p.codgrupocliente)
 inner join tblnaturezaoperacao no on (no.codnaturezaoperacao = n.codnaturezaoperacao)
 where lancamento >= '2012-01-01 00:00:00.0'
-and lancamento <= '2022-03-31 23:59:59.9'
+and lancamento <= '2022-04-30 23:59:59.9'
 and codnegociostatus = 2
 and n.codnaturezaoperacao in (1, 2, 5) -- venda, devolucao, cupom
 --and n.codnaturezaoperacao in (2) -- venda, devolucao, cupom
@@ -52,3 +52,6 @@ group by filial--, fantasiavendedor, extract(year from lancamento), extract(mont
 --select * from tblfilial
 
 --select * from tblnegocio where codfilial = 202 order by lancamento desc limit 100 
+
+
+update tblnegocio set codnegociostatus = 1 where codnegocio = 2645127
