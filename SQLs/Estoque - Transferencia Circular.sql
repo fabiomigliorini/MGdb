@@ -17,7 +17,7 @@ inner join tblestoquemovimentotipo tdest on (tdest.codestoquemovimentotipo = des
 inner join tblestoquemes mes on (mes.codestoquemes = orig.codestoquemes)
 inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
 where orig.codestoquemes = dest.codestoquemes
---and dest.manual = false
+and dest.manual = false
 and dest.codestoquemovimentotipo not in (3002, 2002) -- Devolucao de venda, Devolucao de compra
 and sld.fiscal = false
 --and dest.codestoquemes = 864560

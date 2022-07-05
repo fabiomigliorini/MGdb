@@ -5,7 +5,7 @@ from tblprodutovariacao pv
 inner join tblestoquelocalprodutovariacao elpv on (pv.codprodutovariacao = elpv.codprodutovariacao)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
 inner join tblestoquemes em on (em.codestoquesaldo = es.codestoquesaldo)
-where pv.codproduto = 308426 -- :codproduto 
+where pv.codproduto = :codproduto 
 and em.saldoquantidade < 0
 order by fiscal, elpv.codestoquelocal, pv.variacao, mes
 

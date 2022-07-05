@@ -55,7 +55,9 @@ inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutova
 inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao )
 inner join tblestoquemovimento dest on (dest.codestoquemovimentoorigem = mov.codestoquemovimento)
 where mov.manual = true
-and pv.codproduto = :codproduto;
+and pv.codproduto = :codproduto
+order by codestoquemes desc
+;
 
 -- apaga restante dos movimentos manuais
 delete from tblestoquemovimento 
@@ -71,13 +73,13 @@ and tblestoquemovimento.codestoquemovimento in (
 	and pv.codproduto = :codproduto
 );
 
-select 'wget https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes
+select 'curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || ' &'
 from tblestoquemes mes
 inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutovariacao = sld.codestoquelocalprodutovariacao)
 inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao )
 where pv.codproduto = :codproduto
-order by mes.mes, mes.codestoquesaldo;
+order by elpv.codestoquelocalprodutovariacao, mes.codestoquesaldo, mes.mes;
 
 
 
