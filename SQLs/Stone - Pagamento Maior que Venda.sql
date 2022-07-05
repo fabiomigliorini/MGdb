@@ -40,6 +40,7 @@ inner join p on (p.codnegocio = n.codnegocio)
 inner join c on (c.codnegocio = n.codnegocio)
 where n.codnegociostatus = 2
 and coalesce(c.valorcartao, 0) + coalesce(p.valorpagamento, 0) > coalesce(n.valortotal, 0)
+order by n.lancamento desc
 --and n.codnegocio = 2381383
 
 select * from tblnegocioformapagamento t where codnegocio = :codnegocio 

@@ -40,7 +40,7 @@ inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
 group by po.portador, pcs.pixcobstatus, t.codpixcobstatus
 order by t.codpixcobstatus, 2 DESC
 
--- Marca PIXCOb com mais de um dia EXPIRADOS
+-- Marca PIXCOb com mais de duas horas de EXPIRADO
 update tblpixcob
 set codpixcobstatus = 4
 where codpixcobstatus in (1, 3)
