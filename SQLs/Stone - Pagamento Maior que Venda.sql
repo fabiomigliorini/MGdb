@@ -63,3 +63,6 @@ update tbltitulo set codnegocioformapagamento = null where codnegocioformapagame
 delete from tblnegocioformapagamento where codnegocioformapagamento = 2405990
 
 */
+
+
+select codnegocio, * from tblstonepretransacao t where valor = 136 and criacao between '2022-08-24 00:00:00' and '2022-08-24 23:59:59'

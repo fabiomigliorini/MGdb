@@ -3,7 +3,7 @@ from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
 --where t.debito = 89
-where t.debito = 541.94
+where t.credito = 619.8
 --where t.credito = 89
 --and saldo > 0
 order by criacao desc nulls LAST
@@ -12,7 +12,7 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.observacao ilike '%poço%'
+where t.observacao ilike '%ana%p%g%'
 order by criacao desc nulls LAST
 
 
@@ -28,7 +28,7 @@ update tblnegocio set codnegociostatus  =   1 where codnegocio = 2350905
 
 select * 
 from tblliquidacaotitulo lt
-where lt.observacao ilike '%FELIPPE%'
+where lt.observacao ilike '%306%135%578%'
 
 select * from tbltitulo where observacao ilike '%5419%'
 
@@ -68,3 +68,14 @@ update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao =null where c
 
 
 update tblnegocio set codnegociostatus = 1 where codnegocio = 2467310
+
+
+select codpessoa, pessoa, TO_CHAR(cnpj, 'fm00000000000')  from tblpessoa where codgrupocliente = 8 and inativo is null order by pessoa 
+
+
+select * from tblgrupocliente t 
+
+
+select * from tblnotafiscalprodutobarra t2  where codnotafiscal = 2200356
+
+select * from tblprodutobarra t where codprodutobarra = 969727

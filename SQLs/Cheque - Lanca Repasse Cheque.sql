@@ -5,6 +5,8 @@ insert into tblchequerepasse (codportador, data, observacoes, criacao, codusuari
 
 select * from tblchequerepasse order by codchequerepasse desc limit 50;
 
+select * from tblchequerepassecheque t order by codchequerepassecheque desc limit 50;
+
 -- Vincula Cheques ao repasse
 insert into tblchequerepassecheque (codcheque, codchequerepasse, criacao, codusuariocriacao)
 select codcheque, :codchequerepasse, :data, 1

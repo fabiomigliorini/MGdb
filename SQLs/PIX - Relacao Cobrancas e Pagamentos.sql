@@ -1,5 +1,5 @@
 -- Forca reconsultar
-select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H ''Accept: application/json'' --range 0-200', pc.criacao, u.usuario, pc.valororiginal
+select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H ''Accept: application/json'' --range 0-200', pc.criacao, u.usuario, pc.valororiginal, n.codnegocio
  from tblpixcob pc
 left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
@@ -44,7 +44,7 @@ order by t.codpixcobstatus, 2 DESC
 update tblpixcob
 set codpixcobstatus = 4
 where codpixcobstatus in (1, 3)
-and criacao + (expiracao || ' second')::interval < now() - '2 HOUR'::interval
+and criacao + (expiracao || ' second')::interval < now() - '1 DAY'::interval
 
 update tblpixcob
 set codpixcobstatus = 4
@@ -62,3 +62,7 @@ select * from tblpixcob where solicitacaopagador ilike '%2603831%'
 
 
 select * from tblnegocioformapagamento t where codnegocio = :codnegocio
+
+select * from tblnegocio where codnegocio = :codnegocio  
+
+
