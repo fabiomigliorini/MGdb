@@ -58,8 +58,8 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
-and n.saida >= '2016-01-01 00:00:00'
---and n.saida >= '2021-08-01 00:00:00' 
+--and n.saida >= '2016-01-01 00:00:00'
+and n.saida >= '2022-08-01 00:00:00' 
 and tp.estoque = true
 and no.estoque = true
 and em.codestoquemovimento is null
@@ -67,7 +67,7 @@ order by n.saida, n.codfilial, n.codnotafiscal, p.produto
 limit 300
 
 --Notas Canceladas/Inutilizadas/Nao Autorizadas Com Movimentacao de estoque
-select n.codfilial, n.codnotafiscal, npb.codnotafiscalprodutobarra, em.codestoquemovimento, p.codproduto, p.produto, 'curl http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-nota-fiscal-produto-barra/' || cast(npb.codnotafiscalprodutobarra as varchar)
+select n.codfilial, n.codnotafiscal, npb.codnotafiscalprodutobarra, n.saida, em.codestoquemovimento, p.codproduto, p.produto, 'curl http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-nota-fiscal-produto-barra/' || cast(npb.codnotafiscalprodutobarra as varchar)
 from tblnotafiscal n
 inner join tblnaturezaoperacao no on (no.codnaturezaoperacao = n.codnaturezaoperacao)
 inner join tblnotafiscalprodutobarra npb on (npb.codnotafiscal = n.codnotafiscal)
@@ -78,6 +78,7 @@ left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotaf
 where n.emitida = true
 and (n.nfeautorizacao is null or n.nfeinutilizacao is not null or n.nfecancelamento is not null)
 and n.saida >= '2016-01-01 00:00:00'
+--and n.saida >= '2022-05-01 00:00:00' 
 and tp.estoque = true
 and no.estoque = true
 and em.codestoquemovimento is not null
