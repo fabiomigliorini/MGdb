@@ -13,6 +13,29 @@ order by criacao desc
 select count(*) from tblstonepretransacao t where not processada and ativa
 
 
+-- Totais de stone Movimentado
+select
+	to_char( date_trunc('month', t.criacao), 'yyyy-mm-dd'),
+	pt.tipo,
+	--pcs.pixcobstatus,
+	count(t.codstonetransacao) as quantidade,
+	sum(t.valor) as valor,
+	sum(t.valor) / count(t.codstonepretransacao) as media
+from tblstonetransacao t
+inner join tblstonepretransacao pt on (pt.codstonepretransacao = t.codstonetransacao)
+inner join tblnegocio n on (n.codnegocio = pt.codnegocio)
+inner join tblusuario u on (u.codusuario = n.codusuario)
+where t.status = 1
+group by date_trunc('month', t.criacao), pt.tipo
+--order by t.codpixcobstatus, 2 DESC
+order by 1 desc, 2 asc
+
+
+select distinct st.codstonepretransacao from tblstonetransacao st
+
+select * from tblstonepretransacao t 
+
+
 select count(*)
 from tblstonepretransacao t 
 where not processada 
@@ -63,3 +86,9 @@ update tbltitulo set codnegocioformapagamento = null where codnegocioformapagame
 delete from tblnegocioformapagamento where codnegocioformapagamento = 2405990
 
 */
+
+
+select * from tblstonetransacao t where valor = 12.6 order by criacao desc
+
+select * from tblnegocio where valortotal = 12.6 order by lancamento desc
+

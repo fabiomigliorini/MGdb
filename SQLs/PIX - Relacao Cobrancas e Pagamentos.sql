@@ -22,10 +22,7 @@ order by p.horario desc, po.portador asc,  p.valor, p.codpix
 -- Totais de PIX Movimentado
 select
 	po.portador,
-	pcs.pixcobstatus,
-	count(t.codpixcob) as quantidade,
-	sum(t.valororiginal) as valor,
-	sum(t.valororiginal) / count(t.codpixcob) as media,
+	--pcs.pixcobstatus,
 	count(p.codpix) as quantidade,
 	sum(p.valor) as valor,
 	sum(p.valor) / count(p.codpix) as media,
@@ -37,8 +34,27 @@ inner join tblusuario u on (u.codusuario = n.codusuario)
 left join tblpix p on (p.codpixcob = t.codpixcob)
 left join tblportador po on (po.codportador = t.codportador)
 inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
-group by po.portador, pcs.pixcobstatus, t.codpixcobstatus
-order by t.codpixcobstatus, 2 DESC
+group by po.portador --, pcs.pixcobstatus, t.codpixcobstatus
+--order by t.codpixcobstatus, 2 DESC
+order by 1
+
+
+-- Totais de PIX Movimentado
+select
+	to_char( date_trunc('month', p.horario), 'yyyy-mm-dd'),
+	--pcs.pixcobstatus,
+	count(p.codpix) as quantidade,
+	sum(p.valor) as valor,
+	sum(p.valor) / count(p.codpix) as media
+from tblpixcob t
+inner join tblnegocio n on (n.codnegocio = t.codnegocio)
+inner join tblusuario u on (u.codusuario = n.codusuario)
+left join tblpix p on (p.codpixcob = t.codpixcob)
+left join tblportador po on (po.codportador = t.codportador)
+inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
+group by date_trunc('month', p.horario)
+--order by t.codpixcobstatus, 2 DESC
+order by 1 desc 
 
 -- Marca PIXCOb com mais de duas horas de EXPIRADO
 update tblpixcob
@@ -62,3 +78,8 @@ select * from tblpixcob where solicitacaopagador ilike '%2603831%'
 
 
 select * from tblnegocioformapagamento t where codnegocio = :codnegocio
+
+
+select * from tblnegocio where codnegocio = :codnegocio 
+
+
