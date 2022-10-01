@@ -16,7 +16,7 @@
 update tblnfeterceiroitem set complemento = vprod, margem = 40 where codnfeterceiro = 39775
 
 --FOUR STAR / CW
-update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (40205, 40206)
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (41312, 41313)
 
 update tblnfeterceiroitem  set complemento = -4.8 where codnfeterceiroitem = 347981
 
@@ -47,7 +47,7 @@ select sum(vprod) from tblnfeterceiroitem t where codnfeterceiro in (32388)
 --update tblnfeterceiroitem set complemento = vprod - vdesc, margem = 37 where codnfeterceiro in (27610)
 
 -- Rocie / Fartex / Wincy / Rio de Ouro
-update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (40303)
+update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (41216)
 
 
 -- Bazzi Company
@@ -104,10 +104,36 @@ update tblnfeterceiroitem set margem = 40 where codnfeterceiro = 40409
 select * from tblnfeterceiroitem nti where codnfeterceiro = 36343
 
 
-select * from tblnfeterceiroitem   where codnfeterceiroitem = 389620
+select margem, * from tblnfeterceiroitem   where codnfeterceiroitem = 491207
 
 
 select senhacertificado, filial, * from tblfilial order by codfilial 
 
 
+select codtributacao, * from tblproduto where codproduto = 9785
 
+select * from tbltributacao t 
+
+
+select observacao, credito, emissao, * from tbltitulo where observacao ilike '%22812%' order by emissao desc nulls last
+
+select nt.numero, nti.voutro, nti.complemento , nti.margem, nti.qcom, nti.vprod, nti.*
+from tblnfeterceiroitem nti
+inner join tblnfeterceiro nt on (nt.codnfeterceiro = nti.codnfeterceiro)
+where nt.codpessoa = 7850
+order by nti.criacao desc
+
+
+select * from tblpessoa where codpessoa = 13243
+
+update tblpessoa set ie = '134014669' where codpessoa = 13243
+
+
+
+
+update tblnfeterceiroitem t  set margem = 30 where codprodutobarra in (12299, 12297)
+
+
+
+
+select * from tbl

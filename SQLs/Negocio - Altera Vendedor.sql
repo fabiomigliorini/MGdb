@@ -9,3 +9,4 @@ set codpessoavendedor =
 where codnegocio = :codnegocio
 and valortotal = :valortotal 
 
+select * from tblnegocio where codnegocio = 2725432
