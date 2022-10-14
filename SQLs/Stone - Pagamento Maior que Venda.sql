@@ -2,7 +2,7 @@
 select 
 	codnegocio, 
 	codstonepretransacao, 
-	'curl https://api.mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || codstonepretransacao, 
+	' curl https://api.mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || codstonepretransacao, 
 	criacao,
 	* 
 from tblstonepretransacao t 
@@ -93,3 +93,6 @@ select codnegocio, * from tblstonepretransacao t where valor = 136 and criacao b
 select * from tblstonetransacao t where valor = 12.6 order by criacao desc
 
 select * from tblnegocio where valortotal = 12.6 order by lancamento desc
+
+
+select * from tblliquidacaotitulo t where codliquidacaotitulo = 101894

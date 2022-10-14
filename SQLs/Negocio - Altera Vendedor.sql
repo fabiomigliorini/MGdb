@@ -8,5 +8,3 @@ set codpessoavendedor =
 	and p.pessoa ilike :vendedor) 
 where codnegocio = :codnegocio
 and valortotal = :valortotal 
-
-select * from tblnegocio where codnegocio = 2725432

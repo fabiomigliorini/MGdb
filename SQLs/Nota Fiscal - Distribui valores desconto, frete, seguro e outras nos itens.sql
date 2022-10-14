@@ -52,6 +52,13 @@ or coalesce(a.valorseguro, 0) != coalesce(b.valorseguro, 0)
 or coalesce(a.valoroutras, 0) != coalesce(b.valoroutras, 0)
 
 
+UPDATE tblnotafiscalprodutobarra SET valorunitario = round((valortotal  - valordesconto) / quantidade, 2) where codnotafiscal =  2215137
+
+UPDATE tblnotafiscalprodutobarra SET valordesconto = null, valortotal = valorunitario  * quantidade where codnotafiscal =  2215137
+
+
+
+
 
 
 

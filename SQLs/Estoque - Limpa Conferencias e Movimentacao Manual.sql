@@ -73,7 +73,7 @@ and tblestoquemovimento.codestoquemovimento in (
 	and pv.codproduto = :codproduto
 );
 
-select 'curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || ' &'
+select ' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || ' &'
 from tblestoquemes mes
 inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutovariacao = sld.codestoquelocalprodutovariacao)

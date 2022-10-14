@@ -1,5 +1,5 @@
 -- Forca reconsultar
-select 'curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H ''Accept: application/json'' --range 0-200', pc.criacao, u.usuario, pc.valororiginal, n.codnegocio
+select ' curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codpixcob || '/consultar'' -X ''POST'' -H ''Accept: application/json'' --range 0-200', pc.criacao, u.usuario, pc.valororiginal, n.codnegocio
  from tblpixcob pc
 left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
@@ -7,7 +7,8 @@ left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado
 and p.codpix is null
 --and pc.codpixcob = 10032
-order by pc.criacao desc
+order by pc.criacao asc
+--order by pc.criacao asc
 
 -- PIXCob concluidos
 select po.portador, p.horario, p.valor, p.nome, p.txid, n.codnegocio
@@ -74,10 +75,12 @@ inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
 order by t.criacao desc
 
 
-select * from tblpixcob where solicitacaopagador ilike '%2603831%'
+select * from tblpixcob where solicitacaopagador ilike '%02842997%'
 
 
 select * from tblnegocioformapagamento t where codnegocio = :codnegocio
 
-select * from tblnegocio where codnegocio = :codnegocio  
+select * from tblnegocio where codnegocio = :codnegocio
+
+select * from tblpixcob where codnegocio = :codnegocio
 
