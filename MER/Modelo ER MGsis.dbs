@@ -902,7 +902,7 @@
 		</table>
 		<table name="tblcontacontabil" >
 			<column name="codcontacontabil" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="contacontabil" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="contacontabil" type="varchar" length="100" decimal="0" jt="12" />
 			<column name="numero" type="varchar" length="15" decimal="0" jt="12" />
 			<column name="inativo" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
@@ -2867,6 +2867,43 @@
 			<column name="id" type="varchar" length="1024" decimal="0" jt="12" />
 			<column name="do" type="varchar" length="1024" decimal="0" jt="12" />
 			<column name="observacao_exclusao" type="varchar" length="1024" decimal="0" jt="12" />
+		</table>
+		<table name="tblmagazordproduto" >
+			<column name="codmagazordproduto" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codproduto" type="bigint" jt="-5" mandatory="y" />
+			<column name="codprodutovariacao" type="bigint" jt="-5" mandatory="y" />
+			<column name="codprodutoembalagem" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="sku" type="varchar" length="25" jt="12" mandatory="y" >
+				<comment><![CDATA[SKU da Derivacao no Magazord]]></comment>
+			</column>
+			<column name="precovarejo" prior="preco" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="precovarejoatualizado" type="timestamp" length="0" jt="93" />
+			<column name="precoatacado" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="precoatacadoatualizado" type="timestamp" length="0" jt="93" />
+			<column name="saldoquantidade" type="numeric" length="14" decimal="3" jt="2" />
+			<column name="saldoquantidadeatualizado" prior="saldoatualizado" type="timestamp" length="0" jt="93" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblmagazordproduto" unique="PRIMARY_KEY" >
+				<column name="codmagazordproduto" />
+			</index>
+			<fk name="fk_tblmagazordproduto_tblproduto" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codproduto" pk="codproduto" />
+			</fk>
+			<fk name="fk_tblmagazordproduto_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
+			</fk>
+			<fk name="fk_tblmagazordproduto_tblprodutoembalagem" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codprodutoembalagem" pk="codprodutoembalagem" />
+			</fk>
+			<fk name="fk_tblmagazordproduto_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblmagazordproduto_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
 		</table>
 		<table name="tblmarca" >
 			<column name="codmarca" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -5963,10 +6000,6 @@ Peso em KG]]></comment>
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="descricaosite" type="text" length="1024" jt="12" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="observacoes" type="varchar" length="255" decimal="0" jt="12" />
 			<column name="codopencart" type="bigint" jt="-5" />
 			<column name="codopencartvariacao" type="bigint" jt="-5" />
@@ -5991,6 +6024,10 @@ Peso em KG]]></comment>
 				<defo><![CDATA['C'::bpchar]]></defo>
 			</column>
 			<column name="codcestanterior" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<index name="tblproduto_pkey" unique="PRIMARY_KEY" >
 				<column name="codproduto" />
 			</index>
@@ -6120,10 +6157,6 @@ Peso em KG]]></comment>
 			<column name="codunidademedida" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="quantidade" type="numeric" length="20" decimal="10" jt="2" />
 			<column name="preco" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="peso" type="numeric" length="7" decimal="4" jt="2" />
 			<column name="altura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="largura" type="numeric" length="8" decimal="2" jt="2" />
@@ -6134,6 +6167,10 @@ Peso em KG]]></comment>
 			<column name="descricaosite" type="text" length="1024" jt="12" />
 			<column name="codopencart" type="bigint" jt="-5" />
 			<column name="codprodutoimagem" type="bigint" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<index name="tblprodutoembalagem_pkey" unique="PRIMARY_KEY" >
 				<column name="codprodutoembalagem" />
 			</index>
@@ -7867,7 +7904,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="custoutilizar" type="numeric" jt="2" />
 		</table>
 		<view name="vwboleto" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblbanco.numerobanco,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblbanco.numerobanco,
     tblportador.agencia,
     tblportador.agenciadigito,
     tbltitulo.nossonumero,
@@ -7942,7 +7979,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="remessa" type="bigint" />
 		</view>
 		<view name="vwboletoretorno" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblboletoretorno.codboletoretorno,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblboletoretorno.codboletoretorno,
     tblboletoretorno.codboletomotivoocorrencia,
     tblboletotipoocorrencia.ocorrencia,
     tblboletomotivoocorrencia.motivo,
@@ -7994,7 +8031,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="arquivo" type="varchar" />
 		</view>
 		<view name="vwcupomfiscal" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblcupomfiscal.codcupomfiscal,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblcupomfiscal.codcupomfiscal,
     tblcupomfiscal.codecf,
     tblecf.ecf,
     tblcupomfiscal.datamovimento,
@@ -8017,7 +8054,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortotalfinal" type="numeric" />
 		</view>
 		<view name="vwcupomfiscalprodutobarra" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblcupomfiscalprodutobarra.codcupomfiscalprodutobarra,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblcupomfiscalprodutobarra.codcupomfiscalprodutobarra,
     tblcupomfiscalprodutobarra.codcupomfiscal,
     tblcupomfiscalprodutobarra.codprodutobarra,
     tblcupomfiscalprodutobarra.aliquotaicms,
@@ -8037,7 +8074,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codnegocio" type="bigint" />
 		</view>
 		<view name="vwcupomfiscalprodutobarratotais" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblcupomfiscalprodutobarra.codcupomfiscal,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblcupomfiscalprodutobarra.codcupomfiscal,
     sum((COALESCE(tblcupomfiscalprodutobarra.quantidade, (0)::numeric) * COALESCE(tblcupomfiscalprodutobarra.valorunitario, (0)::numeric))) AS valortotal
    FROM tblcupomfiscalprodutobarra
   GROUP BY tblcupomfiscalprodutobarra.codcupomfiscal]]></view_script>
@@ -8045,7 +8082,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortotal" type="numeric" />
 		</view>
 		<view name="vwiscolunas" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT c.table_catalog,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT c.table_catalog,
     c.table_schema,
     c.table_name,
     c.column_name,
@@ -8137,7 +8174,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="is_updatable" type="&quot;yes_or_no&quot;" />
 		</view>
 		<view name="vwliquidacaotitulo" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblliquidacaotitulo.codliquidacaotitulo,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblliquidacaotitulo.codliquidacaotitulo,
     iq.codpessoa,
     tblpessoa.fantasia,
     iq.debito,
@@ -8175,7 +8212,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="usuario" type="varchar" />
 		</view>
 		<view name="vwnegocio" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocio.codnegocio,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocio.codnegocio,
     tblnegocio.codpessoa,
     tblpessoa.fantasia,
     tblpessoa.pessoa,
@@ -8266,7 +8303,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortroco" type="numeric" />
 		</view>
 		<view name="vwnegocio_listagem" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocio.codnegocio,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocio.codnegocio,
     tblnegocio.codpessoa,
     tblpessoa.fantasia,
     tblpessoa.pessoa,
@@ -8319,7 +8356,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valorpagamentoaprazo" type="numeric" />
 		</view>
 		<view name="vwnegocioformapagamento" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocioformapagamento.codnegocioformapagamento,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocioformapagamento.codnegocioformapagamento,
     tblnegocioformapagamento.codnegocio,
     tblnegocioformapagamento.valorpagamento,
     tblnegocioformapagamento.codformapagamento,
@@ -8347,7 +8384,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="formapagamentoecf" type="varchar" />
 		</view>
 		<view name="vwnegocioformapagamentototais" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocioformapagamento.codnegocio,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocioformapagamento.codnegocio,
     sum(
         CASE
             WHEN (COALESCE(tblformapagamento.avista, true) = true) THEN COALESCE(tblnegocioformapagamento.valorpagamento, (0)::numeric)
@@ -8368,7 +8405,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valorpagamentototal" type="numeric" />
 		</view>
 		<view name="vwnegocioprodutobarra" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocioprodutobarra.codnegocioprodutobarra,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocioprodutobarra.codnegocioprodutobarra,
     tblnegocioprodutobarra.codnegocio,
     tblnegocioprodutobarra.quantidade,
     tblnegocioprodutobarra.valorunitario,
@@ -8418,7 +8455,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="aliquotaicmsecf" type="varchar" />
 		</view>
 		<view name="vwnegocioprodutobarratotais" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnegocioprodutobarra.codnegocio,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnegocioprodutobarra.codnegocio,
     sum(tblnegocioprodutobarra.valortotal) AS valortotal
    FROM tblnegocioprodutobarra
   GROUP BY tblnegocioprodutobarra.codnegocio]]></view_script>
@@ -8426,7 +8463,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortotal" type="numeric" />
 		</view>
 		<view name="vwnotafiscal" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnotafiscal.codnotafiscal,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnotafiscal.codnotafiscal,
     tblnaturezaoperacao.naturezaoperacao,
     tblnotafiscal.modelo,
     tblnotafiscal.serie,
@@ -8566,7 +8603,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="volumes" type="integer" />
 		</view>
 		<view name="vwnotafiscalprodutobarra" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnotafiscalprodutobarra.codnotafiscalprodutobarra,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnotafiscalprodutobarra.codnotafiscalprodutobarra,
     tblnotafiscalprodutobarra.codnotafiscal,
     tblnotafiscalprodutobarra.codcfop,
     vwprodutobarra.codproduto,
@@ -8621,7 +8658,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="barras" type="varchar" />
 		</view>
 		<view name="vwnotafiscalprodutobarratotais" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblnotafiscalprodutobarra.codnotafiscal,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblnotafiscalprodutobarra.codnotafiscal,
     sum(tblnotafiscalprodutobarra.valortotal) AS valortotal,
     sum(tblnotafiscalprodutobarra.icmsbase) AS icmsbase,
     sum(tblnotafiscalprodutobarra.icmsvalor) AS icmsvalor,
@@ -8641,7 +8678,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="icmsstvalor" type="numeric" />
 		</view>
 		<view name="vwpessoa" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblpessoa.codpessoa,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblpessoa.codpessoa,
     tblpessoa.pessoa,
     tblpessoa.fantasia,
     tblpessoa.inativo,
@@ -8697,7 +8734,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="fisica" type="boolean" />
 		</view>
 		<view name="vwprodutobarra" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblprodutobarra.codprodutobarra,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblprodutobarra.codprodutobarra,
     tblprodutoembalagem.codprodutoembalagem,
     tblproduto.codproduto,
     tblproduto.produto,
@@ -8769,7 +8806,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="descontinuado" type="timestamp" />
 		</view>
 		<view name="vwprodutotributacao" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tblproduto.codproduto,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblproduto.codproduto,
     tblprodutobarra.codprodutobarra,
     tbltributacaonaturezaoperacao.codtributacaonaturezaoperacao,
     tbltributacaonaturezaoperacao.codtributacao,
@@ -8802,7 +8839,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codtipoproduto" type="bigint" />
 		</view>
 		<view name="vwtitulo" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tbltitulo.codtitulo,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tbltitulo.codtitulo,
     tblfilial.filial,
     tbltitulo.codtipotitulo,
     tbltipotitulo.tipotitulo,
@@ -8886,7 +8923,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="telefone1" type="varchar" />
 		</view>
 		<view name="vwtituloagrupamento_baixados" >
-			<view_script><![CDATA[CREATE VIEW ${schema}.${name} AS  SELECT tbltitulo.codtitulo,
+			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tbltitulo.codtitulo,
     tbltitulo.codfilial,
     tbltitulo.codpessoa,
     tbltitulo.numero,
@@ -8922,7 +8959,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="filial" type="varchar" />
 		</view>
 		<materialized_view name="mvwestoque2019" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${schema}.${name} AS  SELECT p.codproduto,
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${fullName} AS  SELECT p.codproduto,
     p.produto,
     p.inativo,
     p.preco,
@@ -8976,7 +9013,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="markup" type="numeric" />
 		</materialized_view>
 		<materialized_view name="mvwestoque2020" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${schema}.${name} AS  SELECT p.codproduto,
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${fullName} AS  SELECT p.codproduto,
     p.produto,
     p.inativo,
     p.preco,
@@ -9030,7 +9067,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="markup" type="numeric" />
 		</materialized_view>
 		<materialized_view name="mvwestoque2021" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${schema}.${name} AS  SELECT p.codproduto,
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${fullName} AS  SELECT p.codproduto,
     p.produto,
     p.inativo,
     p.preco,
@@ -9328,14 +9365,27 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<trigger name="tbltituloau" table="tbltitulo" id="Trigger4846967" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER tbltituloau AFTER UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloau();]]></string>
 		</trigger>
-		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
+		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text_serial$function$
+AS '$libdir/tablefunc', $function$connectby_text$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="integer" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
+		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
+ RETURNS SETOF record
+ LANGUAGE c
+ STABLE STRICT
+AS '$libdir/tablefunc', $function$connectby_text$function$
+;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
@@ -9357,32 +9407,19 @@ AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 			<input_param jt="-1" type="integer" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
-		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
+		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
+AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="integer" inOut="-1" />
-		</function>
-		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
- RETURNS SETOF record
- LANGUAGE c
- STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
-;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="criatriggers_geraauditoria" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.criatriggers_geraauditoria(brecria boolean DEFAULT false)
@@ -9420,14 +9457,13 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
+		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab_hash$function$
+AS '$libdir/tablefunc', $function$crosstab$function$
 ;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab" id="Function_1a50" isSystem="false" params_known="y" >
@@ -9440,13 +9476,14 @@ AS '$libdir/tablefunc', $function$crosstab$function$
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
 		</function>
-		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
+		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab$function$
+AS '$libdir/tablefunc', $function$crosstab_hash$function$
 ;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab2" id="Function_1f2b" isSystem="false" params_known="y" >
@@ -10004,6 +10041,89 @@ END;
 $function$
 ;]]></string>
 		</function>
+		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
+ RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+	pcodecf bigint;
+BEGIN
+	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Geral' as tipo
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
+	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
+	  from tblecfreducaoz
+	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblecfreducaoz.movimento = pmovimento
+	   and tblecfreducaoz.crz = pcrz
+	 group by 
+	       tblecfreducaoz.codecfreducaoz
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     ;
+	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
+/*
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscalprodutobarra.aliquotaicms
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+*/
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Cancelado' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = true
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Desconto' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(descontoacrescimo)  as total
+	  from tblcupomfiscal 
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
+         
+END;
+$function$
+;]]></string>
+			<input_param name="pmovimento" jt="-1" type="date" inOut="1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="3" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="3" />
+			<input_param name="movimento" jt="-1" type="date" inOut="3" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="3" />
+		</function>
 		<function name="fnlistatotaisecfreducaoz" id="Function-25ba" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint, pdesejado numeric)
  RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric, diferenca numeric)
@@ -10090,89 +10210,6 @@ $function$
 			<input_param name="movimento" jt="-1" type="date" inOut="3" />
 			<input_param name="valor" jt="-1" type="numeric" inOut="3" />
 			<input_param name="diferenca" jt="-1" type="numeric" inOut="3" />
-		</function>
-		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
- RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
- LANGUAGE plpgsql
-AS $function$
-DECLARE
-	pcodecf bigint;
-BEGIN
-	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Geral' as tipo
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
-	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
-	  from tblecfreducaoz
-	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblecfreducaoz.movimento = pmovimento
-	   and tblecfreducaoz.crz = pcrz
-	 group by 
-	       tblecfreducaoz.codecfreducaoz
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     ;
-	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
-/*
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscalprodutobarra.aliquotaicms
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-*/
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Cancelado' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = true
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Desconto' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(descontoacrescimo)  as total
-	  from tblcupomfiscal 
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
-         
-END;
-$function$
-;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="3" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="3" />
-			<input_param name="movimento" jt="-1" type="date" inOut="3" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="3" />
 		</function>
 		<function name="fntblmovimentotituloaiauad" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblmovimentotituloaiauad()
@@ -10765,15 +10802,6 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 			<input_param jt="-1" type="double precision" inOut="-1" />
 			<input_param jt="-1" type="double precision" inOut="-1" />
 		</function>
-		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
- RETURNS text
- LANGUAGE c
- STABLE PARALLEL SAFE STRICT
-AS '$libdir/unaccent', $function$unaccent_dict$function$
-;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
 		<function name="unaccent" id="Function_26c8" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(regdictionary, text)
  RETURNS text
@@ -10782,6 +10810,15 @@ AS '$libdir/unaccent', $function$unaccent_dict$function$
 AS '$libdir/unaccent', $function$unaccent_dict$function$
 ;]]></string>
 			<input_param jt="-1" type="regdictionary" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
+		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
+ RETURNS text
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/unaccent', $function$unaccent_dict$function$
+;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="unaccent_init" id="Function_425" isSystem="false" params_known="y" >
@@ -10806,17 +10843,15 @@ AS '$libdir/unaccent', $function$unaccent_lexize$function$
 			<input_param jt="-1" type="internal" inOut="-1" />
 		</function>
 	</schema>
-	<connector name="dev@docker" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.3.5.jar" driver_desc="Standard" host="localhost" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" />
-	<connector name="prod@mercurio" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.3.5.jar" driver_desc="Standard" url="jdbc:postgresql://mercurio.mgpapelaria.com.br:5432/mgsis" host="sistema.mgpapelaria.com.br" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" />
+	<connector name="dev@docker" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.4.0.jar" driver_desc="Standard" host="localhost" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
+	<connector name="prod@mercurio" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.4.0.jar" driver_desc="Standard" url="jdbc:postgresql://mercurio.mgpapelaria.com.br:5432/mgsis" host="sistema.mgpapelaria.com.br" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
 	<layout name="Layout_Autorizacao" id="Layout_93c6439" confirmed="y" show_column_type="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblanexovilebitbk" color="3986C1" x="592" y="304" />
-		<entity schema="mgsis.mgsis" name="tblfilial" color="B7C8E3" x="768" y="64" />
-		<entity schema="mgsis.mgsis" name="tblgrupousuario" color="B7C8E3" x="448" y="384" />
-		<entity schema="mgsis.mgsis" name="tblgrupousuariopermissao" color="B7C8E3" x="464" y="640" />
-		<entity schema="mgsis.mgsis" name="tblgrupousuariousuario" color="B7C8E3" x="432" y="48" />
-		<entity schema="mgsis.mgsis" name="tblimagem" color="C1D8EE" x="80" y="160" />
-		<entity schema="mgsis.mgsis" name="tblncm2022" color="3986C1" x="800" y="304" />
-		<entity schema="mgsis.mgsis" name="tblpermissao" color="B7C8E3" x="48" y="592" />
+		<entity schema="mgsis.mgsis" name="tblfilial" color="B7C8E3" x="752" y="64" />
+		<entity schema="mgsis.mgsis" name="tblgrupousuario" color="B7C8E3" x="432" y="384" />
+		<entity schema="mgsis.mgsis" name="tblgrupousuariopermissao" color="B7C8E3" x="432" y="608" />
+		<entity schema="mgsis.mgsis" name="tblgrupousuariousuario" color="B7C8E3" x="416" y="48" />
+		<entity schema="mgsis.mgsis" name="tblimagem" color="C1D8EE" x="64" y="160" />
+		<entity schema="mgsis.mgsis" name="tblpermissao" color="B7C8E3" x="48" y="624" />
 		<script name="SQL_Editor" id="Editor_3819819" language="SQL" >
 			<string><![CDATA[﻿--select * from tblportador order by codportador
 
@@ -10993,7 +11028,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codvalecompraformapagamento" />
 		</entity>
 	</layout>
-	<layout name="Layout_DFe_Terceiros" id="Layout_1c1c" show_relation="columns" >
+	<layout name="Layout_DFe_Terceiros" id="Layout_1c1c" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tbldfeevento" color="008000" x="64" y="880" />
 		<entity schema="mgsis.mgsis" name="tbldfetipo" color="008000" x="64" y="48" />
 		<entity schema="mgsis.mgsis" name="tbldistribuicaodfe" color="008000" x="48" y="272" />
@@ -11568,6 +11603,27 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 		<entity schema="mgsis.mgsis" name="tblveiculoconjunto" color="EEC1C1" x="960" y="304" />
 		<entity schema="mgsis.mgsis" name="tblveiculoconjuntoveiculo" color="EEC1C1" x="976" y="528" />
 		<entity schema="mgsis.mgsis" name="tblveiculotipo" color="EEC1C1" x="1040" y="48" />
+	</layout>
+	<layout name="Layout_Magazord" id="Layout-b78" show_relation="columns" >
+		<entity schema="mgsis.mgsis" name="tblestoquesaldo" color="3986C1" x="944" y="464" />
+		<entity schema="mgsis.mgsis" name="tblmagazordproduto" color="EEC1C1" x="304" y="48" />
+		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="48" y="48" />
+		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="3986C1" x="656" y="432" />
+		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="3986C1" x="656" y="48" />
+		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="3986C1" x="304" y="448" />
+		<script name="SQL_Editor" id="Editor-4d3" language="SQL" >
+			<string><![CDATA[CREATE  TABLE mgsis.tblmagazordproduto ( 
+	codmagazordproduto   bigserial  NOT NULL  ,
+	codproduto           bigint  NOT NULL  ,
+	codprodutovariacao   bigint  NOT NULL  ,
+	codprodutoembalagem  bigint    ,
+	sku                  varchar(25)  NOT NULL  ,
+	CONSTRAINT pk_tblmagazordproduto PRIMARY KEY ( codmagazordproduto )
+ ) ;
+
+COMMENT ON COLUMN mgsis.tblmagazordproduto.sku IS 'SKU da Derivacao no Magazord';
+]]></string>
+		</script>
 	</layout>
 	<layout name="Layout_Meta" id="Layout_dd20140" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblcargo" color="C1D8EE" x="336" y="432" />
