@@ -6003,7 +6003,7 @@ Peso em KG]]></comment>
 			<column name="observacoes" type="varchar" length="255" decimal="0" jt="12" />
 			<column name="codopencart" type="bigint" jt="-5" />
 			<column name="codopencartvariacao" type="bigint" jt="-5" />
-			<column name="peso" type="numeric" length="7" decimal="3" jt="2" />
+			<column name="peso" type="numeric" length="7" decimal="4" jt="2" />
 			<column name="altura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="largura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="profundidade" type="numeric" length="8" decimal="2" jt="2" />
@@ -6085,7 +6085,7 @@ Peso em KG]]></comment>
 			<fk name="fk_tblproduto" to_schema="mgsis.mgsis" to_table="tblcest" >
 				<fk_column name="codcest" pk="codcest" />
 			</fk>
-			<fk name="fk_tblproduto_produto_imagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" >
+			<fk name="fk_tblproduto_produto_imagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
 			</fk>
 			<fk name="tblproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
@@ -6245,10 +6245,10 @@ Peso em KG]]></comment>
 		</table>
 		<table name="tblprodutoimagem" >
 			<column name="codprodutoimagem" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codproduto" type="bigint" jt="-5" mandatory="y" />
 			<column name="codimagem" type="bigint" jt="-5" mandatory="y" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="ordem" type="integer" jt="4" mandatory="y" >
@@ -6272,7 +6272,7 @@ Peso em KG]]></comment>
 			<fk name="fk_tblprodutoimagem" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="fk_tblprodutoimagem_0" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblprodutoimagem_0" to_schema="mgsis.mgsis" to_table="tblimagem" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
 			<fk name="fk_tblprodutoimagem_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
@@ -6280,6 +6280,30 @@ Peso em KG]]></comment>
 			</fk>
 			<fk name="fk_tblprodutoimagem_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblprodutoimagemprodutovariacao" >
+			<column name="codprodutoimagemprodutovariacao" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codprodutoimagem" type="bigint" jt="-5" mandatory="y" />
+			<column name="codprodutovariacao" type="bigint" jt="-5" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblprodutoimagemprodutovariacao" unique="PRIMARY_KEY" >
+				<column name="codprodutoimagemprodutovariacao" />
+			</index>
+			<fk name="fk_tblprodutoimagemprodutovariacao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblprodutoimagemprodutovariacao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblprodutoimagemprodutovariacao_tblprodutoimagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
+			</fk>
+			<fk name="fk_tblprodutoimagemprodutovariacao_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
 			</fk>
 		</table>
 		<table name="tblprodutovariacao" >
@@ -6340,7 +6364,7 @@ Peso em KG]]></comment>
 			<fk name="fk_tblprodutovariacao_2" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="fk_tblprodutovariacao_3" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" >
+			<fk name="fk_tblprodutovariacao_3" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
 			</fk>
 			<fk name="fk_tblprodutovariacao_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
@@ -6572,9 +6596,6 @@ Peso em KG]]></comment>
 			</index>
 			<index name="unq_tblstonepos_referenceid" unique="UNIQUE_INDEX" >
 				<column name="referenceid" />
-			</index>
-			<index name="unq_tblstonepos_serialnumber" unique="UNIQUE_KEY" >
-				<column name="serialnumber" />
 			</index>
 			<index name="idx_fk_tblstonepos_tblusuario" unique="NORMAL" >
 				<column name="codusuariocriacao" />
@@ -9195,6 +9216,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tbllioproduto_codlioproduto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbllioterminal_codlioterminal_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblliquidacaotitulo_codliquidacaotitulo_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblmagazordproduto_codmagazordproduto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmarca_codmarca_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmdfe_codmdfe_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmdfe_numero_401_920_58_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -9287,6 +9309,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tblprodutoembalagem_codprodutoembalagem_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblprodutohistoricopreco_codprodutohistoricopreco_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblprodutoimagem_codprodutoimagem_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblprodutoimagemprodutovariac_codprodutoimagemprodutovariac_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblprodutovariacao_codprodutovariacao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblregistrospc_codregistrospc_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblregulamentoicmsstmt_codregulamentoicmsstmt_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -9865,7 +9888,7 @@ BEGIN
 END;
 $function$
 ;]]></string>
-			<input_param name="atualizados" jt="-1" type="bigint" inOut="3" />
+			<input_param name="atualizados" jt="-1" type="bigint" inOut="-1" />
 		</function>
 		<function name="fncalculaestoque" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fncalculaestoque(pcodproduto bigint)
@@ -10119,14 +10142,14 @@ BEGIN
 END;
 $function$
 ;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="1" />
-			<input_param name="pdesejado" jt="-1" type="numeric" inOut="1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="3" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="3" />
-			<input_param name="movimento" jt="-1" type="date" inOut="3" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="3" />
-			<input_param name="diferenca" jt="-1" type="numeric" inOut="3" />
+			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="pdesejado" jt="-1" type="numeric" inOut="-1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
+			<input_param name="diferenca" jt="-1" type="numeric" inOut="-1" />
 		</function>
 		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
@@ -10204,12 +10227,12 @@ BEGIN
 END;
 $function$
 ;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="3" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="3" />
-			<input_param name="movimento" jt="-1" type="date" inOut="3" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="3" />
+			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 		</function>
 		<function name="fntblmovimentotituloaiauad" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblmovimentotituloaiauad()
@@ -11626,10 +11649,25 @@ COMMENT ON COLUMN mgsis.tblmagazordproduto.sku IS 'SKU da Derivacao no Magazord'
 		</script>
 	</layout>
 	<layout name="Layout_Mercos" id="Layout-21d4" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblimagem" color="3986C1" x="608" y="512" />
+		<entity schema="mgsis.mgsis" name="tblimagem" color="3986C1" x="784" y="592" />
 		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="48" y="64" />
-		<entity schema="mgsis.mgsis" name="tblprodutoimagem" color="3986C1" x="336" y="480" />
+		<entity schema="mgsis.mgsis" name="tblprodutoimagem" color="3986C1" x="336" y="560" />
+		<entity schema="mgsis.mgsis" name="tblprodutoimagemprodutovariacao" color="C1D8EE" x="320" y="176" />
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="3986C1" x="832" y="48" />
+		<script name="SQL_Editor" id="Editor-43a" language="SQL" >
+			<string><![CDATA[ALTER TABLE mgsis.tblproduto DROP CONSTRAINT fk_tblproduto_produto_imagem;
+
+ALTER TABLE mgsis.tblprodutoimagem DROP CONSTRAINT fk_tblprodutoimagem_0;
+
+ALTER TABLE mgsis.tblprodutovariacao DROP CONSTRAINT fk_tblprodutovariacao_3;
+
+ALTER TABLE mgsis.tblproduto ADD CONSTRAINT fk_tblproduto_produto_imagem FOREIGN KEY ( codprodutoimagem ) REFERENCES mgsis.tblprodutoimagem( codprodutoimagem ) ON DELETE SET NULL ON UPDATE CASCADE ;
+
+ALTER TABLE mgsis.tblprodutoimagem ADD CONSTRAINT fk_tblprodutoimagem_0 FOREIGN KEY ( codimagem ) REFERENCES mgsis.tblimagem( codimagem ) ON DELETE CASCADE ON UPDATE CASCADE ;
+
+ALTER TABLE mgsis.tblprodutovariacao ADD CONSTRAINT fk_tblprodutovariacao_3 FOREIGN KEY ( codprodutoimagem ) REFERENCES mgsis.tblprodutoimagem( codprodutoimagem ) ON DELETE SET NULL ON UPDATE CASCADE ;
+]]></string>
+		</script>
 	</layout>
 	<layout name="Layout_Meta" id="Layout_dd20140" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblcargo" color="C1D8EE" x="336" y="432" />
@@ -11741,7 +11779,7 @@ COMMENT ON COLUMN mgsis.tblmagazordproduto.sku IS 'SKU da Derivacao no Magazord'
 		<entity schema="mgsis.mgsis" name="tblpixdevolucaostatus" color="C1D8EE" x="1056" y="608" />
 		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="1040" y="64" />
 	</layout>
-	<layout name="Layout_Portador" id="Layout_91c" show_relation="columns" >
+	<layout name="Layout_Portador" id="Layout_91c" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
 		<entity schema="mgsis.mgsis" name="tblbanco" color="3986C1" x="64" y="832" />
 		<entity schema="mgsis.mgsis" name="tblextratobancario" color="C6EEC1" x="368" y="48" />
