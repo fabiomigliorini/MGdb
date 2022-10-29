@@ -47,7 +47,7 @@ select sum(vprod) from tblnfeterceiroitem t where codnfeterceiro in (32388)
 --update tblnfeterceiroitem set complemento = vprod - vdesc, margem = 37 where codnfeterceiro in (27610)
 
 -- Rocie / Fartex / Wincy / Rio de Ouro
-update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (41216)
+update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (41638)
 
 
 -- Bazzi Company

@@ -1,11 +1,21 @@
-select setval('tblibptcache_tblibptcache_seq', 1, false)
+
+update tabelaibptaxmt22 set ex = null where ex = ''
 
 delete from tblibptcache
+
+select setval('tblibptcache_codibptcache_seq', 1, false)
+
+insert into tblncm (ncm, descricao, criacao, codusuariocriacao, alteracao, codusuarioalteracao, bit, fecep, inicio)
+select i.codigo, i.descricao, now(), 1, now(), 1, false, false, now()
+from tabelaibptaxmt22 i
+left join tblncm n on (n.ncm = i.codigo)
+where i.tipo = '0' 
+and n.codncm is null
 
 INSERT INTO mgsis.tblibptcache
 (codfilial, codestado, ncm, extarif, descricao, nacional, estadual, importado, municipal, tipo, vigenciainicio, vigenciafim, chave, versao, fonte, criacao, codusuariocriacao, alteracao, codusuarioalteracao)
 select
-	104 as codfilial, 
+	f.codfilial,
 	8956 as codestado, 
 	i.codigo, 
 	coalesce(cast(i.ex as smallint), 0) as extarif, 
@@ -15,18 +25,18 @@ select
 	cast(i.importadosfederal as numeric) as importado, 
 	cast(i.municipal as numeric), 
 	cast(i.tipo as smallint) as tipo, 
-	cast(i.vigenciainicio as date), 
-	cast(i.vigenciafim as date), 
+	to_date(i.vigenciainicio, 'DD/MM/YYYY'), 
+	to_date(i.vigenciafim, 'DD/MM/YYYY'), 
 	i.chave, 
 	i.versao, 
 	i.fonte,
 	date_trunc('second', now()) criacao, 
 	1 as codusuariocriacao,
-	date_trunc('second', now()) alteracao, 
+	date_trunc('second', now()) alteracao,
 	1 as codusuarioalteracao 
-from tblibptaxmt211a i
+from tabelaibptaxmt22 i
 left join tblncm n on (i.codigo = n.ncm)
+left join tblfilial f on (f.codfilial in (101, 102, 103, 104, 105)) 
 where i.tipo = '0' 
---and n.codncm is null
 
 select count(*) from tblibptcache t 

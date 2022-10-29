@@ -9,6 +9,7 @@ from tblstonepretransacao t
 where not processada 
 and ativa
 order by criacao desc
+--offset 200
 
 select count(*) from tblstonepretransacao t where not processada and ativa
 
@@ -16,7 +17,7 @@ select count(*) from tblstonepretransacao t where not processada and ativa
 -- Totais de stone Movimentado
 select
 	to_char( date_trunc('month', t.criacao), 'yyyy-mm-dd'),
-	pt.tipo,
+	--pt.tipo,
 	--pcs.pixcobstatus,
 	count(t.codstonetransacao) as quantidade,
 	sum(t.valor) as valor,
@@ -26,7 +27,7 @@ inner join tblstonepretransacao pt on (pt.codstonepretransacao = t.codstonetrans
 inner join tblnegocio n on (n.codnegocio = pt.codnegocio)
 inner join tblusuario u on (u.codusuario = n.codusuario)
 where t.status = 1
-group by date_trunc('month', t.criacao), pt.tipo
+group by date_trunc('month', t.criacao) --, pt.tipo
 --order by t.codpixcobstatus, 2 DESC
 order by 1 desc, 2 asc
 
@@ -66,9 +67,13 @@ and coalesce(c.valorcartao, 0) + coalesce(p.valorpagamento, 0) > coalesce(n.valo
 order by n.lancamento desc
 --and n.codnegocio = 2381383
 
-select * from tblnegocioformapagamento t where codnegocio = :codnegocio 
+select * from tblnegocioformapagamento t where codnegocio = 2660124
 
-select * from tblnegocio t where codnegocio = 2449361
+ 
+
+select * from tblnegocio t where codnegocio = 2660124
+
+
 
 
 /*

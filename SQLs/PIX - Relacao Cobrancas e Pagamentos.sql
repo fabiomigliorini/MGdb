@@ -5,10 +5,13 @@ left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado
+
+
+
 and p.codpix is null
 --and pc.codpixcob = 10032
-order by pc.criacao asc
---order by pc.criacao asc
+--order by pc.criacao desc
+order by pc.criacao desc
 
 -- PIXCob concluidos
 select po.portador, p.horario, p.valor, p.nome, p.txid, n.codnegocio
@@ -74,13 +77,45 @@ from tblpixcob t
 inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
 order by t.criacao desc
 
+select pc.codnegocio, p.valor  
+from tblpix p
+inner join tblpixcob pc on (pc.codpixcob = p.codpixcob)
 
-select * from tblpixcob where solicitacaopagador ilike '%02842997%'
+
+-- fechado a vista e a prazo
+with c as (
+	select pc.codnegocio, sum(p.valor) as valor
+	from tblpix p
+	inner join tblpixcob pc on (pc.codpixcob = p.codpixcob)
+	group by pc.codnegocio
+),
+p as (
+	select nfp.codnegocio, sum(nfp.valorpagamento) as valorpagamento 
+	from tblnegocioformapagamento nfp 
+	where nfp.codformapagamento not in (00001010, 00005605, 00002010, 00001030, 5604) --Dinheiro, Stone, Cartao, vale, PIX
+	group by nfp.codnegocio
+)
+select coalesce(c.valor, 0), coalesce(p.valorpagamento, 0), coalesce(n.valortotal, 0), * 
+from tblnegocio n
+inner join p on (p.codnegocio = n.codnegocio)
+inner join c on (c.codnegocio = n.codnegocio)
+where n.codnegociostatus = 2
+and coalesce(c.valor, 0) + coalesce(p.valorpagamento, 0) > coalesce(n.valortotal, 0)
+order by n.lancamento desc
+--and n.codnegocio = 2381383
 
 
-select * from tblnegocioformapagamento t where codnegocio = :codnegocio
+select valorpagamento, * from tblnegocioformapagamento t 
+where codusuariocriacao is not null
+and codnegocio = 2857690
 
-select * from tblnegocio where codnegocio = :codnegocio
 
-select * from tblpixcob where codnegocio = :codnegocio
+
+
+select * from tblstonefilial t 
+
+
+
+select * from tblstonepos t where serialnumber  = '6M493665'
+
 
