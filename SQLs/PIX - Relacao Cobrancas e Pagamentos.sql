@@ -5,13 +5,26 @@ left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado
-
-
-
 and p.codpix is null
 --and pc.codpixcob = 10032
 --order by pc.criacao desc
 order by pc.criacao desc
+offset 400
+limit 100
+
+-- Forca reconsultar
+select count(*)
+ from tblpixcob pc
+left join tblpix p on (p.codpixcob = pc.codpixcob)
+left join tblnegocio n on (n.codnegocio = pc.codnegocio)
+left join tblusuario u on (u.codusuario = n.codusuario)
+where pc.codpixcobstatus != 4 -- Expirado
+and p.codpix is null
+
+select * from tblpixcob where codnegocio = 2873244
+
+select * from tblnegocio where codnegocio = 2873244
+
 
 -- PIXCob concluidos
 select po.portador, p.horario, p.valor, p.nome, p.txid, n.codnegocio
@@ -110,7 +123,10 @@ where codusuariocriacao is not null
 and codnegocio = 2857690
 
 
-
+select codpessoa
+from tblpessoa p
+where p.cnpj = :cnpj 
+and regexp_replace(p.ie, '[^0-9]+', '', 'g')::numeric = :ie
 
 select * from tblstonefilial t 
 
@@ -119,3 +135,8 @@ select * from tblstonefilial t
 select * from tblstonepos t where serialnumber  = '6M493665'
 
 
+select * from tblproduto order by criacao desc nulls last 
+
+delete from tblmercospedido
+
+select * from tblnegocio where codnegocio = 2848205

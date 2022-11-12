@@ -16,9 +16,15 @@
 update tblnfeterceiroitem set complemento = vprod, margem = 40 where codnfeterceiro = 39775
 
 --FOUR STAR / CW
-update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (41312, 41313)
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (42124, 42126, 42127)
 
-update tblnfeterceiroitem  set complemento = -4.8 where codnfeterceiroitem = 347981
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.8555) - vprod, margem = 40 where codnfeterceiro in (42126)
+
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.85) - vprod, margem = 40 where codnfeterceiroitem in (550157)
+
+update tblnfeterceiroitem  set complemento = null where codnfeterceiroitem = 550156
+
+
 
 --Lua de Cristal
 --update tblnfeterceiroitem set complemento = vprod, margem = 37 where codnfeterceiro in (26042)
@@ -131,9 +137,18 @@ update tblpessoa set ie = '134014669' where codpessoa = 13243
 
 
 
-update tblnfeterceiroitem t  set margem = 30 where codprodutobarra in (12299, 12297)
+update tblnfeterceiroitem t  set margem = 40, complemento = vprod where codnfeterceiro = 41968
 
 
 
+select * from tblnegocio where codnegocio = 2860952
 
-select * from tbl
+
+
+select nextval('tblnfeterceiroitem_codnfeterceiroitem_seq')
+
+update tblnfeterceiroitem set nitem = nitem * 100 where codnfeterceiro in (42124, 42126, 42127)
+
+select * from tblnfeterceiroitem t where codnfeterceiro = 41744 order by nitem
+
+

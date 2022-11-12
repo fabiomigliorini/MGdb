@@ -128,3 +128,13 @@ update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao = null where 
 
 update tblnegocio set codfilial = :codfilial, codestoquelocal = :codestoquelocal where codnegocio = :codnegocio 
 
+delete from tblmercosproduto
+
+delete from tblmercosprodutoimagem 
+
+
+
+
+select * from tblproduto where codproduto  = 67305
+
+

@@ -8,6 +8,7 @@ select
 from tblstonepretransacao t 
 where not processada 
 and ativa
+--order by criacao 
 order by criacao desc
 --offset 200
 
