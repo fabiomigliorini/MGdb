@@ -2009,6 +2009,7 @@
 			<column name="dfe" type="boolean" jt="-7" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
+			<column name="pagarmesk" type="varchar" length="50" jt="12" />
 			<index name="tblfilial_pkey" unique="PRIMARY_KEY" >
 				<column name="codfilial" />
 			</index>
@@ -5303,6 +5304,198 @@ Peso em KG]]></comment>
 			</fk>
 			<fk name="tbloperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpagarmebandeira" >
+			<column name="codpagarmebandeira" type="bigserial" jt="-5" mandatory="y" />
+			<column name="bandeira" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[metadata.schemeName]]></comment>
+			</column>
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblpagarmebandeira" unique="PRIMARY_KEY" >
+				<column name="codpagarmebandeira" />
+			</index>
+			<fk name="fk_tblpagarmebandeira_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpagarmebandeira_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpagarmepagamento" >
+			<column name="codpagarmepagamento" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codpagarmepedido" type="bigint" jt="-5" />
+			<column name="nsu" type="varchar" length="20" jt="12" >
+				<comment><![CDATA[data.code
+NSU - Código identificador da transação na adquirente]]></comment>
+			</column>
+			<column name="codpagarmebandeira" type="bigint" jt="-5" >
+				<comment><![CDATA[metadata.schemeName
+Nome da bandeira]]></comment>
+			</column>
+			<column name="portador" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[metadata.accountHolderName
+Nome do portador do cartão]]></comment>
+			</column>
+			<column name="tipo" type="smallint" length="1024" jt="5" >
+				<comment><![CDATA[metadata.accountFundingSource
+1-debit
+2-credit
+3-voucher]]></comment>
+			</column>
+			<column name="autorizacao" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[metadata.authorizationCode
+Código de autorização da bandeira]]></comment>
+			</column>
+			<column name="parcelas" type="smallint" jt="5" >
+				<comment><![CDATA[metadata.installmentQuantity
+Quantidade de parcelas. Campo não será enviado se transação não for de crédito parcelado]]></comment>
+			</column>
+			<column name="jurosloja" type="boolean" jt="-7" >
+				<defo><![CDATA[true]]></defo>
+				<comment><![CDATA[metadata.installmentType
+true=MerchantFinanced
+false=IssuerFinanced
+Tipo de parcelamento.
+Campo não será enviado se transação não for de crédito parcelado]]></comment>
+			</column>
+			<column name="transacao" type="timestamp" length="0" jt="93" >
+				<comment><![CDATA[metadata.transactionTimestamp
+Data/Hora da transação UTV]]></comment>
+			</column>
+			<column name="codpagarmepos" type="bigint" jt="-5" >
+				<comment><![CDATA[metadata.terminalSerialNumber
+Numero serial do terminal (POS)]]></comment>
+			</column>
+			<column name="idtransacao" type="varchar" length="30" jt="12" >
+				<comment><![CDATA[last_transaction.id]]></comment>
+			</column>
+			<column name="identificador" type="integer" jt="4" >
+				<comment><![CDATA[metadata.initiatorTransactionKey
+Código identificador da transação do POS]]></comment>
+			</column>
+			<column name="valorpagamento" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorcancelamento" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="codfilial" type="bigint" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblpagarmepagamento" unique="PRIMARY_KEY" >
+				<column name="codpagarmepagamento" />
+			</index>
+			<fk name="fk_tblpagarmepagamento_tblpagarmebandeira" to_schema="mgsis.mgsis" to_table="tblpagarmebandeira" update_action="cascade" >
+				<fk_column name="codpagarmebandeira" pk="codpagarmebandeira" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblpagarmepedido" to_schema="mgsis.mgsis" to_table="tblpagarmepedido" >
+				<fk_column name="codpagarmepedido" pk="codpagarmepedido" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblpagarmepos" to_schema="mgsis.mgsis" to_table="tblpagarmepos" update_action="cascade" >
+				<fk_column name="codpagarmepos" pk="codpagarmepos" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpagarmepedido" >
+			<column name="codpagarmepedido" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codnegocio" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codpessoa" type="bigint" jt="-5" >
+				<comment><![CDATA[customer]]></comment>
+			</column>
+			<column name="codpagarmepos" type="bigint" jt="-5" >
+				<comment><![CDATA[poi_payment_settings.devices_serial_number]]></comment>
+			</column>
+			<column name="valor" type="numeric" length="14" decimal="2" jt="2" mandatory="y" >
+				<comment><![CDATA[amount]]></comment>
+			</column>
+			<column name="valorpago" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorcancelado" prior="valorpagocancelado" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorpagoliquido" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="fechado" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+				<comment><![CDATA[closed]]></comment>
+			</column>
+			<column name="tipo" type="smallint" length="1024" jt="5" >
+				<comment><![CDATA[poi_payment_settings.payment_setup.type
+1-debit
+2-credit
+3-voucher]]></comment>
+			</column>
+			<column name="parcelas" type="smallint" jt="5" >
+				<comment><![CDATA[poi_payment_settings.payment_setup.installments]]></comment>
+			</column>
+			<column name="jurosloja" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+				<comment><![CDATA[poi_payment_settings.payment_setup.installment_type
+true=merchant
+false=issuer]]></comment>
+			</column>
+			<column name="descricao" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[display_name]]></comment>
+			</column>
+			<column name="codfilial" type="bigint" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblpagarmepedido" unique="PRIMARY_KEY" >
+				<column name="codpagarmepedido" />
+			</index>
+			<fk name="fk_tblpagarmepedido_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
+				<fk_column name="codnegocio" pk="codnegocio" />
+			</fk>
+			<fk name="fk_tblpagarmepedido_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="fk_tblpagarmepedido_tblpagarmepos" to_schema="mgsis.mgsis" to_table="tblpagarmepos" update_action="cascade" >
+				<fk_column name="codpagarmepos" pk="codpagarmepos" />
+			</fk>
+			<fk name="fk_tblpagarmepedido_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+		</table>
+		<table name="tblpagarmepos" >
+			<column name="codpagarmepos" type="bigint" jt="-5" mandatory="y" />
+			<column name="codfilial" type="bigint" jt="-5" mandatory="y" />
+			<column name="serial" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="apelido" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblpagarmepos" unique="PRIMARY_KEY" >
+				<column name="codpagarmepos" />
+			</index>
+			<fk name="fk_tblpagarmepos_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblpagarmepos_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpagarmepos_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblpais" >
@@ -9366,6 +9559,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tblmdfestatus_codmdfestatus_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmdfeveiculo_codmdfeveiculo_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmenu_codmenu_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblmercosimagem_codmercosimagem_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmeta_codmeta_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmetafilial_codmetafilial_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmetafilialpessoa_codmetafilialpessoa_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -11212,6 +11406,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 			<column name="dfe" />
+			<column name="pagarmesk" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="C1D8EE" x="48" y="592" >
 			<column name="codnaturezaoperacao" />
@@ -11677,6 +11872,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="acbrnfemonitorcodusuario" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
+			<column name="pagarmesk" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1008" y="48" />
 		<entity schema="mgsis.mgsis" name="tblliobandeiracartao" color="C1D8EE" x="1072" y="400" />
@@ -11725,6 +11921,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 			<column name="nfeambiente" />
+			<column name="pagarmesk" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblmdfe" color="CAEEC1" x="384" y="352" />
 		<entity schema="mgsis.mgsis" name="tblmdfeenviosefaz" color="CAEEC1" x="160" y="736" />
@@ -11912,6 +12109,44 @@ ALTER TABLE mgsis.tblmercospedido ADD faturamentoid bigint    ;]]></string>
 		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="C1D8EE" x="320" y="1408" />
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="C1D8EE" x="880" y="1072" />
 	</layout>
+	<layout name="Layout_Pagarme" id="Layout-26c6" show_relation="columns" >
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="800" y="480" >
+			<column name="codfilial" />
+			<column name="codempresa" />
+			<column name="codpessoa" />
+			<column name="acbrnfemonitorcodusuario" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="pagarmesk" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="64" y="48" />
+		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="48" y="608" />
+		<entity schema="mgsis.mgsis" name="tblpagarmebandeira" color="EEC1C1" x="784" y="848" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepagamento" color="EEC1C1" x="416" y="752" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepedido" color="EEC1C1" x="448" y="128" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepos" color="EEC1C1" x="368" y="528" />
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="800" y="48" >
+			<column name="codpessoa" />
+			<column name="pessoa" />
+			<column name="fantasia" />
+			<column name="inativo" />
+			<column name="cliente" />
+			<column name="fornecedor" />
+			<column name="fisica" />
+			<column name="codsexo" />
+			<column name="cnpj" />
+			<column name="ie" />
+			<column name="consumidor" />
+			<column name="codestadocivil" />
+			<column name="codcidade" />
+			<column name="codcidadecobranca" />
+			<column name="codformapagamento" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="codgrupocliente" />
+			<column name="codgrupoeconomico" />
+		</entity>
+	</layout>
 	<layout name="Layout_Pessoa" id="Layout_156d02e" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="C1D8EE" x="624" y="48" />
 		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="C1D8EE" x="624" y="240" />
@@ -11983,6 +12218,7 @@ ALTER TABLE mgsis.tblmercospedido ADD faturamentoid bigint    ;]]></string>
 			<column name="acbrnfemonitorcodusuario" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
+			<column name="pagarmesk" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1008" y="368" >
 			<column name="codformapagamento" />
@@ -12112,6 +12348,7 @@ ALTER TABLE mgsis.tblmercospedido ADD faturamentoid bigint    ;]]></string>
 			<column name="nfeserie" />
 			<column name="validadecertificado" />
 			<column name="dfe" />
+			<column name="pagarmesk" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="C1D8EE" x="48" y="912" >
 			<column name="codformapagamento" />
