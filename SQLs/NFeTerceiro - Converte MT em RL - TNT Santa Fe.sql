@@ -16,7 +16,8 @@ and cprod in (
 	'211400050040065',
 	'211400050040003',
 	'211400050040015',
-	'211400050040016'
+	'211400050040016',
+	'211400050040013'
 )
 
 -- CAMESA
@@ -29,11 +30,14 @@ and ucom = 'MT'
 and cprod ilike '1.07532.01.%'
 
 
-select * from tblnegocioprodutobarra t where codnegocio = 2850977
+-- PEGON
+update tblnfeterceiroitem 
+set qcom = :quantidade_bobinas,
+ucom = 'RL',
+vuncom = vprod / :quantidade_bobinas
+where codnfeterceiro = :codnfeterceiro 
+and ucom = 'KG'
+and cprod ilike '3'
 
-update tblnegocioprodutobarra  set valorunitario = valortotal /quantidade where codnegocio = 2850977
 
 
-select * from tblnotafiscalprodutobarra t2   where codnotafiscal  = 2217066
-
-update tblnotafiscalprodutobarra  set valorunitario = valortotal /quantidade where codnotafiscal = 2217066
