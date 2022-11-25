@@ -3398,6 +3398,7 @@ Peso em KG]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inativo" type="timestamp" length="0" jt="93" />
 			<index name="pk_tblmercosproduto" unique="PRIMARY_KEY" >
 				<column name="codmercosproduto" />
 			</index>
@@ -6377,6 +6378,7 @@ false=issuer]]></comment>
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="revisao" type="timestamp" length="0" decimal="0" jt="93" />
 			<index name="tblproduto_pkey" unique="PRIMARY_KEY" >
 				<column name="codproduto" />
 			</index>
@@ -6411,7 +6413,7 @@ false=issuer]]></comment>
 				<column name="codusuariocriacao" />
 			</index>
 			<constraint name="tblproduto_abc_check" >
-				<string><![CDATA[(abc = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar]))]]></string>
+				<string><![CDATA[(abc = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar]))]]></string>
 			</constraint>
 			<fk name="tblproduto_codmarca_fkey" to_schema="mgsis.mgsis" to_table="tblmarca" >
 				<fk_column name="codmarca" pk="codmarca" />
@@ -11473,6 +11475,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcestanterior" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
+			<column name="revisao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="800" y="880" >
 			<column name="codprodutobarra" />
@@ -12183,8 +12186,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.identificador IS 'metadata.initiator
 
 COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorpagamento IS 'last_transaction.amount\nstatus = paid';
 
-COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transaction.amount\nstatus = canceled';
-]]></string>
+COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transaction.amount\nstatus = canceled';]]></string>
 		</script>
 	</layout>
 	<layout name="Layout_Meta" id="Layout_dd20140" confirmed="y" show_relation="columns" >
@@ -12280,7 +12282,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="C1D8EE" x="320" y="1408" />
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="C1D8EE" x="880" y="1072" />
 	</layout>
-	<layout name="Layout_PagarMe" id="Layout-26c6" show_relation="columns" >
+	<layout name="Layout_PagarMe" id="Layout-26c6" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="800" y="480" >
 			<column name="codfilial" />
 			<column name="codempresa" />
@@ -12487,6 +12489,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codcestanterior" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
+			<column name="revisao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="304" y="560" >
 			<column name="codprodutobarra" />
