@@ -32,3 +32,6 @@ where tblnfeterceiroitem.codnfeterceiro = :codnfeterceiro
 
 
 select * from tbltipoproduto t order by codtipoproduto 
+
+
+select codnfeterceiro, nsu, nfechave, data, * from tbldistribuicaodfe t where "data" is null

@@ -16,7 +16,7 @@
 update tblnfeterceiroitem set complemento = vprod, margem = 40 where codnfeterceiro = 39775
 
 --FOUR STAR / CW
-update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (42124, 42126, 42127)
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.9) - vprod, margem = 40 where codnfeterceiro in (42622)
 
 update tblnfeterceiroitem set complemento = (vprod * 4 * 0.8555) - vprod, margem = 40 where codnfeterceiro in (42126)
 

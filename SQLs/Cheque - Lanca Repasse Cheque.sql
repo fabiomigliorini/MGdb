@@ -119,3 +119,10 @@ having count(*) > 1
 delete from tblchequerepassecheque where codchequerepassecheque in (17644, 17645)
 
 delete from tblchequerepassecheque where codchequerepasse = :codchequerepasse 
+
+
+
+select * from tbl
+
+select * from tblcontacontabil t order by alteracao desc nulls 
+

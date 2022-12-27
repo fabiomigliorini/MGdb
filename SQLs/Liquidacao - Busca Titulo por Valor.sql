@@ -3,7 +3,7 @@ from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
 --where t.debito = 89
-where t.credito = 619.8
+where t.credito = 2358.20 
 --where t.credito = 89
 --and saldo > 0
 order by criacao desc nulls LAST

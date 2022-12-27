@@ -6,11 +6,13 @@ left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
 where pc.codpixcobstatus != 4 -- Expirado
 and p.codpix is null
+--and u.usuario = 'igor'
 --and pc.codpixcob = 10032
+order by pc.criacao asc
+--order by pc.criacao asc
 --order by pc.criacao desc
-order by pc.criacao desc
-offset 400
-limit 100
+--offset 150
+--limit 50
 
 -- Forca reconsultar
 select count(*)
@@ -77,7 +79,9 @@ order by 1 desc
 update tblpixcob
 set codpixcobstatus = 4
 where codpixcobstatus in (1, 3)
-and criacao + (expiracao || ' second')::interval < now() - '1 DAY'::interval
+and criacao + (expiracao || ' second')::interval < now() - '2 HOURS'::interval
+
+select * from tblpixcobstatus t 
 
 update tblpixcob
 set codpixcobstatus = 4
@@ -140,3 +144,60 @@ select * from tblproduto order by criacao desc nulls last
 delete from tblmercospedido
 
 select * from tblnegocio where codnegocio = 2848205
+
+select * from tblportador
+
+
+
+update tblnotafiscal set nfeautorizacao = null where codnotafiscal = '2247087'  
+
+
+select * from tblpessoa where cnpj = '14837548000103'
+
+
+select * from tblportador where portador ilike '%n%'
+
+
+select criacao, * from tblpixcob order by criacao 
+
+select codpixcob is null, count(*), min(horario) from tblpix group by codpixcob is null
+
+--with itens as (
+	select 
+		coalesce(pix.horario, cob.criacao) as horario, 
+		coalesce(pix.valor, cob.valororiginal) as valor, 
+		pix.nome, 
+		pix.cpf, 
+		pix.cnpj,
+		cob.codnegocio, 
+		u.usuario,
+		port.portador, 
+		pix.e2eid, 
+		pix.txid, 
+		pix.infopagador		
+	from tblpix pix
+	full join tblpixcob cob on (cob.codpixcob = pix.codpixcob)
+	left join tblportador port on (port.codportador = coalesce(pix.codportador, cob.codportador))
+	left join tblnegocio n on (n.codnegocio = cob.codnegocio)
+	left join tblusuario u on (u.codusuario = n.codusuario)
+--	where pix.codpix is null
+	order by coalesce(pix.horario, cob.criacao) desc
+--)
+--select count(*) from itens
+	
+delete from tblpix where criacao >= '2022-12-20'
+	
+select coalesce(cpf, cnpj), min(nome), count(*), sum(valor), sum(valor) / count(*)
+from tblpix 
+where cpf is not null or cnpj is not null
+group by coalesce(cpf, cnpj) order by 3 desc
+	
+	
+select * from tblmovimentotitulo where debito = 940.95
+
+select * from tblliquidacaotitulo t where codliquidacaotitulo = 00105336
+
+select cpf, to_char(cpf, '00000000000'), * 
+from tblpix t 
+where cpf is not null
+and coalesce(to_char(cpf, '00000000000'), to_char(cnpj, '00000000000000')) ilike '%26633730000113%'

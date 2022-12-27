@@ -1,17 +1,17 @@
 ﻿
 delete from tbljobsspa where tbljobsspa.id not in (select min(id) from tbljobsspa dup group by dup.payload);
 delete from tbljobs where tbljobs.id not in (select min(id) from tbljobs dup group by dup.payload);
-
 select 'lara', queue, count(*), min(id), max(id) from tbljobs group by queue union all
 select 'spa', queue, count(*), min(id), max(id) from tbljobsspa group by queue order by queue
 
-delete from tbljobsspa where payload ilike '%PagarMe%'
 
-select * from tbljobsspa
+select * from tblestoquemovimento where codestoquemes = 3792318
 
-{"displayName":"Mg\\Stone\\StoneTransacaoProcessaJob","job":"Illuminate\\Queue\\CallQueuedHandler@call","maxTries":null,"timeout":null,"timeoutAt":null,"data":{"commandName":"Mg\\Stone\\StoneTransacaoProcessaJob","command":"O:34:\"Mg\\Stone\\StoneTransacaoProcessaJob\":9:{s:23:\"\u0000*\u0000stone_transaction_id\";s:14:\"42321476766290\";s:19:\"\u0000*\u0000establishment_id\";s:36:\"cbdede4f-8cfc-470f-bb94-e81bccfa117c\";s:6:\"\u0000*\u0000job\";N;s:10:\"connection\";N;s:5:\"queue\";N;s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:5:\"delay\";N;s:7:\"chained\";a:0:{}}"}}
+select * from tblestoquemovimento where codestoquemes = 3804646
 
-{"displayName":"Mg\\Stone\\StoneTransacaoProcessaJob","job":"Illuminate\\Queue\\CallQueuedHandler@call","maxTries":null,"timeout":null,"timeoutAt":null,"data":{"commandName":"Mg\\Stone\\StoneTransacaoProcessaJob","command":"O:34:\"Mg\\Stone\\StoneTransacaoProcessaJob\":9:{s:23:\"\u0000*\u0000stone_transaction_id\";s:14:\"42321476766290\";s:19:\"\u0000*\u0000establishment_id\";s:36:\"cbdede4f-8cfc-470f-bb94-e81bccfa117c\";s:6:\"\u0000*\u0000job\";N;s:10:\"connection\";N;s:5:\"queue\";N;s:15:\"chainConnection\";N;s:10:\"chainQueue\";N;s:5:\"delay\";N;s:7:\"chained\";a:0:{}}"}}
+select * from tblfilial order by codfilial
+
+select * from tblpagarmepedido t where idpedido = 'or_LVmQVzBhGskBQqgw'
 
 /*
 

@@ -126,6 +126,15 @@ and nf.numero between :numero_inicial and :numero_final
 
 update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao = null where codnotafiscal = :codnotafiscal
 
+
+update tblnotafiscal 
+set nfeautorizacao = null, 
+nfedataautorizacao = null 
+where emitida = true 
+and codfilial = 102
+and modelo = 65
+and numero in (580622, 580623, 580624, 580625, 580626, 584506, 584507)
+
 update tblnegocio set codfilial = :codfilial, codestoquelocal = :codestoquelocal where codnegocio = :codnegocio 
 
 delete from tblmercosproduto

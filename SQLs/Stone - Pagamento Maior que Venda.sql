@@ -10,7 +10,7 @@ where not processada
 and ativa
 --order by criacao 
 order by criacao desc
---offset 200
+--offset 100
 
 select count(*) from tblstonepretransacao t where not processada and ativa
 

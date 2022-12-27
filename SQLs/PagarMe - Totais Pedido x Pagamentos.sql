@@ -74,3 +74,8 @@ select codpagarmepedido, valor, status, fechado, * from tblpagarmepedido order b
 
 
 select * from tblpagarmepos t 
+
+select * from information_schema."columns" c where table_name='tblpagarmepedido' order by ordinal_position 
+
+select * from tblpagarmepedido t where idpedido  ilike '%8B9P'
+
