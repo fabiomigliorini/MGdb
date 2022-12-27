@@ -2011,6 +2011,7 @@
 			</column>
 			<column name="pagarmesk" type="varchar" length="50" jt="12" />
 			<column name="pagarmeid" type="varchar" length="30" jt="12" />
+			<column name="stonecode" type="numeric" length="9" decimal="0" jt="2" />
 			<index name="tblfilial_pkey" unique="PRIMARY_KEY" >
 				<column name="codfilial" />
 			</index>
@@ -2869,43 +2870,6 @@
 			<column name="id" type="varchar" length="1024" decimal="0" jt="12" />
 			<column name="do" type="varchar" length="1024" decimal="0" jt="12" />
 			<column name="observacao_exclusao" type="varchar" length="1024" decimal="0" jt="12" />
-		</table>
-		<table name="tblmagazordproduto" >
-			<column name="codmagazordproduto" type="bigserial" jt="-5" mandatory="y" />
-			<column name="codproduto" type="bigint" jt="-5" mandatory="y" />
-			<column name="codprodutovariacao" type="bigint" jt="-5" mandatory="y" />
-			<column name="codprodutoembalagem" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="sku" type="varchar" length="25" jt="12" mandatory="y" >
-				<comment><![CDATA[SKU da Derivacao no Magazord]]></comment>
-			</column>
-			<column name="precovarejo" prior="preco" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="precovarejoatualizado" type="timestamp" length="0" jt="93" />
-			<column name="precoatacado" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="precoatacadoatualizado" type="timestamp" length="0" jt="93" />
-			<column name="saldoquantidade" type="numeric" length="14" decimal="3" jt="2" />
-			<column name="saldoquantidadeatualizado" prior="saldoatualizado" type="timestamp" length="0" jt="93" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<index name="pk_tblmagazordproduto" unique="PRIMARY_KEY" >
-				<column name="codmagazordproduto" />
-			</index>
-			<fk name="fk_tblmagazordproduto_tblproduto" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
-				<fk_column name="codproduto" pk="codproduto" />
-			</fk>
-			<fk name="fk_tblmagazordproduto_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
-				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
-			</fk>
-			<fk name="fk_tblmagazordproduto_tblprodutoembalagem" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="cascade" update_action="cascade" >
-				<fk_column name="codprodutoembalagem" pk="codprodutoembalagem" />
-			</fk>
-			<fk name="fk_tblmagazordproduto_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblmagazordproduto_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
 		</table>
 		<table name="tblmarca" >
 			<column name="codmarca" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -9577,7 +9541,6 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tbllioproduto_codlioproduto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbllioterminal_codlioterminal_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblliquidacaotitulo_codliquidacaotitulo_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblmagazordproduto_codmagazordproduto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmarca_codmarca_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmdfe_codmdfe_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmdfe_numero_401_920_58_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -11440,6 +11403,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="dfe" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="C1D8EE" x="48" y="592" >
 			<column name="codnaturezaoperacao" />
@@ -11908,6 +11872,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuariocriacao" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1008" y="48" />
 		<entity schema="mgsis.mgsis" name="tblliobandeiracartao" color="C1D8EE" x="1072" y="400" />
@@ -11958,6 +11923,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="nfeambiente" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblmdfe" color="CAEEC1" x="384" y="352" />
 		<entity schema="mgsis.mgsis" name="tblmdfeenviosefaz" color="CAEEC1" x="160" y="736" />
@@ -11995,27 +11961,6 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 		<entity schema="mgsis.mgsis" name="tblveiculoconjunto" color="EEC1C1" x="960" y="304" />
 		<entity schema="mgsis.mgsis" name="tblveiculoconjuntoveiculo" color="EEC1C1" x="976" y="528" />
 		<entity schema="mgsis.mgsis" name="tblveiculotipo" color="EEC1C1" x="1040" y="48" />
-	</layout>
-	<layout name="Layout_Magazord" id="Layout-b78" confirmed="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblestoquesaldo" color="3986C1" x="944" y="464" />
-		<entity schema="mgsis.mgsis" name="tblmagazordproduto" color="EEC1C1" x="304" y="48" />
-		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="48" y="48" />
-		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="3986C1" x="656" y="432" />
-		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="3986C1" x="656" y="48" />
-		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="3986C1" x="304" y="448" />
-		<script name="SQL_Editor" id="Editor-4d3" language="SQL" >
-			<string><![CDATA[CREATE  TABLE mgsis.tblmagazordproduto ( 
-	codmagazordproduto   bigserial  NOT NULL  ,
-	codproduto           bigint  NOT NULL  ,
-	codprodutovariacao   bigint  NOT NULL  ,
-	codprodutoembalagem  bigint    ,
-	sku                  varchar(25)  NOT NULL  ,
-	CONSTRAINT pk_tblmagazordproduto PRIMARY KEY ( codmagazordproduto )
- ) ;
-
-COMMENT ON COLUMN mgsis.tblmagazordproduto.sku IS 'SKU da Derivacao no Magazord';
-]]></string>
-		</script>
 	</layout>
 	<layout name="Layout_Mercos" id="Layout-21d4" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblimagem" color="3986C1" x="800" y="592" />
@@ -12302,6 +12247,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codusuariocriacao" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="64" y="48" />
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="48" y="608" />
@@ -12347,11 +12293,11 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="48" y="96" />
 		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="384" y="480" />
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="48" y="512" />
-		<entity schema="mgsis.mgsis" name="tblpix" color="C1D8EE" x="720" y="240" />
-		<entity schema="mgsis.mgsis" name="tblpixcob" color="C1D8EE" x="384" y="48" />
-		<entity schema="mgsis.mgsis" name="tblpixcobstatus" color="C1D8EE" x="720" y="48" />
-		<entity schema="mgsis.mgsis" name="tblpixdevolucao" color="C1D8EE" x="720" y="576" />
-		<entity schema="mgsis.mgsis" name="tblpixdevolucaostatus" color="C1D8EE" x="1056" y="608" />
+		<entity schema="mgsis.mgsis" name="tblpix" color="EEC1C1" x="720" y="240" />
+		<entity schema="mgsis.mgsis" name="tblpixcob" color="EEC1C1" x="384" y="48" />
+		<entity schema="mgsis.mgsis" name="tblpixcobstatus" color="EEC1C1" x="720" y="48" />
+		<entity schema="mgsis.mgsis" name="tblpixdevolucao" color="EEC1C1" x="720" y="576" />
+		<entity schema="mgsis.mgsis" name="tblpixdevolucaostatus" color="EEC1C1" x="1056" y="608" />
 		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="1040" y="64" />
 	</layout>
 	<layout name="Layout_Portador" id="Layout_91c" confirmed="y" show_relation="columns" >
@@ -12410,6 +12356,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codusuariocriacao" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1008" y="368" >
 			<column name="codformapagamento" />
@@ -12543,6 +12490,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="dfe" />
 			<column name="pagarmesk" />
 			<column name="pagarmeid" />
+			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="C1D8EE" x="48" y="912" >
 			<column name="codformapagamento" />
