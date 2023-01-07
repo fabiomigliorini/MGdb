@@ -2,8 +2,8 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
---where t.debito = 89
-where t.credito = 2358.20 
+where t.debito = 461.88
+--where t.credito = 2358.20 
 --where t.credito = 89
 --and saldo > 0
 order by criacao desc nulls LAST
@@ -12,14 +12,14 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.observacao ilike '%ana%p%g%'
+where t.observacao ilike '%Fistarol%'
 order by criacao desc nulls LAST
 
 
 select valortotal, valoraprazo, * 
 from tblnegocio n 
-where n.valortotal = 219.3
-and criacao >= '2021-07-22'
+where n.valortotal = 190.82
+---and criacao >= '2021-07-22'
 order by criacao desc
 
 select criacao, * from tblpixcob where valororiginal = 20
@@ -28,7 +28,7 @@ update tblnegocio set codnegociostatus  =   1 where codnegocio = 2350905
 
 select * 
 from tblliquidacaotitulo lt
-where lt.observacao ilike '%306%135%578%'
+where lt.observacao ilike '%Fistarol%'
 
 select * from tbltitulo where observacao ilike '%5419%'
 

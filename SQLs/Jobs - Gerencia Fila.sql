@@ -5,13 +5,6 @@ select 'lara', queue, count(*), min(id), max(id) from tbljobs group by queue uni
 select 'spa', queue, count(*), min(id), max(id) from tbljobsspa group by queue order by queue
 
 
-select * from tblestoquemovimento where codestoquemes = 3792318
-
-select * from tblestoquemovimento where codestoquemes = 3804646
-
-select * from tblfilial order by codfilial
-
-select * from tblpagarmepedido t where idpedido = 'or_LVmQVzBhGskBQqgw'
 
 /*
 

@@ -1,4 +1,17 @@
-﻿select criacao, * from tblnfeterceiroitem where '7899755686736' in (cean, ceantrib) order by criacao desc nulls last
+﻿
+select pb.barras, pv.variacao, pe.quantidade, pv.referencia, count(npb.codnegocioprodutobarra), min(npb.criacao), max(npb.criacao), min(npb.codnegocio)
+from tblnegocioprodutobarra npb
+inner join  tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)
+inner join tblprodutovariacao pv on (pv.codprodutovariacao = pb.codprodutovariacao)
+left join tblprodutoembalagem pe on (pe.codprodutoembalagem = pb.codprodutoembalagem)
+where pb.codproduto = :codproduto
+and npb.criacao >= '2022-01-01'
+group by pb.barras, pv.variacao, pv.referencia, pe.quantidade
+order by 2 asc, 1 asc
+
+
+
+select criacao, * from tblnfeterceiroitem where '7898563360012' in (cean, ceantrib) order by criacao desc nulls last
 
 SKO341 ENV SACO SC KO 41 310X410 80G C/100
 
@@ -56,19 +69,11 @@ select * from tblmovimentotitulo t where codtitulo = 384193
 delete from tblmovimentotitulo where codmovimentotitulo  = 857929
 
 
-
-select pb.barras, pv.variacao, pe.quantidade, count(npb.codnegocioprodutobarra), min(npb.criacao), max(npb.criacao), min(npb.codnegocio)
-from tblnegocioprodutobarra npb
-inner join  tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)
-inner join tblprodutovariacao pv on (pv.codprodutovariacao = pb.codprodutovariacao)
-left join tblprodutoembalagem pe on (pe.codprodutoembalagem = pb.codprodutoembalagem)
-where pb.codproduto = 27683
-group by pb.barras, pv.variacao, pe.quantidade
-order by 2 asc, 1 asc
-
-
 update tblprodutobarra 
 set codproduto = :codproduto, 
 codprodutoembalagem  = null, 
 codprodutovariacao = (select pv.codprodutovariacao from tblprodutovariacao pv where pv.codproduto = :codproduto) 
 where barras  = :barras
+
+
+update tblnegocio set codnegociostatus = 3 where codnegocio = 2939526

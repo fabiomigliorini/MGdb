@@ -193,3 +193,53 @@ select * from tblpagarmepedido where valor  = 109.43
 select distinct codproduto,
 ' curl "https://sistema.mgpapelaria.com.br/MGLara/mercos/produto/' || codproduto || '/atualiza" -H "Referer: https://sistema.mgpapelaria.com.br/MGLara/produto/' || codproduto || '" -H "Cookie: remember_82e5d2c56bdd0811318f0cf078b78bfc=eyJpdiI6IjZCK0o3eU1aQmRncWFrZnM1MUhCRmc9PSIsInZhbHVlIjoiQ3kxYXhveHBhak9uSWhDWXhHMU1MdThsbDQ0VG9wNXFuS2JmMHppVmQ0SGhPa2dXR0FyRGJpRkdEM3NsaXQ5cjFxUkM1TnA0QWZGZmkwaTNySDJ1bGtSbkRlRGJkS0ErNU82VExnTEE1MDA9IiwibWFjIjoiMjFjM2RlNGQ2NjBkMzY2ZmViNzBiYjVmYTJmZjA5YzhhY2FjNTg3MjMzNzY0MWE3YWQ5ZTkyNjI0ZGU0ZDAzZCJ9; PHPSESSID=thp5bih4cusbn5c8e95pc500n3; XSRF-TOKEN=eyJpdiI6IjdES3NkRVo5WlY4NHFPN04yMnNcL0tBPT0iLCJ2YWx1ZSI6IlptUzlVOHZid2ZtQkJJOWI5dWVxUktzUzdFSmxXeDZLZ0N2VW5iTW5JaE5NenhjQ0NuYU9ENE50aXFieFpJc0JveE5cL3YyNzk5MFwvT2tcL3lkNXJZXC9uZz09IiwibWFjIjoiM2FhMGI2NjBlNTY3OTYxOWI2MDVjODExZTVlM2E2ZGMzMjBjODhjMWU1ZDkwZDUyNzgwZjIyODk1YTIyNTQ1ZCJ9; laravel_session=eyJpdiI6IjlNVGxkM3B1dFZwNFNYYmM2T0oxS0E9PSIsInZhbHVlIjoiTm42MkorR0VibG1aSjVtWWk1MFpEV2lKbGJEOTlSRFNGdHFYRmpadEJ2SE1yRDA1dTB2QmVnd2JOZ1VRQitIYjVPeHRROEdpVWdESERPUEl6byt1N1E9PSIsIm1hYyI6IjVkZDRiM2NiZGJkZTUwODRhYmI5YjRmNjM1MjRhNDE5MzdlOGNhZGViNGYwNDYzOGQxMGRhNjhiMDM2YzFmZTUifQ%3D%3D; 433ad42554cc9716d8e6c800e8498334=eb6dec17a981400c5071cb519158b898e07759c7a%3A4%3A%7Bi%3A0%3Bi%3A1%3Bi%3A1%3Bs%3A5%3A%22fabio%22%3Bi%3A2%3Bi%3A10800%3Bi%3A3%3Ba%3A6%3A%7Bs%3A12%3A%22ultimoAcesso%22%3Bs%3A19%3A%2227%2F12%2F2022+13%3A51%3A52%22%3Bs%3A10%3A%22codusuario%22%3Bi%3A1%3Bs%3A19%3A%22impressoraMatricial%22%3BN%3Bs%3A17%3A%22impressoraTermica%22%3Bs%3A17%3A%22elgin-i9-cxacen06%22%3Bs%3A11%3A%22codportador%22%3Bi%3A100%3Bs%3A9%3A%22codfilial%22%3Bi%3A103%3B%7D%7D" -H "Sec-Fetch-Dest: empty" -H "Sec-Fetch-Mode: cors" -H "Sec-Fetch-Site: same-origin"'
 from tblmercosproduto t 
+where inativo is null
+order by codproduto asc
+
+select table_name, column_name  from information_schema."columns" c where column_name ilike '%maga%' limit 10
+
+
+
+select 
+	codproduto, 
+	produto, 
+	descricaosite, 
+	regexp_replace(
+		replace(
+			replace(
+				descricaosite, 
+				'</p>',
+				E'\n'
+			), 
+			'<br>',
+			E'\n'
+		), 
+		E'<[^>]+>', 
+		'', 
+		'gi'
+	) 
+from tblproduto t 
+where descricaosite ilike '%<%'
+
+select count(*)
+from tblproduto t 
+where descricaosite ilike '%<%'
+
+
+update tblproduto
+set descricaosite = 
+	regexp_replace(
+		replace(
+			replace(
+				descricaosite, 
+				'</p>',
+				E'\n'
+			), 
+			'<br>',
+			E'\n'
+		), 
+		E'<[^>]+>', 
+		'', 
+		'gi'
+	) 
+where descricaosite ilike '%<%'

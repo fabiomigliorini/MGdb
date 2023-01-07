@@ -1,20 +1,4 @@
-﻿/*
-update tblnotafiscal set numero = 0, emitida = true, nfechave = null where codnotafiscal = :codnotafiscal
-
-update tblnotafiscal set numero = 780334, emitida = true, nfechave = null where codnotafiscal = :codnotafiscal
-
-update tblnotafiscal set emissao = '05/02/2022 11:38:06', saida ='05/02/2022 11:38:06' where codnotafiscal = :codnotafiscal
-
-update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao = null where codnotafiscal = :codnotafiscal
-
-
---select * from tblfilial
-
-select * from tblnaturezaoperacao t
-*/
-
-
-with lancadas as (
+﻿with lancadas as (
 	select
 		f2.filial as origem,
 		f.filial as destino,

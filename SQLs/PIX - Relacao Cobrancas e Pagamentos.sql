@@ -8,7 +8,7 @@ where pc.codpixcobstatus != 4 -- Expirado
 and p.codpix is null
 --and u.usuario = 'igor'
 --and pc.codpixcob = 10032
-order by pc.criacao asc
+order by pc.criacao desc
 --order by pc.criacao asc
 --order by pc.criacao desc
 --offset 150
@@ -197,7 +197,11 @@ select * from tblmovimentotitulo where debito = 940.95
 
 select * from tblliquidacaotitulo t where codliquidacaotitulo = 00105336
 
-select cpf, to_char(cpf, '00000000000'), * 
+select cpf, cnpj, to_char(cpf, '00000000000'), * 
 from tblpix t 
-where cpf is not null
-and coalesce(to_char(cpf, '00000000000'), to_char(cnpj, '00000000000000')) ilike '%26633730000113%'
+where coalesce(to_char(cpf, '00000000000'), to_char(cnpj, '00000000000000')) ilike '%182678%'
+
+
+SELECT * FROM TBLNEGOCIO WHERE CODNEGOCIO = 2934666
+
+update tblnotafiscal set nfechave = '51221204576775000322650010008263231991736762' where codnotafiscal = 2250023
