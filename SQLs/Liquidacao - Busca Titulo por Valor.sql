@@ -2,7 +2,7 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.debito = 461.88
+where t.debito = 282.4
 --where t.credito = 2358.20 
 --where t.credito = 89
 --and saldo > 0
@@ -12,13 +12,13 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.observacao ilike '%Fistarol%'
+where t.observacao ilike '%cleonice%'
 order by criacao desc nulls LAST
 
 
 select valortotal, valoraprazo, * 
 from tblnegocio n 
-where n.valortotal = 190.82
+where n.valortotal = 461.88
 ---and criacao >= '2021-07-22'
 order by criacao desc
 
