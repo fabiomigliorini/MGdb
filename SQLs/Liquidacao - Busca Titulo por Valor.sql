@@ -8,17 +8,17 @@ where t.credito = 641.95
 --and saldo > 0
 order by criacao desc nulls LAST
 
-select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.vencimento, t.criacao, t.codtitulo 
+select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.vencimento, t.criacao, t.codtitulo
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.observacao ilike '%Fistarol%'
+where t.observacao ilike '%cleonice%'
 order by criacao desc nulls LAST
 
 
-select valortotal, valoraprazo, * 
-from tblnegocio n 
-where n.valortotal = 190.82
+select valortotal, valoraprazo, *
+from tblnegocio n
+where n.valortotal = 461.88
 ---and criacao >= '2021-07-22'
 order by criacao desc
 
@@ -26,7 +26,7 @@ select criacao, * from tblpixcob where valororiginal = 20
 
 update tblnegocio set codnegociostatus  =   1 where codnegocio = 2350905
 
-select * 
+select *
 from tblliquidacaotitulo lt
 where lt.observacao ilike '%Fistarol%'
 
@@ -56,9 +56,9 @@ select * from tblferiado t order by data
 
 update tblnegocio set codnegociostatus = 2 where codnegocio = 2232235
 
-select distinct codpessoa from tblnegocio t where lancamento >= '2020-01-01' 
+select distinct codpessoa from tblnegocio t where lancamento >= '2020-01-01'
 
-select 'wget https://api.mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || cast(spt.codstonepretransacao  as varchar), spt.criacao, st.codstonetransacao, spt.status 
+select 'wget https://api.mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || cast(spt.codstonepretransacao  as varchar), spt.criacao, st.codstonetransacao, spt.status
 from tblstonepretransacao spt
 left join tblstonetransacao st on (st.codstonepretransacao = spt.codstonepretransacao)
 where st.codstonetransacao is null
@@ -70,14 +70,12 @@ update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao =null where c
 update tblnegocio set codnegociostatus = 1 where codnegocio = 2467310
 
 
-select codpessoa, pessoa, TO_CHAR(cnpj, 'fm00000000000')  from tblpessoa where codgrupocliente = 8 and inativo is null order by pessoa 
+select codpessoa, pessoa, TO_CHAR(cnpj, 'fm00000000000')  from tblpessoa where codgrupocliente = 8 and inativo is null order by pessoa
 
 
-select * from tblgrupocliente t 
+select * from tblgrupocliente t
 
 
 select * from tblnotafiscalprodutobarra t2  where codnotafiscal = 2200356
 
 select * from tblprodutobarra t where codprodutobarra = 969727
-
-
