@@ -33,3 +33,4 @@ SELECT * FROM tblnegocio WHERE codnegocio = 2607671
 select * from tblestoqueverao t  where codbar ilike '%241942%' or codbar ilike '7897256222064' 
 
 
+update tblnfeterceiroitem set margem = 37 where codnfeterceiro = 42678

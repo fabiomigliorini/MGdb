@@ -2,26 +2,28 @@ select
 	pp.criacao,
 	pp.valor,
 	pp.codfilial,
+	pp.status,
 	pos.apelido, 
+	pp.idpedido,
 	' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/pagar-me/pedido/' || pp.codpagarmepedido || '/consultar''  -X POST -H ''Accept: application/json''' as consultar,
 	' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/pagar-me/pedido/' || pp.codpagarmepedido || '''  -X DELETE -H ''Accept: application/json''' as cancelar,
 	pp.valorcancelado, 
 	pp.valorpagoliquido,
 	pp.codpagarmepedido,
-	pp.status,
 	pp.codnegocio 
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
-where pp.status = 1
---and pos.serial ilike '%6416'
---where pp.valor = 4.5
---and pp.codfilial = 102
+--where pp.status = 1
+where pp.valor = 21.8
+and pos.serial ilike '%6K699667'
+--where idpedido = 'or_WQAbX3dSZvfB8KOD'
+--and pp.codfilial = 103
 --and pos.apelido ilike 'Charlie'
---where pp.idpedido = 'or_bJDXo5QuJu2oEzPx'
+--and pp.idpedido = 'or_rYOVmZYfPuk1JpmL'
 --where pp.codnegocio = 2916106
 order by pp.criacao desc
 
-select * from tblpagarmepedido t2 where codfilial = 103  
+select * from tblpagarmepedido t2 where idpedido = 'or_E53R45vsXWTmx64W'
 
 insert into tblpagarmepedido  (codfilial, idpedido, valor) values (105, 'or_bJDXo5QuJu2oEzPx', 2.9)
 

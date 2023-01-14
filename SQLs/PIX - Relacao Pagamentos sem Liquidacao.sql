@@ -13,6 +13,7 @@ with listagem as (
 	left join totais t on (t.codportador = p.codportador and t.transacao = date_trunc('day', p.horario)  and t.credito = p.valor)
 	inner join tblportador por on (por.codportador = p.codportador)
 	where p.codpixcob is null
+	and p.horario > now() - '15 days'::interval 
 	order by p.horario desc
 )
 select * from listagem where codliquidacaotitulo is null
@@ -44,3 +45,15 @@ having count(*) > 1
 order by 1 desc
 
 select * from tblcest where cest ilike '0600700'
+
+
+select codfilial, stonecode from tblfilial where codempresa = 1 order by codfilial 
+
+select *  from tblformapagamento t  where formapagamento ilike '%PIX%'
+
+select * from tblnegocioformapagamento t where codformapagamento = 5604
+
+--delete from tblformapagamento  where codformapagamento  = 5604
+
+
+update tblnegocioforma
