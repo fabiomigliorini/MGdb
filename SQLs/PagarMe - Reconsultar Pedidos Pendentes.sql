@@ -3,7 +3,8 @@ select
 	pp.valor,
 	pp.codfilial,
 	pp.status,
-	pos.apelido, 
+	pos.apelido,
+	pos.serial,
 	pp.idpedido,
 	' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/pagar-me/pedido/' || pp.codpagarmepedido || '/consultar''  -X POST -H ''Accept: application/json''' as consultar,
 	' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/pagar-me/pedido/' || pp.codpagarmepedido || '''  -X DELETE -H ''Accept: application/json''' as cancelar,
@@ -14,16 +15,16 @@ select
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
 --where pp.status = 1
-where pp.valor = 21.8
-and pos.serial ilike '%6K699667'
---where idpedido = 'or_WQAbX3dSZvfB8KOD'
+--where pp.valor = 59
+--and pos.serial ilike '%6K699667'
+where idpedido = 'or_DAQqQQLu43i6qNOB'
 --and pp.codfilial = 103
 --and pos.apelido ilike 'Charlie'
 --and pp.idpedido = 'or_rYOVmZYfPuk1JpmL'
 --where pp.codnegocio = 2916106
 order by pp.criacao desc
 
-select * from tblpagarmepedido t2 where idpedido = 'or_E53R45vsXWTmx64W'
+select * from tblpagarmepedido t2 where idpedido = 'or_Gbj6rxxFrvcWm0ZX'
 
 insert into tblpagarmepedido  (codfilial, idpedido, valor) values (105, 'or_bJDXo5QuJu2oEzPx', 2.9)
 
@@ -81,11 +82,10 @@ alter table tblfilial add stonecode numeric (20,0)
 select * from tblpagarmepos t where serial ilike '%93665'
 
 
-select * f
 
-103			
 
-6M493665
+select * from tblvalecompraformapagamento t where codvalecompra = 2439
 
-insert into pagarme
+select * from tbltitulo where codtitulo = 470846
+
 
