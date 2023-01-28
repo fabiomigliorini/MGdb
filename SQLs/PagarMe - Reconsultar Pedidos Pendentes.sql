@@ -14,10 +14,10 @@ select
 	pp.codnegocio 
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
---where pp.status = 1
+where pp.status = 1
 --where pp.valor = 59
 --and pos.serial ilike '%6K699667'
-where idpedido = 'or_DAQqQQLu43i6qNOB'
+--where idpedido = 'or_Qe2POm1IYTW7zJd7'
 --and pp.codfilial = 103
 --and pos.apelido ilike 'Charlie'
 --and pp.idpedido = 'or_rYOVmZYfPuk1JpmL'

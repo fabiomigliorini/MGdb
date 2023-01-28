@@ -4,9 +4,19 @@ delete from tbljobs where tbljobs.id not in (select min(id) from tbljobs dup gro
 select 'lara', queue, count(*), min(id), max(id) from tbljobs group by queue union all
 select 'spa', queue, count(*), min(id), max(id) from tbljobsspa group by queue order by queue
 
-
-
 /*
+
+select attempts , * from tbljobs order by attempts desc
+
+SELECT
+  pid,
+  now() - pg_stat_activity.query_start AS duration,
+  query,
+  state
+FROM pg_stat_activity
+--WHERE (now() - pg_stat_activity.query_start) > interval '2 minutes'
+
+
 
 select * from tbljobs where attempts > 1
 

@@ -13,5 +13,4 @@ select row_number() over() as Lugar, * from (
 		) venda on (venda.codproduto = p.codproduto)
 	order by venda.vendaanovalor desc nulls last
 	limit 2000
-
 ) x

@@ -39,4 +39,4 @@ and nf.codfilial = 201 --INGAS
 group by EXTRACT(YEAR FROM EMISSAO) , EXTRACT(MONTH FROM EMISSAO) 
 order by 1, 2 ASC
 limit 20
-*/
+7*/
