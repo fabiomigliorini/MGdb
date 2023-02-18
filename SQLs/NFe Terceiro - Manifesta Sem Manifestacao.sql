@@ -7,7 +7,7 @@ and codnegocio is not null
 
 --curl 'https://api.mgspa.mgpapelaria.com.br/api/v1/nfe-terceiro/37597/manifestacao' --data-raw 'indmanifestacao=210200'
 
-select nt.cnpj, nt.codfilial, nt.codnfeterceiro, nt.emissao, ' curl ''https://api.mgspa.mgpapelaria.com.br/api/v1/nfe-terceiro/' || nt.codnfeterceiro || '/manifestacao'' --data-raw ''indmanifestacao=210200'' & '  
+select nt.cnpj, nt.codfilial, nt.codnfeterceiro, nt.emissao, ' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-terceiro/' || nt.codnfeterceiro || '/manifestacao'' --data-raw ''indmanifestacao=210200'' & '  
 from tblnotafiscal nf
 inner join tblnfeterceiro nt on (nt.codnotafiscal = nf.codnotafiscal)
 where nf.emitida = false
@@ -16,4 +16,4 @@ and coalesce(nt.indmanifestacao, 210210) = 210210 --ciencia
 --and nt.codnfeterceiro = 36974
 and nf.emissao > now() - '181 days'::interval 
 order by nt.codnfeterceiro asc
-limit 100
+--limit 100

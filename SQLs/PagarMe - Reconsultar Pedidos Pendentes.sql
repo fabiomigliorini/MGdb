@@ -15,7 +15,7 @@ select
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
 where pp.status = 1
---where pp.valor = 59
+--where pp.valor = 242.22
 --and pos.serial ilike '%6K699667'
 --where idpedido = 'or_Qe2POm1IYTW7zJd7'
 --and pp.codfilial = 103
@@ -58,6 +58,7 @@ from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
 where pp.status = 2
 and pp.codnegocio is not null
+and pp.criacao between '2023-01-01' and '2023-02-22 23:59:59'
 --group by 
 	--pp.codfilial
 	--, pos.serial, pos.apelido
@@ -81,7 +82,7 @@ alter table tblfilial add stonecode numeric (20,0)
 
 select * from tblpagarmepos t where serial ilike '%93665'
 
-
+select valorjuros, status, * from tblpagarmepedido t where valorjuros > 0
 
 
 select * from tblvalecompraformapagamento t where codvalecompra = 2439

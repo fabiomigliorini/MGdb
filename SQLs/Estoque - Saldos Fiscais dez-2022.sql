@@ -104,14 +104,25 @@ where e.codproduto in (
 	where e2.quant < 0
 )
 
+
 -- Totais do Estoque
-select codfilial, sum(e.valor)
+select cast(codfilial as varchar), sum(e.valor)
 from mvwestoque2022  e
 where e.quant > 0
 group by codfilial
+union
+select 'Total', sum(e.valor)
+from mvwestoque2022  e
+where e.quant > 0
 order by codfilial
 
-select * from mvwestoque2022 order by valor desc
+refresh materialized view mvwestoque2022
+
+select codproduto, produto, preco, sum(quant) as quant, avg(custo) as custo, sum(valor) as valor, avg(markup) as markup 
+from mvwestoque2022
+group by codproduto, produto, preco
+order by valor desc
+
 
 /*
 101	2073605.92
@@ -153,7 +164,54 @@ with qry as (
     left join tblncm n on (n.codncm = p.codncm)
     where p.codtipoproduto = 0
     AND fiscal.saldoquantidade != 0
-
-    order by 7 desc, p.produto, p.codproduto
+    order by 11 desc, p.produto, p.codproduto
+    --order by 7 desc, p.produto, p.codproduto
 )
 select sum(saldovalor) from qry
+
+
+select
+	p.codproduto
+	, p.produto
+	--, p.inativo
+	--, p.codtipoproduto
+	, p.preco
+	, um.sigla
+	--, n.ncm
+	, fiscal.saldoquantidade
+	, fiscal.customedio
+	, fiscal.saldovalor
+	, p.preco / case when fiscal.customedio != 0 then fiscal.customedio else null end as markup
+from tblproduto p
+left join tblunidademedida um on (um.codunidademedida = p.codunidademedida)
+left join (
+	select
+	    pv.codproduto
+	    , sum(em.saldoquantidade) as saldoquantidade
+	    , sum(em.saldovalor) as saldovalor
+	    , sum(em.saldovalor) / case when sum(em.saldoquantidade) !=0 then sum(em.saldoquantidade) else null end as customedio
+	from tblestoquelocalprodutovariacao elpv
+	inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao)
+	inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal)
+	inner join tblfilial f on (f.codfilial = el.codfilial)
+	inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
+	inner join tblestoquemes em on (em.codestoquemes = (select em2.codestoquemes from tblestoquemes em2 where em2.codestoquesaldo = es.codestoquesaldo and em2.mes <= :mes order by mes desc limit 1))
+	where f.codfilial = :codfilial
+	group by pv.codproduto
+) fiscal on (fiscal.codproduto = p.codproduto)
+left join tblncm n on (n.codncm = p.codncm)
+where p.codtipoproduto = 0
+AND fiscal.saldoquantidade != 0
+order by 8 desc, p.produto, p.codproduto
+--order by 7 desc, p.produto, p.codproduto
+
+
+update tblnotafiscal set emitida = true, nfechave = null, numero = 0 where codnotafiscal = 2285729
+
+
+
+
+select * from tblmovimentotitulo t where codtitulo = 475351 order by criacao desc
+
+
+select * from tblliquidacaotitulo t where codliquidacaotitulo = 107611

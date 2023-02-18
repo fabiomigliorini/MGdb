@@ -6,7 +6,7 @@ where tblestoquemovimento.codestoquesaldoconferencia in (
 	inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 	inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
 	inner join tblestoquesaldoconferencia esc on (esc.codestoquesaldo = es.codestoquesaldo)
-	where pv.codproduto = 35780
+	where pv.codproduto = :codproduto
 )
 
 -- LIMPA CONFERENCIAS
@@ -17,7 +17,7 @@ where tblestoquesaldoconferencia.codestoquesaldoconferencia in (
 	inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 	inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
 	inner join tblestoquesaldoconferencia esc on (esc.codestoquesaldo = es.codestoquesaldo)
-	where pv.codproduto = 35780
+	where pv.codproduto = :codproduto
 )
 
 -- LIMPA MOVIMENTOS MANUAIS
@@ -31,7 +31,7 @@ delete from tblestoquemovimento where tblestoquemovimento.codestoquemovimento in
 	where mov.codestoquemovimentotipo in (1002, 1001)
 	and mov.manual = true
 	and es.fiscal = false
-	and pv.codproduto = 35780
+	and pv.codproduto = :codproduto
 )
 
 -- RECALCULAR SALDOS
@@ -40,7 +40,7 @@ from tblprodutovariacao pv
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
 inner join tblestoquemes mes on (mes.codestoquesaldo = es.codestoquesaldo)
-where pv.codproduto = 35780
+where pv.codproduto = :codproduto
 and es.fiscal = false
 order by mes.codestoquesaldo, mes.mes
 
@@ -53,7 +53,7 @@ inner join tblestoquemes mes on (mes.codestoquesaldo = es.codestoquesaldo)
 inner join tblestoquemovimento mov on (mov.codestoquemes = mes.codestoquemes)
 where mov.manual = true
 --and es.fiscal = false
-and pv.codproduto = 35780
+and pv.codproduto = :codproduto
 order by mov.entradaquantidade desc nulls last
 limit 50
 

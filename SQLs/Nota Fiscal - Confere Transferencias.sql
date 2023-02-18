@@ -40,8 +40,8 @@ emitidas as (
 	order by 1, 2, 3, 4, 5
 )
 select
-	e.valor as valor_e,
-	l.valor as valor_l,
+	e.valor as emitida,
+	l.valor as lancada,
 	abs(coalesce(e.valor, 0) - coalesce(l.valor, 0)) as valor_dif,
 	coalesce(e.origem, l.origem) as origem,
 	coalesce(e.destino, l.destino) as destino,
@@ -52,4 +52,6 @@ select
 	coalesce(e.qtd, 0) - coalesce(l.qtd, 0) as qtd_dif
 from emitidas e
 full outer join lancadas l on (l.origem = e.origem and l.destino = e.destino and l.codnaturezaoperacao = e.codnaturezaoperacaodevolucao)
-order by 3 desc
+order by 3, 4, 5, 6, 7, 8, 9 desc
+
+
