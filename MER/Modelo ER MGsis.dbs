@@ -54,10 +54,10 @@
 			<index name="tblauditoriatransmissao_codbaseremota_idx" unique="NORMAL" >
 				<column name="codbaseremota" />
 			</index>
-			<fk name="tblauditoriatransmissao_codauditoria_fkey" to_schema="mgsis.mgsis" to_table="tblauditoria" >
+			<fk name="tblauditoriatransmissao_codauditoria_fkey" to_schema="mgsis.mgsis" to_table="tblauditoria" update_action="cascade" >
 				<fk_column name="codauditoria" pk="codauditoria" />
 			</fk>
-			<fk name="tblauditoriatransmissao_codbaseremota_fkey" to_schema="mgsis.mgsis" to_table="tblbaseremota" >
+			<fk name="tblauditoriatransmissao_codbaseremota_fkey" to_schema="mgsis.mgsis" to_table="tblbaseremota" update_action="cascade" >
 				<fk_column name="codbaseremota" pk="codbaseremota" />
 			</fk>
 		</table>
@@ -126,10 +126,10 @@
 			<index name="idx_tblbanco_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblbanco_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblbanco_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblbanco_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblbanco_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -153,10 +153,10 @@
 			<index name="idx_tblbaseremota_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblbaseremota_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblbaseremota_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblbaseremota_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblbaseremota_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -192,13 +192,13 @@
 			<index name="idx_tblboletomotivoocorrencia_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblboletomotivoocorrencia_codboletotipoocorrencia_fkey" to_schema="mgsis.mgsis" to_table="tblboletotipoocorrencia" >
+			<fk name="tblboletomotivoocorrencia_codboletotipoocorrencia_fkey" to_schema="mgsis.mgsis" to_table="tblboletotipoocorrencia" update_action="cascade" >
 				<fk_column name="codboletotipoocorrencia" pk="codboletotipoocorrencia" />
 			</fk>
-			<fk name="tblboletomotivoocorrencia_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletomotivoocorrencia_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblboletomotivoocorrencia_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletomotivoocorrencia_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -245,19 +245,19 @@
 			<index name="idx_tblboletoretorno_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblboletoretorno_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tblboletoretorno_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tblboletoretorno_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblboletoretorno_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblboletoretorno_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletoretorno_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblboletoretorno_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletoretorno_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblboletoretorno_tblboletomotivoocorrencia" to_schema="mgsis.mgsis" to_table="tblboletomotivoocorrencia" >
+			<fk name="fk_tblboletoretorno_tblboletomotivoocorrencia" to_schema="mgsis.mgsis" to_table="tblboletomotivoocorrencia" update_action="cascade" >
 				<fk_column name="codboletomotivoocorrencia" pk="codboletomotivoocorrencia" />
 			</fk>
 		</table>
@@ -277,10 +277,10 @@
 			<index name="idx_tblboletotipoocorrencia_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblboletotipoocorrencia_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletotipoocorrencia_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblboletotipoocorrencia_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblboletotipoocorrencia_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -305,13 +305,13 @@
 			<index name="idx_tblcaixamercadoria_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblcaixamercadoria_tblcaixamercadoriamodelo" to_schema="mgsis.mgsis" to_table="tblcaixamercadoriamodelo" >
+			<fk name="fk_tblcaixamercadoria_tblcaixamercadoriamodelo" to_schema="mgsis.mgsis" to_table="tblcaixamercadoriamodelo" update_action="cascade" >
 				<fk_column name="codcaixamercadoriamodelo" pk="codcaixamercadoriamodelo" />
 			</fk>
-			<fk name="fk_tblcaixamercadoria_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcaixamercadoria_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblcaixamercadoria_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcaixamercadoria_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -333,10 +333,10 @@
 			<index name="idx_tblcaixamercadoriamodelo_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblcaixamercadoriamodelo_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcaixamercadoriamodelo_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblcaixamercadoriamodelo_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcaixamercadoriamodelo_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -357,10 +357,10 @@
 			<index name="idx_tblcargo_0" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblcargo" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcargo" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblcargo_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcargo_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -378,6 +378,12 @@
 			<index name="unq_tblcertidaoemissor_certidaoemissor" unique="NORMAL" >
 				<column name="certidaoemissor" />
 			</index>
+			<fk name="fk_tblcertidaoemissor_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblcertidaoemissor_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
 		</table>
 		<table name="tblcertidaotipo" >
 			<column name="codcertidaotipo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -397,6 +403,12 @@
 			<index name="unq_tblcertidaotipo_sigla" unique="UNIQUE_KEY" >
 				<column name="sigla" />
 			</index>
+			<fk name="fk_tblcertidaotipo_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblcertidaotipo_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
 		</table>
 		<table name="tblcest" >
 			<column name="codcest" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -432,13 +444,13 @@
 				<column name="cest" />
 				<column name="ncm" />
 			</index>
-			<fk name="fk_tblcest_codncm" to_schema="mgsis.mgsis" to_table="tblncm" >
+			<fk name="fk_tblcest_codncm" to_schema="mgsis.mgsis" to_table="tblncm" update_action="cascade" >
 				<fk_column name="codncm" pk="codncm" />
 			</fk>
-			<fk name="fk_tblcest" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcest" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblcest_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblcest_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -458,10 +470,10 @@
 			<index name="idx_tblcfop_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcfop_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcfop_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcfop_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcfop_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -521,19 +533,19 @@
 			<constraint name="ck_0" >
 				<string><![CDATA[(indstatus = ANY (ARRAY[1, 2, 3, 4, 5]))]]></string>
 			</constraint>
-			<fk name="tblcheque_codbanco_fkey" to_schema="mgsis.mgsis" to_table="tblbanco" >
+			<fk name="tblcheque_codbanco_fkey" to_schema="mgsis.mgsis" to_table="tblbanco" update_action="cascade" >
 				<fk_column name="codbanco" pk="codbanco" />
 			</fk>
-			<fk name="fk_tblcheque" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblcheque" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblcheque_0" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="fk_tblcheque_0" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblcheque_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcheque_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcheque_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcheque_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -562,16 +574,16 @@
 			<index name="idx_tblchequedevolucao_2" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblchequedevolucao" to_schema="mgsis.mgsis" to_table="tblchequemotivodevolucao" >
+			<fk name="fk_tblchequedevolucao" to_schema="mgsis.mgsis" to_table="tblchequemotivodevolucao" update_action="cascade" >
 				<fk_column name="codchequemotivodevolucao" pk="codchequemotivodevolucao" />
 			</fk>
-			<fk name="fk_tblchequedevolucao_0" to_schema="mgsis.mgsis" to_table="tblchequerepassecheque" >
+			<fk name="fk_tblchequedevolucao_0" to_schema="mgsis.mgsis" to_table="tblchequerepassecheque" update_action="cascade" >
 				<fk_column name="codchequerepassecheque" pk="codchequerepassecheque" />
 			</fk>
-			<fk name="fk_tblchequedevolucao_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequedevolucao_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblchequedevolucao_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequedevolucao_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -600,13 +612,13 @@
 			<index name="idx_tblchequeemitente_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblchequeemitente_codcheque_fkey" to_schema="mgsis.mgsis" to_table="tblcheque" >
+			<fk name="tblchequeemitente_codcheque_fkey" to_schema="mgsis.mgsis" to_table="tblcheque" update_action="cascade" >
 				<fk_column name="codcheque" pk="codcheque" />
 			</fk>
-			<fk name="tblchequeemitente_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblchequeemitente_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblchequeemitente_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblchequeemitente_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -630,10 +642,10 @@
 			<index name="idx_tblchequemotivodevolucao_1" unique="UNIQUE_KEY" >
 				<column name="numero" />
 			</index>
-			<fk name="fk_tblchequemotivodevolucao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequemotivodevolucao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblchequemotivodevolucao_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequemotivodevolucao_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -661,13 +673,13 @@
 			<index name="idx_tblchequerepasse_1" unique="NORMAL" >
 				<column name="codportador" />
 			</index>
-			<fk name="fk_tblchequerepasse_1" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="fk_tblchequerepasse_1" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="fk_tblchequerepasse" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequerepasse" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblchequerepasse_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequerepasse_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -695,16 +707,16 @@
 			<index name="idx_tblchequerepassecheque_2" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblchequerepassecheque" to_schema="mgsis.mgsis" to_table="tblcheque" >
+			<fk name="fk_tblchequerepassecheque" to_schema="mgsis.mgsis" to_table="tblcheque" update_action="cascade" >
 				<fk_column name="codcheque" pk="codcheque" />
 			</fk>
-			<fk name="fk_tblchequerepassecheque_0" to_schema="mgsis.mgsis" to_table="tblchequerepasse" >
+			<fk name="fk_tblchequerepassecheque_0" to_schema="mgsis.mgsis" to_table="tblchequerepasse" update_action="cascade" >
 				<fk_column name="codchequerepasse" pk="codchequerepasse" />
 			</fk>
-			<fk name="fk_tblchequerepassecheque_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequerepassecheque_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblchequerepassecheque_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblchequerepassecheque_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -730,13 +742,13 @@
 			<index name="idx_tblcidade_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcidade_codestado_fkey" to_schema="mgsis.mgsis" to_table="tblestado" >
+			<fk name="tblcidade_codestado_fkey" to_schema="mgsis.mgsis" to_table="tblestado" update_action="cascade" >
 				<fk_column name="codestado" pk="codestado" />
 			</fk>
 			<fk name="tblcidade_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcidade_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcidade_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -776,19 +788,19 @@
 			<index name="idx_tblcobranca_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcobranca_codcheque_fkey" to_schema="mgsis.mgsis" to_table="tblcheque" >
+			<fk name="tblcobranca_codcheque_fkey" to_schema="mgsis.mgsis" to_table="tblcheque" update_action="cascade" >
 				<fk_column name="codcheque" pk="codcheque" />
 			</fk>
-			<fk name="tblcobranca_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tblcobranca_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tblcobranca_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblcobranca_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblcobranca_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobranca_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcobranca_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobranca_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -815,13 +827,13 @@
 			<index name="idx_tblcobrancahistorico_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcobrancahistorico_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblcobrancahistorico_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblcobrancahistorico_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobrancahistorico_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcobrancahistorico_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobrancahistorico_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -848,16 +860,16 @@
 			<index name="idx_tblcobrancahistoricotitulo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcobrancahistoricotitulo_codcobrancahistorico_fkey" to_schema="mgsis.mgsis" to_table="tblcobrancahistorico" >
+			<fk name="tblcobrancahistoricotitulo_codcobrancahistorico_fkey" to_schema="mgsis.mgsis" to_table="tblcobrancahistorico" update_action="cascade" >
 				<fk_column name="codcobrancahistorico" pk="codcobrancahistorico" />
 			</fk>
-			<fk name="tblcobrancahistoricotitulo_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblcobrancahistoricotitulo_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblcobrancahistoricotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobrancahistoricotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcobrancahistoricotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcobrancahistoricotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -877,10 +889,10 @@
 			<index name="idx_tblcodigo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcodigo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcodigo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcodigo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcodigo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -920,10 +932,10 @@
 			<index name="idx_tblcontacontabil_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcontacontabil_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcontacontabil_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcontacontabil_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcontacontabil_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -956,16 +968,16 @@
 			<index name="idx_tblcupomfiscal_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcupomfiscal_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" >
+			<fk name="tblcupomfiscal_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" update_action="cascade" >
 				<fk_column name="codecf" pk="codecf" />
 			</fk>
-			<fk name="tblcupomfiscal_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblcupomfiscal_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblcupomfiscal_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcupomfiscal_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcupomfiscal_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcupomfiscal_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -999,19 +1011,19 @@
 			<index name="idx_tblcupomfiscalprodutobarra_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblcupomfiscalprodutobarra_codcupomfiscal_fkey" to_schema="mgsis.mgsis" to_table="tblcupomfiscal" >
+			<fk name="tblcupomfiscalprodutobarra_codcupomfiscal_fkey" to_schema="mgsis.mgsis" to_table="tblcupomfiscal" update_action="cascade" >
 				<fk_column name="codcupomfiscal" pk="codcupomfiscal" />
 			</fk>
-			<fk name="tblcupomfiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" >
+			<fk name="tblcupomfiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" update_action="cascade" >
 				<fk_column name="codnegocioprodutobarra" pk="codnegocioprodutobarra" />
 			</fk>
-			<fk name="tblcupomfiscalprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="tblcupomfiscalprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="tblcupomfiscalprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcupomfiscalprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblcupomfiscalprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblcupomfiscalprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1120,10 +1132,10 @@
 			<index name="idx_fk_tbldistribuicaodfe_tblnfeterceiro" unique="NORMAL" >
 				<column name="codnfeterceiro" />
 			</index>
-			<fk name="fk_tbldistribuicaodfe_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tbldistribuicaodfe_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tbldistribuicaodfe_tbldfetipo" to_schema="mgsis.mgsis" to_table="tbldfetipo" >
+			<fk name="fk_tbldistribuicaodfe_tbldfetipo" to_schema="mgsis.mgsis" to_table="tbldfetipo" update_action="cascade" >
 				<fk_column name="coddfetipo" pk="coddfetipo" />
 			</fk>
 			<fk name="fk_tbldistribuicaodfe_tblnotafiscalterceiro" to_schema="mgsis.mgsis" to_table="tblnotafiscalterceiro" delete_action="setNull" update_action="cascade" >
@@ -1132,7 +1144,7 @@
 			<fk name="fk_tbldistribuicaodfe_tbldistribuicaodfeevento" to_schema="mgsis.mgsis" to_table="tbldistribuicaodfeevento" delete_action="cascade" update_action="cascade" >
 				<fk_column name="coddistribuicaodfeevento" pk="coddistribuicaodfeevento" />
 			</fk>
-			<fk name="fk_tbldistribuicaodfe_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" >
+			<fk name="fk_tbldistribuicaodfe_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" update_action="cascade" >
 				<fk_column name="codnfeterceiro" pk="codnfeterceiro" />
 			</fk>
 		</table>
@@ -1214,16 +1226,16 @@
 			<index name="idx_tblecf_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblecf_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="tblecf_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblecf_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblecf_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuario" pk="codusuario" />
 			</fk>
-			<fk name="tblecf_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblecf_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblecf_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblecf_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1252,13 +1264,13 @@
 			<index name="idx_tblecfreducaoz_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblecfreducaoz_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" >
+			<fk name="tblecfreducaoz_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" update_action="cascade" >
 				<fk_column name="codecf" pk="codecf" />
 			</fk>
-			<fk name="tblecfreducaoz_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblecfreducaoz_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblecfreducaoz_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblecfreducaoz_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1283,10 +1295,10 @@
 			<index name="idx_tblempresa_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblempresa_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblempresa_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblempresa_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblempresa_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1315,13 +1327,13 @@
 			<index name="idx_tblestado_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblestado_codpais_fkey" to_schema="mgsis.mgsis" to_table="tblpais" >
+			<fk name="tblestado_codpais_fkey" to_schema="mgsis.mgsis" to_table="tblpais" update_action="cascade" >
 				<fk_column name="codpais" pk="codpais" />
 			</fk>
-			<fk name="tblestado_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestado_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblestado_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestado_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1342,10 +1354,10 @@
 			<index name="idx_tblestadocivil_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblestadocivil_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestadocivil_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblestadocivil_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestadocivil_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1383,10 +1395,10 @@
 			<fk name="fk_tblestoquelocal" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblestoquelocal_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocal_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquelocal_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocal_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1439,10 +1451,10 @@
 			<fk name="fk_tblestoquelocalproduto_3" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
 			</fk>
-			<fk name="fk_tblestoquelocalproduto" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocalproduto" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquelocalproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocalproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1489,10 +1501,10 @@
 			<fk name="fk_tblestoquelocalprodutovariacaovenda" to_schema="mgsis.mgsis" to_table="tblestoquelocalprodutovariacao" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codestoquelocalprodutovariacao" pk="codestoquelocalprodutovariacao" />
 			</fk>
-			<fk name="fk_tblestoquelocalprodutovariacaovenda_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocalprodutovariacaovenda_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquelocalprodutovariacaovenda_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquelocalprodutovariacaovenda_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1532,10 +1544,10 @@
 			<fk name="fk_tblestoquemes" to_schema="mgsis.mgsis" to_table="tblestoquesaldo" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codestoquesaldo" pk="codestoquesaldo" />
 			</fk>
-			<fk name="fk_tblestoquemes_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquemes_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquemes_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquemes_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1587,28 +1599,28 @@
 			<index name="idx_tblestoquemovimento_codestoquemovimentotipo_fkey" unique="NORMAL" >
 				<column name="codestoquemovimentotipo" />
 			</index>
-			<fk name="tblestoquemovimento_codestoquemovimentotipo_fkey" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" >
+			<fk name="tblestoquemovimento_codestoquemovimentotipo_fkey" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" update_action="cascade" >
 				<fk_column name="codestoquemovimentotipo" pk="codestoquemovimentotipo" />
 			</fk>
-			<fk name="tblestoquemovimento_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" >
+			<fk name="tblestoquemovimento_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" update_action="cascade" >
 				<fk_column name="codnegocioprodutobarra" pk="codnegocioprodutobarra" />
 			</fk>
-			<fk name="tblestoquemovimento_codnotafiscalprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" >
+			<fk name="tblestoquemovimento_codnotafiscalprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" update_action="cascade" >
 				<fk_column name="codnotafiscalprodutobarra" pk="codnotafiscalprodutobarra" />
 			</fk>
-			<fk name="fk_tblestoquemovimento" to_schema="mgsis.mgsis" to_table="tblestoquemes" >
+			<fk name="fk_tblestoquemovimento" to_schema="mgsis.mgsis" to_table="tblestoquemes" update_action="cascade" >
 				<fk_column name="codestoquemes" pk="codestoquemes" />
 			</fk>
-			<fk name="fk_tblestoquemovimento_2" to_schema="mgsis.mgsis" to_table="tblestoquemovimento" >
+			<fk name="fk_tblestoquemovimento_2" to_schema="mgsis.mgsis" to_table="tblestoquemovimento" update_action="cascade" >
 				<fk_column name="codestoquemovimentoorigem" pk="codestoquemovimento" />
 			</fk>
-			<fk name="fk_tblestoquemovimento_3" to_schema="mgsis.mgsis" to_table="tblestoquesaldoconferencia" >
+			<fk name="fk_tblestoquemovimento_3" to_schema="mgsis.mgsis" to_table="tblestoquesaldoconferencia" update_action="cascade" >
 				<fk_column name="codestoquesaldoconferencia" pk="codestoquesaldoconferencia" />
 			</fk>
-			<fk name="fk_tblestoquemovimento_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquemovimento_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquemovimento_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquemovimento_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1646,13 +1658,13 @@
 			<index name="idx_tblestoquemovimentotipo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblestoquemovimentotipo" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" >
+			<fk name="fk_tblestoquemovimentotipo" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" update_action="cascade" >
 				<fk_column name="codestoquemovimentotipoorigem" pk="codestoquemovimentotipo" />
 			</fk>
-			<fk name="tblestoquemovimentotipo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestoquemovimentotipo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblestoquemovimentotipo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestoquemovimentotipo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1688,10 +1700,10 @@
 			<fk name="fk_tblestoquesaldo" to_schema="mgsis.mgsis" to_table="tblestoquelocalprodutovariacao" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codestoquelocalprodutovariacao" pk="codestoquelocalprodutovariacao" />
 			</fk>
-			<fk name="tblestoquesaldo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestoquesaldo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblestoquesaldo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblestoquesaldo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1721,13 +1733,13 @@
 			<index name="idx_tblestoquesaldoconferencia_1" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblestoquesaldoconferencia" to_schema="mgsis.mgsis" to_table="tblestoquesaldo" >
+			<fk name="fk_tblestoquesaldoconferencia" to_schema="mgsis.mgsis" to_table="tblestoquesaldo" update_action="cascade" >
 				<fk_column name="codestoquesaldo" pk="codestoquesaldo" />
 			</fk>
-			<fk name="fk_tblestoquesaldoconferencia_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquesaldoconferencia_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblestoquesaldoconferencia_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblestoquesaldoconferencia_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1845,10 +1857,10 @@
 			<index name="idx_fk_tblextratobancario_tblextratobancariotipomovimento" unique="NORMAL" >
 				<column name="codextratobancariotipomovimento" />
 			</index>
-			<fk name="fk_tblportadorextratobancario_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="fk_tblportadorextratobancario_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="fk_tblextratobancario_tblextratobancariotipomovimento" to_schema="mgsis.mgsis" to_table="tblextratobancariotipomovimento" >
+			<fk name="fk_tblextratobancario_tblextratobancariotipomovimento" to_schema="mgsis.mgsis" to_table="tblextratobancariotipomovimento" update_action="cascade" >
 				<fk_column name="codextratobancariotipomovimento" pk="codextratobancariotipomovimento" />
 			</fk>
 			<fk name="fk_tblextratobancario_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -1932,16 +1944,16 @@
 			<index name="idx_tblfamiliaproduto_2" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblfamiliaproduto_0" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblfamiliaproduto_0" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
 			<fk name="fk_tblfamiliaproduto" to_schema="mgsis.mgsis" to_table="tblsecaoproduto" update_action="cascade" >
 				<fk_column name="codsecaoproduto" pk="codsecaoproduto" />
 			</fk>
-			<fk name="fk_tblfamiliaproduto_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblfamiliaproduto_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblfamiliaproduto_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblfamiliaproduto_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -1963,10 +1975,10 @@
 			<index name="idx_tblferiado_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblferiado" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblferiado" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblferiado_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblferiado_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2036,13 +2048,13 @@
 			<fk name="tblfilial_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblfilial_acbrnfemonitorcodusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblfilial_acbrnfemonitorcodusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="acbrnfemonitorcodusuario" pk="codusuario" />
 			</fk>
-			<fk name="tblfilial_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblfilial_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblfilial_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblfilial_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2096,10 +2108,10 @@
 			<index name="idx_tblformapagamento_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblformapagamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblformapagamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblformapagamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblformapagamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2119,10 +2131,10 @@
 			<index name="idx_tblgrupocliente_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblgrupocliente_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblgrupocliente_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblgrupocliente_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblgrupocliente_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2144,10 +2156,10 @@
 			<index name="idx_tblgrupoeconomico_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblgrupoeconomico_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupoeconomico_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblgrupoeconomico_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupoeconomico_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2177,16 +2189,16 @@
 			<index name="idx_tblgrupoproduto_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblgrupoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblgrupoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
 			<fk name="fk_tblgrupoproduto_0" to_schema="mgsis.mgsis" to_table="tblfamiliaproduto" update_action="cascade" >
 				<fk_column name="codfamiliaproduto" pk="codfamiliaproduto" />
 			</fk>
-			<fk name="tblgrupoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblgrupoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblgrupoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblgrupoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2211,10 +2223,10 @@
 			<index name="idx_tblgrupousuario_grupousuario" unique="UNIQUE_KEY" >
 				<column name="grupousuario" />
 			</index>
-			<fk name="fk_tblgrupousuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblgrupousuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2245,16 +2257,16 @@
 			<index name="idx_tblgrupousuariopermissao_2" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblgrupousuariopermissao" to_schema="mgsis.mgsis" to_table="tblgrupousuario" delete_action="cascade" >
+			<fk name="fk_tblgrupousuariopermissao" to_schema="mgsis.mgsis" to_table="tblgrupousuario" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codgrupousuario" pk="codgrupousuario" />
 			</fk>
-			<fk name="fk_tblgrupousuariopermissao_0" to_schema="mgsis.mgsis" to_table="tblpermissao" >
+			<fk name="fk_tblgrupousuariopermissao_0" to_schema="mgsis.mgsis" to_table="tblpermissao" update_action="cascade" >
 				<fk_column name="codpermissao" pk="codpermissao" />
 			</fk>
-			<fk name="fk_tblgrupousuariopermissao_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuariopermissao_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblgrupousuariopermissao_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuariopermissao_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2290,19 +2302,19 @@
 				<column name="codusuario" />
 				<column name="codfilial" />
 			</index>
-			<fk name="fk_tblgrupousuariousuario" to_schema="mgsis.mgsis" to_table="tblgrupousuario" delete_action="cascade" >
+			<fk name="fk_tblgrupousuariousuario" to_schema="mgsis.mgsis" to_table="tblgrupousuario" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codgrupousuario" pk="codgrupousuario" />
 			</fk>
-			<fk name="fk_tblgrupousuariousuario_3" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tblgrupousuariousuario_3" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblgrupousuariousuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" delete_action="cascade" >
+			<fk name="fk_tblgrupousuariousuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codusuario" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblgrupousuariousuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuariousuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblgrupousuariousuario_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblgrupousuariousuario_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2355,13 +2367,13 @@
 			<index name="idx_tblibptax_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblibptax" to_schema="mgsis.mgsis" to_table="tblncm" >
+			<fk name="fk_tblibptax" to_schema="mgsis.mgsis" to_table="tblncm" update_action="cascade" >
 				<fk_column name="codncm" pk="codncm" />
 			</fk>
-			<fk name="tblibptax_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblibptax_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblibptax_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblibptax_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2422,16 +2434,16 @@
 			<index name="idx_tblibptcache_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblibpt_tblestado" to_schema="mgsis.mgsis" to_table="tblestado" >
+			<fk name="fk_tblibpt_tblestado" to_schema="mgsis.mgsis" to_table="tblestado" update_action="cascade" >
 				<fk_column name="codestado" pk="codestado" />
 			</fk>
-			<fk name="fk_tblibpt_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tblibpt_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblibptcache_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblibptcache_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblibptcache_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblibptcache_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2453,10 +2465,10 @@
 			<index name="idx_tblimagem_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblimagem" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblimagem" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblimagem_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblimagem_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -2832,22 +2844,22 @@
 			<index name="idx_tblliquidacaotitulo_codusuarioestorno_fkey" unique="NORMAL" >
 				<column name="codusuarioestorno" />
 			</index>
-			<fk name="tblliquidacaotitulo_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblliquidacaotitulo_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblliquidacaotitulo_codPortador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tblliquidacaotitulo_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tblliquidacaotitulo_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblliquidacaotitulo_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuario" pk="codusuario" />
 			</fk>
-			<fk name="tblliquidacaotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblliquidacaotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblliquidacaotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblliquidacaotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="tblliquidacaotitulo_codusuarioestorno_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblliquidacaotitulo_codusuarioestorno_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioestorno" pk="codusuario" />
 			</fk>
 		</table>
@@ -2928,16 +2940,16 @@
 			<index name="idx_tblmarca_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblmarca" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblmarca" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
-			<fk name="tblmarca_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmarca_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblmarca_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmarca_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblmarca_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" >
+			<fk name="fk_tblmarca_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" update_action="cascade" >
 				<fk_column name="codgrupoeconomico" pk="codgrupoeconomico" />
 			</fk>
 		</table>
@@ -3076,13 +3088,13 @@ infMunCarrega]]></comment>
 			<index name="idx_fk_tblmdfeenviosefaz_tblusuario" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblmdfeenviosefaz_tblmdfe" to_schema="mgsis.mgsis" to_table="tblmdfe" >
+			<fk name="fk_tblmdfeenviosefaz_tblmdfe" to_schema="mgsis.mgsis" to_table="tblmdfe" update_action="cascade" >
 				<fk_column name="codmdfe" pk="codmdfe" />
 			</fk>
-			<fk name="fk_tblmdfeenviosefaz_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmdfeenviosefaz_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblmdfeenviosefaz_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmdfeenviosefaz_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3262,10 +3274,10 @@ Peso em KG]]></comment>
 			<index name="idx_tblmenu_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblmenu_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmenu_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblmenu_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmenu_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3399,7 +3411,7 @@ Peso em KG]]></comment>
 			<fk name="fk_tblmercosimagem_tblmercosproduto" to_schema="mgsis.mgsis" to_table="tblmercosproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codmercosproduto" pk="codmercosproduto" />
 			</fk>
-			<fk name="fk_tblmercosimagem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmercosimagem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblmercosimagem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -3429,10 +3441,10 @@ Peso em KG]]></comment>
 			<index name="idx_tblmeta_0" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblmeta" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmeta" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblmeta_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmeta_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3462,16 +3474,16 @@ Peso em KG]]></comment>
 			<index name="idx_tblmetafilial_2" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblmetafilial" to_schema="mgsis.mgsis" to_table="tblmeta" >
+			<fk name="fk_tblmetafilial" to_schema="mgsis.mgsis" to_table="tblmeta" update_action="cascade" >
 				<fk_column name="codmeta" pk="codmeta" />
 			</fk>
-			<fk name="fk_tblmetafilial_0" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tblmetafilial_0" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblmetafilial_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmetafilial_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblmetafilial_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmetafilial_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3502,19 +3514,19 @@ Peso em KG]]></comment>
 			<index name="idx_tblmetafilialpessoa_3" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblmetafilialpessoa" to_schema="mgsis.mgsis" to_table="tblcargo" >
+			<fk name="fk_tblmetafilialpessoa" to_schema="mgsis.mgsis" to_table="tblcargo" update_action="cascade" >
 				<fk_column name="codcargo" pk="codcargo" />
 			</fk>
-			<fk name="fk_tblmetafilialpessoa_0" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblmetafilialpessoa_0" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblmetafilialpessoa_1" to_schema="mgsis.mgsis" to_table="tblmetafilial" >
+			<fk name="fk_tblmetafilialpessoa_1" to_schema="mgsis.mgsis" to_table="tblmetafilial" update_action="cascade" >
 				<fk_column name="codmetafilial" pk="codmetafilial" />
 			</fk>
-			<fk name="fk_tblmetafilialpessoa_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmetafilialpessoa_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblmetafilialpessoa_3" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblmetafilialpessoa_3" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3574,34 +3586,34 @@ Peso em KG]]></comment>
 			<index name="idx_fk_tblmovimentotitulo_tbltituloboleto" unique="NORMAL" >
 				<column name="codtituloboleto" />
 			</index>
-			<fk name="tblmovimentotitulo_codboletoretorno_fkey" to_schema="mgsis.mgsis" to_table="tblboletoretorno" >
+			<fk name="tblmovimentotitulo_codboletoretorno_fkey" to_schema="mgsis.mgsis" to_table="tblboletoretorno" update_action="cascade" >
 				<fk_column name="codboletoretorno" pk="codboletoretorno" />
 			</fk>
-			<fk name="tblmovimentotitulo_codcobranca_fkey" to_schema="mgsis.mgsis" to_table="tblcobranca" >
+			<fk name="tblmovimentotitulo_codcobranca_fkey" to_schema="mgsis.mgsis" to_table="tblcobranca" update_action="cascade" >
 				<fk_column name="codcobranca" pk="codcobranca" />
 			</fk>
-			<fk name="tblmovimentotitulo_codliquidacaotitulo_fkey" to_schema="mgsis.mgsis" to_table="tblliquidacaotitulo" >
+			<fk name="tblmovimentotitulo_codliquidacaotitulo_fkey" to_schema="mgsis.mgsis" to_table="tblliquidacaotitulo" update_action="cascade" >
 				<fk_column name="codliquidacaotitulo" pk="codliquidacaotitulo" />
 			</fk>
-			<fk name="tblmovimentotitulo_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tblmovimentotitulo_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tblmovimentotitulo_codtipomovimentotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipomovimentotitulo" >
+			<fk name="tblmovimentotitulo_codtipomovimentotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipomovimentotitulo" update_action="cascade" >
 				<fk_column name="codtipomovimentotitulo" pk="codtipomovimentotitulo" />
 			</fk>
-			<fk name="tblmovimentotitulo_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblmovimentotitulo_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblmovimentotitulo_codtitulorelacionado_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblmovimentotitulo_codtitulorelacionado_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulorelacionado" pk="codtitulo" />
 			</fk>
-			<fk name="tblmovimentotitulo_codtituloagrupamento_fkey" to_schema="mgsis.mgsis" to_table="tbltituloagrupamento" >
+			<fk name="tblmovimentotitulo_codtituloagrupamento_fkey" to_schema="mgsis.mgsis" to_table="tbltituloagrupamento" update_action="cascade" >
 				<fk_column name="codtituloagrupamento" pk="codtituloagrupamento" />
 			</fk>
-			<fk name="tblmovimentotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmovimentotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblmovimentotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblmovimentotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblmovimentotitulo_tbltituloboleto" to_schema="mgsis.mgsis" to_table="tbltituloboleto" update_action="cascade" >
@@ -3667,22 +3679,22 @@ Peso em KG]]></comment>
 			<index name="idx_tblnaturezaoperacao_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblnaturezaoperacao" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="fk_tblnaturezaoperacao" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacaodevolucao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="fk_tblnaturezaoperacao_0" to_schema="mgsis.mgsis" to_table="tbltipotitulo" >
+			<fk name="fk_tblnaturezaoperacao_0" to_schema="mgsis.mgsis" to_table="tbltipotitulo" update_action="cascade" >
 				<fk_column name="codtipotitulo" pk="codtipotitulo" />
 			</fk>
-			<fk name="fk_tblnaturezaoperacao_1" to_schema="mgsis.mgsis" to_table="tblcontacontabil" >
+			<fk name="fk_tblnaturezaoperacao_1" to_schema="mgsis.mgsis" to_table="tblcontacontabil" update_action="cascade" >
 				<fk_column name="codcontacontabil" pk="codcontacontabil" />
 			</fk>
-			<fk name="fk_tblnaturezaoperacao_2" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" >
+			<fk name="fk_tblnaturezaoperacao_2" to_schema="mgsis.mgsis" to_table="tblestoquemovimentotipo" update_action="cascade" >
 				<fk_column name="codestoquemovimentotipo" pk="codestoquemovimentotipo" />
 			</fk>
-			<fk name="tblnaturezaoperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnaturezaoperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnaturezaoperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnaturezaoperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3720,13 +3732,13 @@ Peso em KG]]></comment>
 			<index name="idx_tblncm_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblncm_tblncm" to_schema="mgsis.mgsis" to_table="tblncm" >
+			<fk name="fk_tblncm_tblncm" to_schema="mgsis.mgsis" to_table="tblncm" update_action="cascade" >
 				<fk_column name="codncmpai" pk="codncm" />
 			</fk>
-			<fk name="tblncm_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblncm_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblncm_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblncm_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3780,7 +3792,7 @@ Peso em KG]]></comment>
 			<index name="idx_tblncmtributacao" unique="NORMAL" >
 				<column name="codtributacao" />
 			</index>
-			<fk name="fk_tblncmtributacao" to_schema="mgsis.mgsis" to_table="tbltributacao" >
+			<fk name="fk_tblncmtributacao" to_schema="mgsis.mgsis" to_table="tbltributacao" update_action="cascade" >
 				<fk_column name="codtributacao" pk="codtributacao" />
 			</fk>
 		</table>
@@ -3892,43 +3904,43 @@ Peso em KG]]></comment>
 			<fk name="tblnegocio_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblnegocio_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="tblnegocio_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="tblnegocio_codnegociostatus_fkey" to_schema="mgsis.mgsis" to_table="tblnegociostatus" >
+			<fk name="tblnegocio_codnegociostatus_fkey" to_schema="mgsis.mgsis" to_table="tblnegociostatus" update_action="cascade" >
 				<fk_column name="codnegociostatus" pk="codnegociostatus" />
 			</fk>
-			<fk name="tblnegocio_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" >
+			<fk name="tblnegocio_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" update_action="cascade" >
 				<fk_column name="codoperacao" pk="codoperacao" />
 			</fk>
-			<fk name="tblnegocio_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblnegocio_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblnegocio_codpessoavendedor_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblnegocio_codpessoavendedor_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoavendedor" pk="codpessoa" />
 			</fk>
 			<fk name="fk_tblnegocio" to_schema="mgsis.mgsis" to_table="tblestoquelocal" update_action="cascade" >
 				<fk_column name="codestoquelocal" pk="codestoquelocal" />
 			</fk>
-			<fk name="tblnegocio_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocio_codusuario_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuario" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocio_codusuarioacertoentrega_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocio_codusuarioacertoentrega_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioacertoentrega" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocio_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocio_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocio_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocio_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblnegocio_tblestoquelocal" to_schema="mgsis.mgsis" to_table="tblestoquelocal" update_action="cascade" >
 				<fk_column name="codestoquelocaldestino" pk="codestoquelocal" />
 			</fk>
-			<fk name="fk_tblnegocio_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegocio_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariorecebimento" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocio_codpessoatransportador_fk" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblnegocio_codpessoatransportador_fk" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoatransportador" pk="codpessoa" />
 			</fk>
 		</table>
@@ -3960,19 +3972,19 @@ Peso em KG]]></comment>
 			<index name="idx_tblnegociocaixamercadoria_codusuariorecebimento" unique="NORMAL" >
 				<column name="codusuariorecebimento" />
 			</index>
-			<fk name="fk_tblnegociocaixamercadoria_tblcaixamercadoria" to_schema="mgsis.mgsis" to_table="tblcaixamercadoria" >
+			<fk name="fk_tblnegociocaixamercadoria_tblcaixamercadoria" to_schema="mgsis.mgsis" to_table="tblcaixamercadoria" update_action="cascade" >
 				<fk_column name="codcaixamercadoria" pk="codcaixamercadoria" />
 			</fk>
-			<fk name="fk_tblnegociocaixamercadoria_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="fk_tblnegociocaixamercadoria_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
-			<fk name="fk_tblnegociocaixamercadoria_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegociocaixamercadoria_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegociocaixamercadoria_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegociocaixamercadoria_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegociocaixamercadoria_tblusuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegociocaixamercadoria_tblusuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariorecebimento" pk="codusuario" />
 			</fk>
 		</table>
@@ -4014,22 +4026,22 @@ Peso em KG]]></comment>
 			<index name="idx_fk_tblnegocioformapagamento_tblstonetransacao" unique="NORMAL" >
 				<column name="codstonetransacao" />
 			</index>
-			<fk name="tblnegocioformapagamento_codformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblformapagamento" >
+			<fk name="tblnegocioformapagamento_codformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblformapagamento" update_action="cascade" >
 				<fk_column name="codformapagamento" pk="codformapagamento" />
 			</fk>
-			<fk name="tblnegocioformapagamento_codnegocio_fkey" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="tblnegocioformapagamento_codnegocio_fkey" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
-			<fk name="tblnegocioformapagamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocioformapagamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocioformapagamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocioformapagamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegocioformapagamento_tblliopedido" to_schema="mgsis.mgsis" to_table="tblliopedido" >
+			<fk name="fk_tblnegocioformapagamento_tblliopedido" to_schema="mgsis.mgsis" to_table="tblliopedido" update_action="cascade" >
 				<fk_column name="codliopedido" pk="codliopedido" />
 			</fk>
-			<fk name="fk_tblnegocioformapagamento_tblpixcob" to_schema="mgsis.mgsis" to_table="tblpixcob" >
+			<fk name="fk_tblnegocioformapagamento_tblpixcob" to_schema="mgsis.mgsis" to_table="tblpixcob" update_action="cascade" >
 				<fk_column name="codpixcob" pk="codpixcob" />
 			</fk>
 			<fk name="fk_tblnegocioformapagamento_tblstonetransacao" to_schema="mgsis.mgsis" to_table="tblstonetransacao" update_action="cascade" >
@@ -4074,22 +4086,22 @@ Peso em KG]]></comment>
 			<index name="idx_tblnegocioprodutobarra_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnegocioprodutobarra_codnegocio_fkey" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="tblnegocioprodutobarra_codnegocio_fkey" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
-			<fk name="tblnegocioprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="tblnegocioprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="fk_tblnegocioprodutobarra" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" >
+			<fk name="fk_tblnegocioprodutobarra" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" update_action="cascade" >
 				<fk_column name="codnegocioprodutobarradevolucao" pk="codnegocioprodutobarra" />
 			</fk>
-			<fk name="tblnegocioprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocioprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnegocioprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegocioprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegocioprodutobarra_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegocioprodutobarra_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioconferencia" pk="codusuario" />
 			</fk>
 		</table>
@@ -4116,13 +4128,13 @@ Peso em KG]]></comment>
 			<index name="idx_tblnegocioprodutobarrapedidoitem_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblpedidoitem" to_schema="mgsis.mgsis" to_table="tblpedidoitem" >
+			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblpedidoitem" to_schema="mgsis.mgsis" to_table="tblpedidoitem" update_action="cascade" >
 				<fk_column name="codpedidoitem" pk="codpedidoitem" />
 			</fk>
 			<fk name="fk_tblnegocioprodutobarrapedidoitem_tblnegocioprodutobarra" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" delete_action="cascade" update_action="cascade" >
@@ -4145,10 +4157,10 @@ Peso em KG]]></comment>
 			<index name="idx_tblnegociostatus_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnegociostatus_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegociostatus_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnegociostatus_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnegociostatus_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4246,25 +4258,25 @@ Peso em KG]]></comment>
 			<fk name="tblnfeterceiro_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblnfeterceiro_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="tblnfeterceiro_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="tblnfeterceiro_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnfeterceiro_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="tblnfeterceiro_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" >
+			<fk name="tblnfeterceiro_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" update_action="cascade" >
 				<fk_column name="codoperacao" pk="codoperacao" />
 			</fk>
-			<fk name="tblnfeterceiro_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblnfeterceiro_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="fk_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
-			<fk name="tblnfeterceiro_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiro_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnfeterceiro_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiro_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblnfeterceiro_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -4300,16 +4312,16 @@ Peso em KG]]></comment>
 			<index name="idx_tblnfeterceiroduplicata_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnfeterceiroduplicata_codnfeterceiro_fkey" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" >
+			<fk name="tblnfeterceiroduplicata_codnfeterceiro_fkey" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" update_action="cascade" >
 				<fk_column name="codnfeterceiro" pk="codnfeterceiro" />
 			</fk>
-			<fk name="tblnfeterceiroduplicata_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="tblnfeterceiroduplicata_codtitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="tblnfeterceiroduplicata_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiroduplicata_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnfeterceiroduplicata_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiroduplicata_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4419,16 +4431,16 @@ Peso em KG]]></comment>
 			<index name="idx_tblnfeterceiroitem_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnfeterceiroitem_codnfeterceiro_fkey" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" >
+			<fk name="tblnfeterceiroitem_codnfeterceiro_fkey" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" update_action="cascade" >
 				<fk_column name="codnfeterceiro" pk="codnfeterceiro" />
 			</fk>
-			<fk name="tblnfeterceiroitem_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="tblnfeterceiroitem_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="tblnfeterceiroitem_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiroitem_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnfeterceiroitem_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnfeterceiroitem_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblnfeterceiroitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -4491,7 +4503,7 @@ Peso em KG]]></comment>
 			<index name="idx_fk_tblnfeterceiropagamento_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblnfeterceiropagamento_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" >
+			<fk name="fk_tblnfeterceiropagamento_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" update_action="cascade" >
 				<fk_column name="codnfeterceiro" pk="codnfeterceiro" />
 			</fk>
 			<fk name="fk_tblnfeterceiropagamento_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -4617,28 +4629,28 @@ Peso em KG]]></comment>
 			<fk name="tblnotafiscal_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblnotafiscal_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="tblnotafiscal_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="tblnotafiscal_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" >
+			<fk name="tblnotafiscal_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" update_action="cascade" >
 				<fk_column name="codoperacao" pk="codoperacao" />
 			</fk>
-			<fk name="tblnotafiscal_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblnotafiscal_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
 			<fk name="fk_tblnotafiscal" to_schema="mgsis.mgsis" to_table="tblestoquelocal" update_action="cascade" >
 				<fk_column name="codestoquelocal" pk="codestoquelocal" />
 			</fk>
-			<fk name="tblnotafiscal_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscal_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnotafiscal_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscal_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblnotafiscal_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblnotafiscal_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoatransportador" pk="codpessoa" />
 			</fk>
-			<fk name="tblnotafiscal_codestadoplaca_fk" to_schema="mgsis.mgsis" to_table="tblestado" >
+			<fk name="tblnotafiscal_codestadoplaca_fk" to_schema="mgsis.mgsis" to_table="tblestado" update_action="cascade" >
 				<fk_column name="codestadoplaca" pk="codestado" />
 			</fk>
 		</table>
@@ -4669,13 +4681,13 @@ Peso em KG]]></comment>
 			<index name="idx_tblnotafiscalcartacorrecao_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnotafiscalcartacorrecao_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnotafiscalcartacorrecao_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="tblnotafiscalcartacorrecao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalcartacorrecao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnotafiscalcartacorrecao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalcartacorrecao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4690,7 +4702,7 @@ Peso em KG]]></comment>
 			<index name="tblnotafiscalcreditoicmssimples_codnotafiscal_key" unique="UNIQUE_KEY" >
 				<column name="codnotafiscal" options="ASC" />
 			</index>
-			<fk name="tblnotafiscalcreditoicmssimples_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnotafiscalcreditoicmssimples_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
 		</table>
@@ -4716,13 +4728,13 @@ Peso em KG]]></comment>
 			<index name="idx_tblnotafiscalduplicatas_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnotafiscalduplicatas_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnotafiscalduplicatas_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="tblnotafiscalduplicatas_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalduplicatas_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnotafiscalduplicatas_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalduplicatas_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4810,25 +4822,25 @@ Peso em KG]]></comment>
 			<index name="idx_tblnotafiscalprodutobarra_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnotafiscalprodutobarra_codcfop_fkey" to_schema="mgsis.mgsis" to_table="tblcfop" >
+			<fk name="tblnotafiscalprodutobarra_codcfop_fkey" to_schema="mgsis.mgsis" to_table="tblcfop" update_action="cascade" >
 				<fk_column name="codcfop" pk="codcfop" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" >
+			<fk name="tblnotafiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" update_action="cascade" >
 				<fk_column name="codnegocioprodutobarra" pk="codnegocioprodutobarra" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnotafiscalprodutobarra_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="tblnotafiscalprodutobarra_codprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="fk_tblnotafiscalprodutobarra" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" >
+			<fk name="fk_tblnotafiscalprodutobarra" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" update_action="cascade" >
 				<fk_column name="codnotafiscalprodutobarraorigem" pk="codnotafiscalprodutobarra" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4852,13 +4864,13 @@ Peso em KG]]></comment>
 			<index name="idx_tblnotafiscalreferenciada_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblnotafiscalreferenciada_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="tblnotafiscalreferenciada_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="tblnotafiscalreferenciada_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalreferenciada_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblnotafiscalreferenciada_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblnotafiscalreferenciada_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -4948,19 +4960,19 @@ Peso em KG]]></comment>
 			<index name="idx_fk_tblnotafiscalterceiro_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblnotafiscalterceiro_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblnotafiscalterceiro_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblnotafiscalterceiro_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tblnotafiscalterceiro_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblnotafiscalterceiro_tblnaturezaoperacao" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="fk_tblnotafiscalterceiro_tblnaturezaoperacao" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="fk_tblnotafiscalterceiro_tblnotafiscal" to_schema="mgsis.mgsis" to_table="tblnotafiscal" >
+			<fk name="fk_tblnotafiscalterceiro_tblnotafiscal" to_schema="mgsis.mgsis" to_table="tblnotafiscal" update_action="cascade" >
 				<fk_column name="codnotafiscal" pk="codnotafiscal" />
 			</fk>
-			<fk name="fk_tblnotafiscalterceiro_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="fk_tblnotafiscalterceiro_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
 			<fk name="fk_tblnotafiscalterceiro_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -5256,7 +5268,7 @@ Peso em KG]]></comment>
 			<fk name="fk_tblnotafiscalterceiroitemprodutobarra_tblnotafiscalterceiroi" to_schema="mgsis.mgsis" to_table="tblnotafiscalterceirogrupo" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codnotafiscalterceirogrupo" pk="codnotafiscalterceirogrupo" />
 			</fk>
-			<fk name="fk_tblnotafiscalterceiroitemprodutobarra_tblprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="fk_tblnotafiscalterceiroitemprodutobarra_tblprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
 			<fk name="fk_tblnotafiscalterceiroprodutobarra_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
@@ -5282,10 +5294,10 @@ Peso em KG]]></comment>
 			<index name="idx_tbloperacao_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbloperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbloperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbloperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbloperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5362,7 +5374,7 @@ Numero serial do terminal (POS)]]></comment>
 			<column name="idtransacao" type="varchar" length="30" jt="12" >
 				<comment><![CDATA[last_transaction.id]]></comment>
 			</column>
-			<column name="identificador" type="varchar" length="50" jt="12" >
+			<column name="identificador" type="varchar" length="100" decimal="0" jt="12" >
 				<comment><![CDATA[metadata.initiatorTransactionKey
 Código identificador da transação do POS]]></comment>
 			</column>
@@ -5389,7 +5401,7 @@ status = canceled]]></comment>
 			<fk name="fk_tblpagarmepagamento_tblpagarmebandeira" to_schema="mgsis.mgsis" to_table="tblpagarmebandeira" update_action="cascade" >
 				<fk_column name="codpagarmebandeira" pk="codpagarmebandeira" />
 			</fk>
-			<fk name="fk_tblpagarmepagamento_tblpagarmepedido" to_schema="mgsis.mgsis" to_table="tblpagarmepedido" >
+			<fk name="fk_tblpagarmepagamento_tblpagarmepedido" to_schema="mgsis.mgsis" to_table="tblpagarmepedido" update_action="cascade" >
 				<fk_column name="codpagarmepedido" pk="codpagarmepedido" />
 			</fk>
 			<fk name="fk_tblpagarmepagamento_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
@@ -5529,10 +5541,10 @@ false=issuer]]></comment>
 			<index name="idx_tblpais_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblpais_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblpais_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblpais_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblpais_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5553,10 +5565,10 @@ false=issuer]]></comment>
 			<index name="idx_tblparametrosgerais_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblparametrosgerais_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblparametrosgerais_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblparametrosgerais_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblparametrosgerais_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5598,19 +5610,19 @@ false=issuer]]></comment>
 			<index name="idx_tblpedido_codgrupoeconomico" unique="NORMAL" >
 				<column name="codgrupoeconomico" />
 			</index>
-			<fk name="fk_tblpedido_tblestoquelocal" to_schema="mgsis.mgsis" to_table="tblestoquelocal" >
+			<fk name="fk_tblpedido_tblestoquelocal" to_schema="mgsis.mgsis" to_table="tblestoquelocal" update_action="cascade" >
 				<fk_column name="codestoquelocal" pk="codestoquelocal" />
 			</fk>
-			<fk name="fk_tblpedido_tblestoquelocal_0" to_schema="mgsis.mgsis" to_table="tblestoquelocal" >
+			<fk name="fk_tblpedido_tblestoquelocal_0" to_schema="mgsis.mgsis" to_table="tblestoquelocal" update_action="cascade" >
 				<fk_column name="codestoquelocalorigem" pk="codestoquelocal" />
 			</fk>
-			<fk name="fk_tblpedido_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpedido_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpedido_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpedido_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpedido_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" >
+			<fk name="fk_tblpedido_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" update_action="cascade" >
 				<fk_column name="codgrupoeconomico" pk="codgrupoeconomico" />
 			</fk>
 		</table>
@@ -5643,13 +5655,13 @@ false=issuer]]></comment>
 			<index name="idx_tblpedidoitem_codusuarioalteracao" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpedidoitem_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" >
+			<fk name="fk_tblpedidoitem_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" update_action="cascade" >
 				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
 			</fk>
-			<fk name="fk_tblpedidoitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpedidoitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpedidoitem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpedidoitem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblpedidoitem_tblpedido" to_schema="mgsis.mgsis" to_table="tblpedido" delete_action="cascade" update_action="cascade" >
@@ -5676,10 +5688,10 @@ false=issuer]]></comment>
 			<index name="idx_tblpermissao_permissao" unique="UNIQUE_KEY" >
 				<column name="permissao" />
 			</index>
-			<fk name="fk_tblpermissao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpermissao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpermissao_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpermissao_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5800,31 +5812,31 @@ false=issuer]]></comment>
 			<constraint name="tblpessoa_notafiscal_check" >
 				<string><![CDATA[(notafiscal = ANY (ARRAY[0, 1, 2, 9]))]]></string>
 			</constraint>
-			<fk name="tblpessoa_codcidade_fkey" to_schema="mgsis.mgsis" to_table="tblcidade" >
+			<fk name="tblpessoa_codcidade_fkey" to_schema="mgsis.mgsis" to_table="tblcidade" update_action="cascade" >
 				<fk_column name="codcidade" pk="codcidade" />
 			</fk>
-			<fk name="tblpessoa_codcidadecobranca_fkey" to_schema="mgsis.mgsis" to_table="tblcidade" >
+			<fk name="tblpessoa_codcidadecobranca_fkey" to_schema="mgsis.mgsis" to_table="tblcidade" update_action="cascade" >
 				<fk_column name="codcidadecobranca" pk="codcidade" />
 			</fk>
-			<fk name="tblpessoa_codestadocivil_fkey" to_schema="mgsis.mgsis" to_table="tblestadocivil" >
+			<fk name="tblpessoa_codestadocivil_fkey" to_schema="mgsis.mgsis" to_table="tblestadocivil" update_action="cascade" >
 				<fk_column name="codestadocivil" pk="codestadocivil" />
 			</fk>
-			<fk name="tblpessoa_codformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblformapagamento" >
+			<fk name="tblpessoa_codformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblformapagamento" update_action="cascade" >
 				<fk_column name="codformapagamento" pk="codformapagamento" />
 			</fk>
-			<fk name="tblpessoa_codgrupocliente_fkey" to_schema="mgsis.mgsis" to_table="tblgrupocliente" >
+			<fk name="tblpessoa_codgrupocliente_fkey" to_schema="mgsis.mgsis" to_table="tblgrupocliente" update_action="cascade" >
 				<fk_column name="codgrupocliente" pk="codgrupocliente" />
 			</fk>
-			<fk name="tblpessoa_codsexo_fkey" to_schema="mgsis.mgsis" to_table="tblsexo" >
+			<fk name="tblpessoa_codsexo_fkey" to_schema="mgsis.mgsis" to_table="tblsexo" update_action="cascade" >
 				<fk_column name="codsexo" pk="codsexo" />
 			</fk>
-			<fk name="tblpessoa_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblpessoa_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblpessoa_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblpessoa_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpessoa_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" >
+			<fk name="fk_tblpessoa_tblgrupoeconomico" to_schema="mgsis.mgsis" to_table="tblgrupoeconomico" update_action="cascade" >
 				<fk_column name="codgrupoeconomico" pk="codgrupoeconomico" />
 			</fk>
 		</table>
@@ -5861,6 +5873,161 @@ false=issuer]]></comment>
 			</fk>
 			<fk name="fk_tblpessoacertidao_tblcertidaotipo" to_schema="mgsis.mgsis" to_table="tblcertidaotipo" update_action="cascade" >
 				<fk_column name="codcertidaotipo" pk="codcertidaotipo" />
+			</fk>
+			<fk name="fk_tblpessoacertidao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoacertidao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpessoaconta" prior="tbl" >
+			<column name="codpessoaconta" type="bigint" jt="-5" mandatory="y" />
+			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
+			<column name="banco" type="numeric" length="3" decimal="0" jt="2" />
+			<column name="agencia" type="varchar" length="20" decimal="0" jt="12" />
+			<column name="conta" type="varchar" length="20" decimal="0" jt="12" />
+			<column name="cnpj" type="numeric" length="14" decimal="0" jt="2" />
+			<column name="tipo" type="numeric" length="1" decimal="0" jt="2" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[1 - Corrente
+2 - Poupança]]></comment>
+			</column>
+			<column name="pixcpf" type="bigint" jt="-5" />
+			<column name="pixcnpj" type="bigint" jt="-5" />
+			<column name="pixtelefone" type="numeric" length="20" decimal="0" jt="2" />
+			<column name="pixemail" type="varchar" length="100" jt="12" />
+			<column name="pixaleatoria" type="varchar" length="100" jt="12" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
+			<index name="pk_tblpessoaconta" unique="PRIMARY_KEY" >
+				<column name="codpessoaconta" />
+			</index>
+			<fk name="fk_tblpessoaconta_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="fk_tblpessoaconta_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoaconta_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpessoaemail" prior="tblpessoatelefone_0" >
+			<column name="codpessoatelefone" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
+			<column name="ordem" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="email" prior="telefone" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<column name="nfe" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="cobranca" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
+			<column name="verificacao" type="timestamp" length="0" jt="93" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
+			<index name="pk_tblpessoatelefone_0" unique="PRIMARY_KEY" >
+				<column name="codpessoatelefone" />
+			</index>
+			<fk name="fk_tblpessoatelefone_tblusuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblusuario_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblpessoa_0" to_schema="mgsis.mgsis" to_table="tblpessoa" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+		</table>
+		<table name="tblpessoaendereco" prior="tblpessoaemail_0" >
+			<column name="codpessoaendereco" prior="codpessoatelefone" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
+			<column name="ordem" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="nfe" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="entrega" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="cobranca" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="cep" type="varchar" length="8" decimal="0" jt="12" />
+			<column name="endereco" type="varchar" length="100" decimal="0" jt="12" />
+			<column name="numero" type="varchar" length="10" decimal="0" jt="12" />
+			<column name="complemento" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="bairro" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="codcidade" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
+			<index name="pk_tblpessoatelefone_1" unique="PRIMARY_KEY" >
+				<column name="codpessoaendereco" />
+			</index>
+			<fk name="fk_tblpessoatelefone_tblusuario_3" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblusuario_4" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblpessoa_1" to_schema="mgsis.mgsis" to_table="tblpessoa" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="fk_tblpessoaendereco_tblcidade" to_schema="mgsis.mgsis" to_table="tblcidade" update_action="cascade" >
+				<fk_column name="codcidade" pk="codcidade" />
+			</fk>
+		</table>
+		<table name="tblpessoatelefone" >
+			<column name="codpessoatelefone" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
+			<column name="ordem" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="tipo" type="smallint" length="1024" jt="5" mandatory="y" >
+				<defo><![CDATA[2]]></defo>
+				<comment><![CDATA[1 - Fixo
+2 - Celular]]></comment>
+			</column>
+			<column name="pais" type="numeric" length="3" decimal="0" jt="2" mandatory="y" >
+				<defo><![CDATA[55]]></defo>
+			</column>
+			<column name="ddd" type="numeric" length="3" decimal="0" jt="2" mandatory="y" >
+				<defo><![CDATA[66]]></defo>
+			</column>
+			<column name="telefone" type="numeric" length="10" decimal="0" jt="2" mandatory="y" />
+			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
+			<column name="verificacao" type="timestamp" length="0" jt="93" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
+			<index name="pk_tblpessoatelefone" unique="PRIMARY_KEY" >
+				<column name="codpessoatelefone" />
+			</index>
+			<fk name="fk_tblpessoatelefone_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" options="" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpessoatelefone_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
 		</table>
 		<table name="tblpix" >
@@ -5899,16 +6066,16 @@ false=issuer]]></comment>
 			<index name="idx_fk_tblpix_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpix_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="fk_tblpix_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="fk_tblpix_tblpixcob" to_schema="mgsis.mgsis" to_table="tblpixcob" >
+			<fk name="fk_tblpix_tblpixcob" to_schema="mgsis.mgsis" to_table="tblpixcob" update_action="cascade" >
 				<fk_column name="codpixcob" pk="codpixcob" />
 			</fk>
-			<fk name="fk_tblpix_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpix_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpix_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpix_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5953,19 +6120,19 @@ false=issuer]]></comment>
 			<index name="idx_fk_tblpixcob_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpixcob_tblpixstatus" to_schema="mgsis.mgsis" to_table="tblpixcobstatus" >
+			<fk name="fk_tblpixcob_tblpixstatus" to_schema="mgsis.mgsis" to_table="tblpixcobstatus" update_action="cascade" >
 				<fk_column name="codpixcobstatus" pk="codpixcobstatus" />
 			</fk>
-			<fk name="fk_tblpixcob_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" >
+			<fk name="fk_tblpixcob_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
-			<fk name="fk_tblpixcob_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="fk_tblpixcob_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="fk_tblpixcob_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixcob_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpixcob_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixcob_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -5988,10 +6155,10 @@ false=issuer]]></comment>
 			<index name="idx_fk_tblpixstatus_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpixstatus_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixstatus_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpixstatus_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixstatus_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6023,16 +6190,16 @@ false=issuer]]></comment>
 			<index name="idx_fk_tblpixdevolucao_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpixdevolucao_tblpixdevolucaostatus" to_schema="mgsis.mgsis" to_table="tblpixdevolucaostatus" >
+			<fk name="fk_tblpixdevolucao_tblpixdevolucaostatus" to_schema="mgsis.mgsis" to_table="tblpixdevolucaostatus" update_action="cascade" >
 				<fk_column name="codpixdevolucaostatus" pk="codpixdevolucaostatus" />
 			</fk>
-			<fk name="fk_tblpixdevolucao_tblpix" to_schema="mgsis.mgsis" to_table="tblpix" >
+			<fk name="fk_tblpixdevolucao_tblpix" to_schema="mgsis.mgsis" to_table="tblpix" update_action="cascade" >
 				<fk_column name="codpix" pk="codpix" />
 			</fk>
-			<fk name="fk_tblpixdevolucao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixdevolucao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpixdevolucao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixdevolucao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6055,10 +6222,10 @@ false=issuer]]></comment>
 			<index name="idx_fk_tblpixdevolucaostatus_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblpixdevolucaostatus_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixdevolucaostatus_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpixdevolucaostatus_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpixdevolucaostatus_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6111,16 +6278,16 @@ false=issuer]]></comment>
 			<index name="idx_tblportador_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblportador_codbanco_fkey" to_schema="mgsis.mgsis" to_table="tblbanco" >
+			<fk name="tblportador_codbanco_fkey" to_schema="mgsis.mgsis" to_table="tblbanco" update_action="cascade" >
 				<fk_column name="codbanco" pk="codbanco" />
 			</fk>
-			<fk name="codfilial" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="codfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblportador_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblportador_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblportador_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblportador_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6238,10 +6405,10 @@ false=issuer]]></comment>
 			<index name="idx_tblprancheta_0" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblprancheta" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprancheta" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblprancheta_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprancheta_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6274,16 +6441,16 @@ false=issuer]]></comment>
 				<column name="codprancheta" />
 				<column name="codproduto" />
 			</index>
-			<fk name="fk_tblpranchetaproduto_1" to_schema="mgsis.mgsis" to_table="tblprancheta" >
+			<fk name="fk_tblpranchetaproduto_1" to_schema="mgsis.mgsis" to_table="tblprancheta" update_action="cascade" >
 				<fk_column name="codprancheta" pk="codprancheta" />
 			</fk>
-			<fk name="fk_tblpranchetaproduto_2" to_schema="mgsis.mgsis" to_table="tblproduto" >
+			<fk name="fk_tblpranchetaproduto_2" to_schema="mgsis.mgsis" to_table="tblproduto" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="fk_tblpranchetaproduto" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpranchetaproduto" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblpranchetaproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblpranchetaproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6312,10 +6479,10 @@ false=issuer]]></comment>
 				<column name="inicial" />
 				<column name="final" />
 			</index>
-			<fk name="fk_tblprefixogs1_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprefixogs1_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblprefixogs1_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprefixogs1_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6406,34 +6573,34 @@ false=issuer]]></comment>
 			<constraint name="tblproduto_abc_check" >
 				<string><![CDATA[(abc = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar]))]]></string>
 			</constraint>
-			<fk name="tblproduto_codmarca_fkey" to_schema="mgsis.mgsis" to_table="tblmarca" >
+			<fk name="tblproduto_codmarca_fkey" to_schema="mgsis.mgsis" to_table="tblmarca" update_action="cascade" >
 				<fk_column name="codmarca" pk="codmarca" />
 			</fk>
 			<fk name="tblproduto_codsubgrupoproduto_fkey" to_schema="mgsis.mgsis" to_table="tblsubgrupoproduto" update_action="cascade" >
 				<fk_column name="codsubgrupoproduto" pk="codsubgrupoproduto" />
 			</fk>
-			<fk name="tblproduto_codtipoproduto_fkey" to_schema="mgsis.mgsis" to_table="tbltipoproduto" >
+			<fk name="tblproduto_codtipoproduto_fkey" to_schema="mgsis.mgsis" to_table="tbltipoproduto" update_action="cascade" >
 				<fk_column name="codtipoproduto" pk="codtipoproduto" />
 			</fk>
-			<fk name="tblproduto_codtributacao_fkey" to_schema="mgsis.mgsis" to_table="tbltributacao" >
+			<fk name="tblproduto_codtributacao_fkey" to_schema="mgsis.mgsis" to_table="tbltributacao" update_action="cascade" >
 				<fk_column name="codtributacao" pk="codtributacao" />
 			</fk>
-			<fk name="tblproduto_codunidademedida_fkey" to_schema="mgsis.mgsis" to_table="tblunidademedida" >
+			<fk name="tblproduto_codunidademedida_fkey" to_schema="mgsis.mgsis" to_table="tblunidademedida" update_action="cascade" >
 				<fk_column name="codunidademedida" pk="codunidademedida" />
 			</fk>
-			<fk name="fk_tblproduto_codncm" to_schema="mgsis.mgsis" to_table="tblncm" >
+			<fk name="fk_tblproduto_codncm" to_schema="mgsis.mgsis" to_table="tblncm" update_action="cascade" >
 				<fk_column name="codncm" pk="codncm" />
 			</fk>
-			<fk name="fk_tblproduto" to_schema="mgsis.mgsis" to_table="tblcest" >
+			<fk name="fk_tblproduto" to_schema="mgsis.mgsis" to_table="tblcest" update_action="cascade" >
 				<fk_column name="codcest" pk="codcest" />
 			</fk>
 			<fk name="fk_tblproduto_produto_imagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
 			</fk>
-			<fk name="tblproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6474,22 +6641,22 @@ false=issuer]]></comment>
 			<index name="idx_tblprodutobarra_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblprodutobarra_codmarca_fkey" to_schema="mgsis.mgsis" to_table="tblmarca" >
+			<fk name="tblprodutobarra_codmarca_fkey" to_schema="mgsis.mgsis" to_table="tblmarca" update_action="cascade" >
 				<fk_column name="codmarca" pk="codmarca" />
 			</fk>
 			<fk name="tblprodutobarra_codproduto_fkey" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="tblprodutobarra_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" >
+			<fk name="tblprodutobarra_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" update_action="cascade" >
 				<fk_column name="codprodutoembalagem" pk="codprodutoembalagem" />
 			</fk>
 			<fk name="fk_tblprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codprodutovariacao" pk="codprodutovariacao" />
 			</fk>
-			<fk name="tblprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutobarra_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutobarra_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6534,16 +6701,16 @@ false=issuer]]></comment>
 			<fk name="tblprodutoembalagem_codproduto_fkey" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="tblprodutoembalagem_codunidademedida_fkey" to_schema="mgsis.mgsis" to_table="tblunidademedida" >
+			<fk name="tblprodutoembalagem_codunidademedida_fkey" to_schema="mgsis.mgsis" to_table="tblunidademedida" update_action="cascade" >
 				<fk_column name="codunidademedida" pk="codunidademedida" />
 			</fk>
-			<fk name="fk_tblprodutoembalagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" >
+			<fk name="fk_tblprodutoembalagem" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
 			</fk>
-			<fk name="tblprodutoembalagem_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutoembalagem_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblprodutoembalagem_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutoembalagem_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6575,13 +6742,13 @@ false=issuer]]></comment>
 			<fk name="tblprodutohistoricopreco_codproduto_fkey" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="tblprodutohistoricopreco_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="cascade" >
+			<fk name="tblprodutohistoricopreco_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codprodutoembalagem" pk="codprodutoembalagem" />
 			</fk>
-			<fk name="tblprodutohistoricopreco_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutohistoricopreco_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblprodutohistoricopreco_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblprodutohistoricopreco_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6617,10 +6784,10 @@ false=issuer]]></comment>
 			<fk name="fk_tblprodutoimagem_0" to_schema="mgsis.mgsis" to_table="tblimagem" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
-			<fk name="fk_tblprodutoimagem_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprodutoimagem_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblprodutoimagem_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprodutoimagem_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6700,7 +6867,7 @@ false=issuer]]></comment>
 			<index name="idx_tblprodutovariacao_4" unique="NORMAL" >
 				<column name="codprodutoimagem" />
 			</index>
-			<fk name="fk_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblmarca" >
+			<fk name="fk_tblprodutovariacao" to_schema="mgsis.mgsis" to_table="tblmarca" update_action="cascade" >
 				<fk_column name="codmarca" pk="codmarca" />
 			</fk>
 			<fk name="fk_tblprodutovariacao_2" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
@@ -6709,10 +6876,10 @@ false=issuer]]></comment>
 			<fk name="fk_tblprodutovariacao_3" to_schema="mgsis.mgsis" to_table="tblprodutoimagem" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codprodutoimagem" pk="codprodutoimagem" />
 			</fk>
-			<fk name="fk_tblprodutovariacao_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprodutovariacao_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblprodutovariacao_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblprodutovariacao_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6739,13 +6906,13 @@ false=issuer]]></comment>
 			<index name="idx_tblregistrospc_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblregistrospc_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblregistrospc_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblregistrospc_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblregistrospc_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblregistrospc_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblregistrospc_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6777,13 +6944,13 @@ false=issuer]]></comment>
 			<index name="idx_tblregulamentoicmsstmt_1" unique="NORMAL" >
 				<column name="codncm" />
 			</index>
-			<fk name="fk_tblregulamentoicmsstmt_codncm" to_schema="mgsis.mgsis" to_table="tblncm" >
+			<fk name="fk_tblregulamentoicmsstmt_codncm" to_schema="mgsis.mgsis" to_table="tblncm" update_action="cascade" >
 				<fk_column name="codncm" pk="codncm" />
 			</fk>
-			<fk name="fk_tblregulamentoicmsstmt" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblregulamentoicmsstmt" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblregulamentoicmsstmt_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblregulamentoicmsstmt_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6809,13 +6976,13 @@ false=issuer]]></comment>
 			<index name="idx_tblsecaoproduto_1" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblsecaoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblsecaoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
-			<fk name="fk_tblsecaoproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblsecaoproduto_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblsecaoproduto_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblsecaoproduto_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -6835,10 +7002,10 @@ false=issuer]]></comment>
 			<index name="idx_tblsexo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblsexo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblsexo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblsexo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblsexo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7226,13 +7393,13 @@ Pode mudar apos conciliacao]]></comment>
 			<fk name="tblsubgrupoproduto_codgrupoproduto_fkey" to_schema="mgsis.mgsis" to_table="tblgrupoproduto" update_action="cascade" >
 				<fk_column name="codgrupoproduto" pk="codgrupoproduto" />
 			</fk>
-			<fk name="fk_tblsubgrupoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="fk_tblsubgrupoproduto" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
-			<fk name="tblsubgrupoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblsubgrupoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblsubgrupoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblsubgrupoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7274,10 +7441,10 @@ Pode mudar apos conciliacao]]></comment>
 			<index name="idx_tbltipomovimentotitulo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltipomovimentotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipomovimentotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltipomovimentotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipomovimentotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7300,10 +7467,10 @@ Pode mudar apos conciliacao]]></comment>
 			<index name="idx_tbltipoproduto_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltipoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipoproduto_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltipoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipoproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7340,13 +7507,13 @@ Pode mudar apos conciliacao]]></comment>
 			<index name="idx_tbltipotitulo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltipotitulo_codtipomovimentotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipomovimentotitulo" >
+			<fk name="tbltipotitulo_codtipomovimentotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipomovimentotitulo" update_action="cascade" >
 				<fk_column name="codtipomovimentotitulo" pk="codtipomovimentotitulo" />
 			</fk>
-			<fk name="tbltipotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipotitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltipotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltipotitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7426,34 +7593,34 @@ Pode mudar apos conciliacao]]></comment>
 			<index name="idx_tbltitulo_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltitulo_codcontacontabil_fkey" to_schema="mgsis.mgsis" to_table="tblcontacontabil" >
+			<fk name="tbltitulo_codcontacontabil_fkey" to_schema="mgsis.mgsis" to_table="tblcontacontabil" update_action="cascade" >
 				<fk_column name="codcontacontabil" pk="codcontacontabil" />
 			</fk>
 			<fk name="tbltitulo_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tbltitulo_codnegocioformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioformapagamento" >
+			<fk name="tbltitulo_codnegocioformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioformapagamento" update_action="cascade" >
 				<fk_column name="codnegocioformapagamento" pk="codnegocioformapagamento" />
 			</fk>
-			<fk name="tbltitulo_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tbltitulo_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tbltitulo_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tbltitulo_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tbltitulo_codtipotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipotitulo" >
+			<fk name="tbltitulo_codtipotitulo_fkey" to_schema="mgsis.mgsis" to_table="tbltipotitulo" update_action="cascade" >
 				<fk_column name="codtipotitulo" pk="codtipotitulo" />
 			</fk>
-			<fk name="tbltitulo_codtituloagrupamento_fkey" to_schema="mgsis.mgsis" to_table="tbltituloagrupamento" >
+			<fk name="tbltitulo_codtituloagrupamento_fkey" to_schema="mgsis.mgsis" to_table="tbltituloagrupamento" update_action="cascade" >
 				<fk_column name="codtituloagrupamento" pk="codtituloagrupamento" />
 			</fk>
-			<fk name="fk_tbltitulo" to_schema="mgsis.mgsis" to_table="tblvalecompraformapagamento" >
+			<fk name="fk_tbltitulo" to_schema="mgsis.mgsis" to_table="tblvalecompraformapagamento" update_action="cascade" >
 				<fk_column name="codvalecompraformapagamento" pk="codvalecompraformapagamento" />
 			</fk>
-			<fk name="tbltitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltitulo_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltitulo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7481,13 +7648,13 @@ Pode mudar apos conciliacao]]></comment>
 			<index name="idx_tbltituloagrupamento_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltituloagrupamento_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tbltituloagrupamento_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tbltituloagrupamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltituloagrupamento_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltituloagrupamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltituloagrupamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7597,7 +7764,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<fk name="fk_tbltituloboleto_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tbltituloboleto_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="fk_tbltituloboleto_tblportador" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
 		</table>
@@ -7624,16 +7791,16 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_fk_tbltitulonfeterceiro_tblusuario_0" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tbltitulonfeterceiro_tbltitulo" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="fk_tbltitulonfeterceiro_tbltitulo" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="fk_tbltitulonfeterceiro_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tbltitulonfeterceiro_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tbltitulonfeterceiro_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tbltitulonfeterceiro_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tbltitulonfeterceiro_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" >
+			<fk name="fk_tbltitulonfeterceiro_tblnfeterceiro" to_schema="mgsis.mgsis" to_table="tblnfeterceiro" update_action="cascade" >
 				<fk_column name="codnfeterceiro" pk="codnfeterceiro" />
 			</fk>
 		</table>
@@ -7654,10 +7821,10 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tbltributacao_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltributacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltributacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltributacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltributacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7738,25 +7905,25 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tbltributacaonaturezaoperacao_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tbltributacaonaturezaoperacao_codcfop_fkey" to_schema="mgsis.mgsis" to_table="tblcfop" >
+			<fk name="tbltributacaonaturezaoperacao_codcfop_fkey" to_schema="mgsis.mgsis" to_table="tblcfop" update_action="cascade" >
 				<fk_column name="codcfop" pk="codcfop" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codestado_fkey" to_schema="mgsis.mgsis" to_table="tblestado" >
+			<fk name="tbltributacaonaturezaoperacao_codestado_fkey" to_schema="mgsis.mgsis" to_table="tblestado" update_action="cascade" >
 				<fk_column name="codestado" pk="codestado" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" >
+			<fk name="tbltributacaonaturezaoperacao_codnaturezaoperacao_fkey" to_schema="mgsis.mgsis" to_table="tblnaturezaoperacao" update_action="cascade" >
 				<fk_column name="codnaturezaoperacao" pk="codnaturezaoperacao" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codtipoproduto_fkey" to_schema="mgsis.mgsis" to_table="tbltipoproduto" >
+			<fk name="tbltributacaonaturezaoperacao_codtipoproduto_fkey" to_schema="mgsis.mgsis" to_table="tbltipoproduto" update_action="cascade" >
 				<fk_column name="codtipoproduto" pk="codtipoproduto" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codtributacao_fkey" to_schema="mgsis.mgsis" to_table="tbltributacao" >
+			<fk name="tbltributacaonaturezaoperacao_codtributacao_fkey" to_schema="mgsis.mgsis" to_table="tbltributacao" update_action="cascade" >
 				<fk_column name="codtributacao" pk="codtributacao" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltributacaonaturezaoperacao_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tbltributacaonaturezaoperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tbltributacaonaturezaoperacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7778,10 +7945,10 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblunidademedida_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblunidademedida_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblunidademedida_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblunidademedida_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblunidademedida_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7835,28 +8002,28 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblusuario_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="tblusuario_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" >
+			<fk name="tblusuario_codecf_fkey" to_schema="mgsis.mgsis" to_table="tblecf" update_action="cascade" >
 				<fk_column name="codecf" pk="codecf" />
 			</fk>
-			<fk name="tblusuario_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="tblusuario_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="tblusuario_codimagem_fkey" to_schema="mgsis.mgsis" to_table="tblimagem" >
+			<fk name="tblusuario_codimagem_fkey" to_schema="mgsis.mgsis" to_table="tblimagem" update_action="cascade" >
 				<fk_column name="codimagem" pk="codimagem" />
 			</fk>
-			<fk name="tblusuario_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" >
+			<fk name="tblusuario_codoperacao_fkey" to_schema="mgsis.mgsis" to_table="tbloperacao" update_action="cascade" >
 				<fk_column name="codoperacao" pk="codoperacao" />
 			</fk>
-			<fk name="tblusuario_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="tblusuario_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="tblusuario_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" >
+			<fk name="tblusuario_codportador_fkey" to_schema="mgsis.mgsis" to_table="tblportador" update_action="cascade" >
 				<fk_column name="codportador" pk="codportador" />
 			</fk>
-			<fk name="tblusuario_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblusuario_codusuarioalteracao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="tblusuario_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="tblusuario_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7902,25 +8069,25 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblvalecompra_8" unique="NORMAL" >
 				<column name="codfilial" />
 			</index>
-			<fk name="fk_tblvalecompra_tblpessoa_favorecido" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblvalecompra_tblpessoa_favorecido" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoafavorecido" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblvalecompra_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblvalecompra_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblvalecompra" to_schema="mgsis.mgsis" to_table="tblvalecompramodelo" >
+			<fk name="fk_tblvalecompra" to_schema="mgsis.mgsis" to_table="tblvalecompramodelo" update_action="cascade" >
 				<fk_column name="codvalecompramodelo" pk="codvalecompramodelo" />
 			</fk>
-			<fk name="fk_tblvalecompra_0" to_schema="mgsis.mgsis" to_table="tbltitulo" >
+			<fk name="fk_tblvalecompra_0" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
-			<fk name="fk_tblvalecompra_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" >
+			<fk name="fk_tblvalecompra_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
-			<fk name="fk_tblvalecompra_tblusuario_alteracao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompra_tblusuario_alteracao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblvalecompra_tblusuario_criacao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompra_tblusuario_criacao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7948,16 +8115,16 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblvalecompraformapagamento_0" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<fk name="fk_tblvalecompraformapagamento" to_schema="mgsis.mgsis" to_table="tblvalecompra" >
+			<fk name="fk_tblvalecompraformapagamento" to_schema="mgsis.mgsis" to_table="tblvalecompra" update_action="cascade" >
 				<fk_column name="codvalecompra" pk="codvalecompra" />
 			</fk>
-			<fk name="fk_tblvalecompraformapagamento_0" to_schema="mgsis.mgsis" to_table="tblformapagamento" >
+			<fk name="fk_tblvalecompraformapagamento_0" to_schema="mgsis.mgsis" to_table="tblformapagamento" update_action="cascade" >
 				<fk_column name="codformapagamento" pk="codformapagamento" />
 			</fk>
-			<fk name="fk_tblvalecompraformapagamento_usuario_alteracao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompraformapagamento_usuario_alteracao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblvalecompraformapagamento_usuario_criacao" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompraformapagamento_usuario_criacao" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
@@ -7988,13 +8155,13 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblvalecompra_5" unique="NORMAL" >
 				<column name="codpessoafavorecido" />
 			</index>
-			<fk name="fk_tblvalecompramodelo_1" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblvalecompramodelo_1" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoafavorecido" pk="codpessoa" />
 			</fk>
-			<fk name="fk_tblvalecompramodelo" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompramodelo" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblvalecompramodelo_0" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompramodelo_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -8024,16 +8191,16 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblvalecompraprodutobarra_6" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblvalecompramodeloprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="fk_tblvalecompramodeloprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="fk_tblvalecompramodeloprodutobarra_0" to_schema="mgsis.mgsis" to_table="tblvalecompramodelo" >
+			<fk name="fk_tblvalecompramodeloprodutobarra_0" to_schema="mgsis.mgsis" to_table="tblvalecompramodelo" update_action="cascade" >
 				<fk_column name="codvalecompramodelo" pk="codvalecompramodelo" />
 			</fk>
-			<fk name="fk_tblvalecompramodeloprodutobarra_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompramodeloprodutobarra_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblvalecompramodeloprodutobarra_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompramodeloprodutobarra_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -8063,16 +8230,16 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<index name="idx_tblvalecompraprodutobarra_2" unique="NORMAL" >
 				<column name="codusuarioalteracao" />
 			</index>
-			<fk name="fk_tblvalecompraprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" >
+			<fk name="fk_tblvalecompraprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutobarra" update_action="cascade" >
 				<fk_column name="codprodutobarra" pk="codprodutobarra" />
 			</fk>
-			<fk name="fk_tblvalecompraprodutobarra_0" to_schema="mgsis.mgsis" to_table="tblvalecompra" >
+			<fk name="fk_tblvalecompraprodutobarra_0" to_schema="mgsis.mgsis" to_table="tblvalecompra" update_action="cascade" >
 				<fk_column name="codvalecompra" pk="codvalecompra" />
 			</fk>
-			<fk name="fk_tblvalecompraprodutobarra_1" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompraprodutobarra_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
-			<fk name="fk_tblvalecompraprodutobarra_2" to_schema="mgsis.mgsis" to_table="tblusuario" >
+			<fk name="fk_tblvalecompraprodutobarra_2" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -8135,7 +8302,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<fk name="fk_tblveiculo_tblveiculotipo" to_schema="mgsis.mgsis" to_table="tblveiculotipo" update_action="cascade" >
 				<fk_column name="codveiculotipo" pk="codveiculotipo" />
 			</fk>
-			<fk name="fk_tblveiculo_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" >
+			<fk name="fk_tblveiculo_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoaproprietario" pk="codpessoa" />
 			</fk>
 			<fk name="fk_tblveiculo_tblestado" to_schema="mgsis.mgsis" to_table="tblestado" update_action="cascade" >
@@ -8252,19 +8419,6 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<fk name="fk_tblveiculotipo_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
-		</table>
-		<table name="tmpestoquezerar" >
-			<column name="codproduto" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="codestoquelocal" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="codprodutovariacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="codestoquelocalprodutovariacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="codestoquesaldo" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="saldoquantidade" type="numeric" length="14" decimal="3" jt="2" />
-			<column name="codestoquemes" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="customedio" type="numeric" length="14" decimal="6" jt="2" />
-			<column name="mes" type="date" length="13" decimal="0" jt="91" />
-			<column name="preco" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="custoutilizar" type="numeric" jt="2" />
 		</table>
 		<view name="vwboleto" >
 			<view_script><![CDATA[CREATE VIEW ${fullName} AS  SELECT tblbanco.numerobanco,
@@ -9483,6 +9637,60 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valor" type="numeric" />
 			<column name="markup" type="numeric" />
 		</materialized_view>
+		<materialized_view name="mvwestoque2022" >
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${fullName} AS  SELECT p.codproduto,
+    p.produto,
+    p.inativo,
+    p.preco,
+    fiscal.codfilial,
+    fiscal.saldoquantidade AS quant,
+    fiscal.customedio AS custo,
+    fiscal.saldovalor AS valor,
+    (p.preco /
+        CASE
+            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
+            ELSE NULL::numeric
+        END) AS markup
+   FROM (((((((tblproduto p
+     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
+     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
+     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
+     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
+     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
+     LEFT JOIN ( SELECT el.codfilial,
+            pv.codproduto,
+            sum(em.saldoquantidade) AS saldoquantidade,
+            sum(em.saldovalor) AS saldovalor,
+            (sum(em.saldovalor) /
+                CASE
+                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
+                    ELSE NULL::numeric
+                END) AS customedio
+           FROM (((((tblestoquelocalprodutovariacao elpv
+             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
+             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
+             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
+             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
+             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
+                   FROM tblestoquemes em2
+                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2022-12-31'::date))
+                  ORDER BY em2.mes DESC
+                 LIMIT 1))))
+          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint, (105)::bigint]))
+          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
+     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
+  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
+  ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
+			<column name="codproduto" type="bigint" />
+			<column name="produto" type="varchar" />
+			<column name="inativo" type="date" />
+			<column name="preco" type="numeric" />
+			<column name="codfilial" type="bigint" />
+			<column name="quant" type="numeric" />
+			<column name="custo" type="numeric" />
+			<column name="valor" type="numeric" />
+			<column name="markup" type="numeric" />
+		</materialized_view>
 		<sequence name="tblauditoria_codauditoria_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblauditoriaexcecao_codauditoriaexcecao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblbanco_codbanco_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -9730,27 +9938,14 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<trigger name="tbltituloau" table="tbltitulo" id="Trigger4846967" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER tbltituloau AFTER UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloau();]]></string>
 		</trigger>
-		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
+		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
+AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="integer" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
-		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
- RETURNS SETOF record
- LANGUAGE c
- STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
-;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
@@ -9772,19 +9967,32 @@ AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 			<input_param jt="-1" type="integer" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
-		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
+		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text_serial$function$
+AS '$libdir/tablefunc', $function$connectby_text$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="integer" inOut="-1" />
+		</function>
+		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
+ RETURNS SETOF record
+ LANGUAGE c
+ STABLE STRICT
+AS '$libdir/tablefunc', $function$connectby_text$function$
+;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="criatriggers_geraauditoria" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.criatriggers_geraauditoria(brecria boolean DEFAULT false)
@@ -9822,13 +10030,14 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
+		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab$function$
+AS '$libdir/tablefunc', $function$crosstab_hash$function$
 ;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab" id="Function_1a50" isSystem="false" params_known="y" >
@@ -9841,14 +10050,13 @@ AS '$libdir/tablefunc', $function$crosstab$function$
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
 		</function>
-		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
+		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab_hash$function$
+AS '$libdir/tablefunc', $function$crosstab$function$
 ;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab2" id="Function_1f2b" isSystem="false" params_known="y" >
@@ -10406,89 +10614,6 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
- RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
- LANGUAGE plpgsql
-AS $function$
-DECLARE
-	pcodecf bigint;
-BEGIN
-	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Geral' as tipo
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
-	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
-	  from tblecfreducaoz
-	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblecfreducaoz.movimento = pmovimento
-	   and tblecfreducaoz.crz = pcrz
-	 group by 
-	       tblecfreducaoz.codecfreducaoz
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     ;
-	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
-/*
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscalprodutobarra.aliquotaicms
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-*/
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Cancelado' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = true
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Desconto' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(descontoacrescimo)  as total
-	  from tblcupomfiscal 
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
-         
-END;
-$function$
-;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
-		</function>
 		<function name="fnlistatotaisecfreducaoz" id="Function-25ba" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint, pdesejado numeric)
  RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric, diferenca numeric)
@@ -10575,6 +10700,89 @@ $function$
 			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
 			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 			<input_param name="diferenca" jt="-1" type="numeric" inOut="-1" />
+		</function>
+		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
+ RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+	pcodecf bigint;
+BEGIN
+	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Geral' as tipo
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
+	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
+	  from tblecfreducaoz
+	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblecfreducaoz.movimento = pmovimento
+	   and tblecfreducaoz.crz = pcrz
+	 group by 
+	       tblecfreducaoz.codecfreducaoz
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     ;
+	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
+/*
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscalprodutobarra.aliquotaicms
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+*/
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Cancelado' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = true
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Desconto' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(descontoacrescimo)  as total
+	  from tblcupomfiscal 
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
+         
+END;
+$function$
+;]]></string>
+			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 		</function>
 		<function name="fntblmovimentotituloaiauad" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblmovimentotituloaiauad()
@@ -11170,6 +11378,15 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 			<input_param jt="-1" type="double precision" inOut="-1" />
 			<input_param jt="-1" type="double precision" inOut="-1" />
 		</function>
+		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
+ RETURNS text
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/unaccent', $function$unaccent_dict$function$
+;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
 		<function name="unaccent" id="Function_26c8" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(regdictionary, text)
  RETURNS text
@@ -11178,15 +11395,6 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 AS '$libdir/unaccent', $function$unaccent_dict$function$
 ;]]></string>
 			<input_param jt="-1" type="regdictionary" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
-		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
- RETURNS text
- LANGUAGE c
- STABLE PARALLEL SAFE STRICT
-AS '$libdir/unaccent', $function$unaccent_dict$function$
-;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="unaccent_init" id="Function_425" isSystem="false" params_known="y" >
@@ -11912,13 +12120,13 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuario" />
 			<column name="codusuarioacertoentrega" />
 			<column name="codnaturezaoperacao" />
+			<column name="valorfrete" />
+			<column name="valorjuros" />
 			<column name="codestoquelocaldestino" />
 			<column name="codusuariorecebimento" />
-			<column name="valorfrete" />
 			<column name="codpessoatransportador" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
-			<column name="valorjuros" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="384" y="96" />
 		<script name="SQL_Editor" id="Editor_4e0" language="SQL" >
@@ -12311,10 +12519,15 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		</script>
 	</layout>
 	<layout name="Layout_Pessoa" id="Layout_156d02e" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="C1D8EE" x="624" y="48" />
-		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="C1D8EE" x="624" y="240" />
-		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="48" y="48" />
-		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="C1D8EE" x="320" y="48" />
+		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="C1D8EE" x="1008" y="64" />
+		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="C1D8EE" x="1040" y="288" />
+		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="704" y="352" />
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="368" y="48" />
+		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="C1D8EE" x="688" y="48" />
+		<entity schema="mgsis.mgsis" name="tblpessoaconta" color="C1D8EE" x="720" y="592" />
+		<entity schema="mgsis.mgsis" name="tblpessoaemail" color="3986C1" x="48" y="368" />
+		<entity schema="mgsis.mgsis" name="tblpessoaendereco" color="3986C1" x="48" y="656" />
+		<entity schema="mgsis.mgsis" name="tblpessoatelefone" color="C1D8EE" x="48" y="48" />
 	</layout>
 	<layout name="Layout_Pix" id="Layout_1b31" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="48" y="96" />
@@ -12403,24 +12616,24 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codusuario" />
 			<column name="codusuarioacertoentrega" />
 			<column name="codnaturezaoperacao" />
+			<column name="valorjuros" />
 			<column name="codestoquelocaldestino" />
 			<column name="codusuariorecebimento" />
 			<column name="codpessoatransportador" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
-			<column name="valorjuros" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="944" y="560" >
 			<column name="codnegocioformapagamento" />
 			<column name="codnegocio" />
 			<column name="codformapagamento" />
+			<column name="valorjuros" />
 			<column name="codliopedido" />
 			<column name="codpixcob" />
 			<column name="codstonetransacao" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
 			<column name="codpagarmepedido" />
-			<column name="valorjuros" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblstonebandeira" color="C4EEC1" x="64" y="256" />
 		<entity schema="mgsis.mgsis" name="tblstonefilial" color="C4EEC1" x="384" y="64" />
