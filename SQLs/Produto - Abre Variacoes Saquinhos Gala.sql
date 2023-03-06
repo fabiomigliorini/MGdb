@@ -56,4 +56,56 @@ where pv.codproduto = :codproduto
 order by variacao 
 
 
-select * from tblprodutobarra where codprodutobarra = 953551
+update tblprodutobarra 
+set variacao = null
+, referencia = null
+where codproduto = 69751
+
+
+select * from tblprodutobarra where codprodutobarra = 953557
+
+
+-- Ajusta descricao das variacoes
+select codprodutovariacao, variacao, referencia --, INITCAP(variacao)
+from tblprodutovariacao v
+--where v.codproduto = :codproduto
+where v.codproduto = 69750
+order by variacao
+
+update tblprodutovariacao
+set variacao = replace(variacao, 'SAQ. P/ PRES. 25X35 - 50 UN - ', '')
+where codproduto  = :codproduto 
+
+update tblprodutovariacao
+set variacao = replace(variacao, 'Saquinho P/ Pres. 25 X 35 - 50 Un. - ', '')
+where codproduto  = :codproduto 
+
+update tblprodutovariacao
+set variacao = initcap(variacao)
+where codproduto  = :codproduto 
+
+
+-- Passa barras pras variacoes
+with novo as (
+	select 
+		codprodutobarra, 
+		barras, 
+		left(right(pb.barras, -1), -1),
+		(
+			select pv.codprodutovariacao
+			from tblprodutovariacao pv
+			where pv.codproduto = pb.codproduto
+			and pv.variacao ilike '%' || left(right(pb.barras, -1), -1) || '%'
+			order by 1
+			limit 1
+		) as codprodutovariacaonovo
+	from tblprodutobarra pb
+	where pb.codproduto = :codproduto 
+)
+update tblprodutobarra 
+set codprodutovariacao = novo.codprodutovariacaonovo
+from novo
+where tblprodutobarra.codprodutobarra = novo.codprodutobarra 
+and novo.codprodutovariacaonovo is not null
+
+select * from tblnegocio where codnegocio = 3029463
