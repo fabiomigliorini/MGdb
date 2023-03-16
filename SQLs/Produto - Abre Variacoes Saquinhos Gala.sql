@@ -29,7 +29,7 @@ where tblprodutobarra.codprodutobarra = conv.codprodutobarra
 with conv as (
 	select pb.codprodutobarra, pv.codprodutovariacao 
 	from tblprodutobarra pb
-	inner join tblprodutovariacao pv on (pv.codproduto = pb.codproduto and pv.variacao ilike '%' || pb.barras || '%')
+	inner join tblprodutovariacao pv on (pv.codproduto = pb.codproduto and pv.variacao ilike '%' || right(left(pb.barras, -1), -1) || '%')
 	where pb.codproduto = :codproduto
 )
 update tblprodutobarra 
@@ -62,7 +62,7 @@ set variacao = null
 where codproduto = 69751
 
 
-select * from tblprodutobarra where codprodutobarra = 953557
+select * from tblprodutobarra where codprodutobarra = 941707
 
 
 -- Ajusta descricao das variacoes

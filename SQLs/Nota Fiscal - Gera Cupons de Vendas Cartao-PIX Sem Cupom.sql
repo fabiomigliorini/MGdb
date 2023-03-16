@@ -31,7 +31,7 @@ and nf.numero = 0
 and nf.codpessoa = 1
 and nf.valortotal < 1000
 --group by nf.codfilial 
-order by 1 asc
+order by 1 desc
 --offset 200
 --offset 2000
 
