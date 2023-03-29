@@ -11,6 +11,8 @@ update tbljobs set reserved_at = null, reserved = 0 where 1=1
 
 select attempts , * from tbljobs order by attempts desc
 
+
+
 SELECT
   pid,
   now() - pg_stat_activity.query_start AS duration,

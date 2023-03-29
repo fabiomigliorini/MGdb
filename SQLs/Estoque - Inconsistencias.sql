@@ -8,11 +8,14 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegocioprodutobarra)
 where n.codnegociostatus = 2
-and n.lancamento >= '2016-04-01 00:00:00'
+--and n.lancamento >= '2016-04-01 00:00:00'
 --and n.lancamento >= '2020-01-01 00:00:00'
+and n.lancamento >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and em.codestoquemovimento is null
+and n.codfilial in (101, 102, 103, 104, 105)
 order by n.lancamento, n.codfilial, n.codnegocio, p.produto
 
 --Negocios NAO Fechados Com Movimentacao de estoque
@@ -25,9 +28,11 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegocioprodutobarra)
 where n.codnegociostatus != 2
-and n.lancamento >= '2016-04-01 00:00:00'
+--and n.lancamento >= '2016-04-01 00:00:00'
+and n.lancamento >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and em.codestoquemovimento is not null
 order by n.codfilial, n.codnegocio, p.produto
 
@@ -42,9 +47,11 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 inner join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegocioprodutobarra)
 where n.codnegociostatus = 2
-and n.lancamento >= '2016-04-01 00:00:00'
+--and n.lancamento >= '2016-04-01 00:00:00'
+and n.lancamento >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and round((coalesce(em.entradaquantidade, 0) + coalesce(em.saidaquantidade, 0)), 1) != round((npb.quantidade * coalesce(pe.quantidade, 1)), 1)
 order by p.codproduto, n.codfilial, n.codnegocio, p.produto
 
@@ -59,9 +66,11 @@ inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
 --and n.saida >= '2016-01-01 00:00:00'
-and n.saida >= '2023-01-01 00:00:00' 
+--and n.saida >= '2023-01-01 00:00:00'
+and n.saida >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and em.codestoquemovimento is null
 order by n.saida, n.codfilial, n.codnotafiscal, p.produto
 limit 300
@@ -77,10 +86,12 @@ inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where n.emitida = true
 and (n.nfeautorizacao is null or n.nfeinutilizacao is not null or n.nfecancelamento is not null)
-and n.saida >= '2016-01-01 00:00:00'
---and n.saida >= '2022-05-01 00:00:00' 
+--and n.saida >= '2016-01-01 00:00:00'
+--and n.saida >= '2022-05-01 00:00:00'
+and n.saida >= now() - '180 days'::interval  
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and em.codestoquemovimento is not null
 order by n.codfilial, n.codnotafiscal, p.produto
 
@@ -94,9 +105,11 @@ left join tblprodutoembalagem pe on (pe.codprodutoembalagem = pb.codprodutoembal
 inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 inner join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
-where n.saida >= '2016-01-01 00:00:00'
+--where n.saida >= '2016-01-01 00:00:00'
+where n.saida >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
+and p.estoque = true
 and round((coalesce(em.entradaquantidade, 0) + coalesce(em.saidaquantidade, 0)), 1) != round((npb.quantidade * coalesce(pe.quantidade, 1)), 1)
 order by p.codproduto, pb.codprodutobarra, n.codfilial, n.codnotafiscal, p.produto
 

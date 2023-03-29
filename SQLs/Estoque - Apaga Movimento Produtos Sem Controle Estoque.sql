@@ -8,7 +8,7 @@ where codestoquemovimento in (
 	inner join tblestoquemes mes on (mes.codestoquesaldo = sld.codestoquesaldo)
 	inner join tblestoquemovimento mov on (mov.codestoquemes = mes.codestoquemes)
 	where p.estoque = false 
-)
+);
 
 -- Apaga Conferencias de Estoque
 delete from tblestoquesaldoconferencia
