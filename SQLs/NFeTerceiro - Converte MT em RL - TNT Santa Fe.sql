@@ -22,6 +22,15 @@ and cprod in (
 	'211400050040029'
 )
 
+-- SUPPER
+update tblnfeterceiroitem 
+set qcom = qcom / 50,
+ucom = 'RL',
+vuncom = vuncom * 50
+where codnfeterceiro = :codnfeterceiro 
+and ucom = 'm'
+and cprod like 'NT.EST.00%'
+
 -- CAMESA
 update tblnfeterceiroitem 
 set qcom = qcom / 30,
@@ -30,7 +39,6 @@ vuncom = vuncom * 30
 where codnfeterceiro = :codnfeterceiro 
 and ucom = 'MT'
 and cprod ilike '1.07532.01.%'
-
 
 -- PEGON
 update tblnfeterceiroitem 
@@ -43,3 +51,7 @@ and cprod ilike '3'
 
 
 
+
+
+
+select * from tblnfeterceiroitem t where codnfeterceiro = 44326

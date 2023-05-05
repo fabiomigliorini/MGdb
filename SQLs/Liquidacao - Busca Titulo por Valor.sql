@@ -2,25 +2,33 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
---where t.debito = 7500
-where t.credito = 791.29
+where t.debito = :valor
+--where t.credito = :valor
 --where t.credito = 89
 --and saldo > 0
-order by criacao desc nulls LAST
+order by vencimento  desc nulls LAST
+--order by criacao desc nulls LAST
+
+select valoraprazo, valoravista, * 
+from tblnegocio n
+where n.lancamento between (:data::timestamp - '1 days'::interval) and (:data::timestamp + '48 HOURS'::interval)
+and (n.VALORTOTAL  = :valor or n.valorprodutos = :valor)
+order by codnegocio asc
+
 
 select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.vencimento, t.criacao, t.codtitulo
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.observacao ilike '%cleonice%'
+where t.observacao ilike '%m%r%x%m%b%'
 order by criacao desc nulls LAST
 
 
 select valortotal, valoraprazo, *
 from tblnegocio n
-where n.valortotal = 461.88
+where n.valortotal = 42
 ---and criacao >= '2021-07-22'
-order by criacao desc
+order by lancamento desc
 
 select criacao, * from tblpixcob where valororiginal = 20
 
@@ -28,7 +36,8 @@ update tblnegocio set codnegociostatus  =   1 where codnegocio = 2350905
 
 select *
 from tblliquidacaotitulo lt
-where lt.observacao ilike '%Fistarol%'
+where lt.observacao ilike '%valeria%'
+ORDER BY CRIACAO DESC
 
 select * from tbltitulo where observacao ilike '%5419%'
 
@@ -79,3 +88,12 @@ select * from tblgrupocliente t
 select * from tblnotafiscalprodutobarra t2  where codnotafiscal = 2200356
 
 select * from tblprodutobarra t where codprodutobarra = 969727
+
+
+select * from tbltitulo where codnegocioformapagamento = 30294421
+
+select * from tblnegocioformapagamento t where codnegocio = 2930835
+
+
+
+update tblprodutobarra set codprodutoembalagem = null where codproduto  = 70045

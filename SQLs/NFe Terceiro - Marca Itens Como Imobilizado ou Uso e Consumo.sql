@@ -7,8 +7,8 @@ select
 		inner join tblproduto p on (p.codncm = n.codncm)
 		inner join tblprodutobarra pb on (pb.codproduto = p.codproduto)
 		where n.ncm = tblnfeterceiroitem.ncm
-		--and p.codtipoproduto = 7 -- USO E CONSUMO
-		and p.codtipoproduto = 8 -- IMOBILIZADO
+		and p.codtipoproduto = 7 -- USO E CONSUMO
+		--and p.codtipoproduto = 8 -- IMOBILIZADO
 	) ,
 	codprodutobarra, 
 	* 
@@ -22,8 +22,8 @@ set codprodutobarra = (
 		inner join tblproduto p on (p.codncm = n.codncm)
 		inner join tblprodutobarra pb on (pb.codproduto = p.codproduto)
 		where n.ncm = tblnfeterceiroitem.ncm
-		--and p.codtipoproduto = 7 -- USO E CONSUMO
-		and p.codtipoproduto = 8 -- IMOBILIZADO
+		and p.codtipoproduto = 7 -- USO E CONSUMO
+		--and p.codtipoproduto = 8 -- IMOBILIZADO
 	),
 	complemento = null,
 	margem = null
@@ -35,3 +35,4 @@ select * from tbltipoproduto t order by codtipoproduto
 
 
 select codnfeterceiro, nsu, nfechave, data, * from tbldistribuicaodfe t where "data" is null
+

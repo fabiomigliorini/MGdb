@@ -3,15 +3,15 @@ select pb.barras, pv.variacao, pe.quantidade, pv.referencia, count(npb.codnegoci
 from tblnegocioprodutobarra npb
 inner join  tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)
 inner join tblprodutovariacao pv on (pv.codprodutovariacao = pb.codprodutovariacao)
-left join tblprodutoembalagem pe on (pe.codprodutoembalagem = pb.codprodutoembalagem)
+left join tblprodutoembalagem pe on (pe.cod	produtoembalagem = pb.codprodutoembalagem)
 where pb.codproduto = :codproduto
 and npb.criacao >= '2022-01-01'
 group by pb.barras, pv.variacao, pv.referencia, pe.quantidade
 order by 2 asc, 1 asc
 
+select * from tblnfeterceiroitem where cean ilike '78984262%'
 
-
-select criacao, * from tblnfeterceiroitem where '7898563364089' in (cean, ceantrib) order by criacao desc nulls last
+select criacao, * from tblnfeterceiroitem where '7898426273435' in (cean, ceantrib) order by criacao desc nulls last
 
 SKO341 ENV SACO SC KO 41 310X410 80G C/100
 

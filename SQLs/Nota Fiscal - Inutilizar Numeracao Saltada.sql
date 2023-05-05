@@ -71,7 +71,7 @@ and nf.nfeinutilizacao is null
 limit 1100
 
 --  Comando para inutilizar as notas
-select 'wget https://api.mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/inutilizar?justificativa=falha+de+sistema%2C+saltou+numeracao' as comando, numero
+select ' curl https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/inutilizar?justificativa=falha+de+sistema%2C+saltou+numeracao &' as comando, numero
 from tblnotafiscal nf
 where nf.emitida = true
 and nf.codfilial = :codfilial
@@ -94,7 +94,7 @@ and codfilial = :codfilial
 and modelo = :modelo
 and serie = :serie
 and nfeautorizacao is not null
---and numero between 197949 and 197949
+--and numero between :numinicial and :numfinal
 and numero = :numero 
 
 /*
@@ -145,5 +145,8 @@ delete from tblmercosprodutoimagem
 
 
 select * from tblproduto where codproduto  = 67305
+
+
+select * from tblnotafiscal where codnotafiscal between 02362954 and 02362977
 
 

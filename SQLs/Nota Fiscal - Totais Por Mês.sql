@@ -19,10 +19,17 @@ group by
 
 -- quantidade por mes
 select 
-	date_trunc('month', nf.emissao), 
-	--nf.modelo,
-	count(*)
+	date_trunc('month', nf.emissao)::date,
+	sum(case when nf.modelo = 55 then 1 else 0 end) as NFe,
+	sum(case when nf.modelo != 55 then 1 else 0 end) as NFCe,
+	--sum(nf.valortotal),
+	count(*) as total
 from tblnotafiscal nf
+where nf.nfeautorizacao is not null
+and nf.nfeinutilizacao is null 
+and nf.nfecancelamento is null
+and nf.emitida 
+and nf.emissao >= '2014-06-01'
 group by
 	date_trunc('month', nf.emissao)
 	--, nf.modelo

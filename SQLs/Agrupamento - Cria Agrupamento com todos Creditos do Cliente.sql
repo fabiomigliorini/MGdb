@@ -30,6 +30,7 @@ select
 		sum(saldo) * -1 as credito, 
 		min(codpessoa) as codpessoa
 from creditos c
+returning codtituloagrupamento
 
 
 INSERT INTO tbltitulo (
@@ -103,7 +104,7 @@ select
 	null as codvalecompraformapagamento
 from tbltituloagrupamento ta 
 where ta.codtituloagrupamento = :codtituloagrupamento 
-
+returning codtitulo
 
 
 with creditos as (
@@ -161,3 +162,8 @@ select sum(credito), sum(debito) from tblmovimentotitulo t where t.codtituloagru
 
 --select * from tblmovimentotitulo t where codtitulo = 335842 order by criacao desc
 
+
+
+select * from tblmovimentotitulo t where codtitulo = 443622
+
+select * from tbltitulo where codtitulo = 481111

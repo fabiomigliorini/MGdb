@@ -126,3 +126,6 @@ select * from tbl
 
 select * from tblcontacontabil t order by alteracao desc nulls 
 
+select * from tblpessoa where codpessoa = 13936
+
+select * from tblnotafiscal where codnotafiscal = 2348647

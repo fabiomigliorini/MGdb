@@ -62,7 +62,7 @@ set variacao = null
 where codproduto = 69751
 
 
-select * from tblprodutobarra where codprodutobarra = 941707
+select * from tblprodutobarra where codproduto  = 2538 and codprodutoembalagem is null
 
 
 -- Ajusta descricao das variacoes
@@ -109,3 +109,9 @@ where tblprodutobarra.codprodutobarra = novo.codprodutobarra
 and novo.codprodutovariacaonovo is not null
 
 select * from tblnegocio where codnegocio = 3029463
+
+
+select * from tblprodutobarra where codproduto = 314252
+
+
+

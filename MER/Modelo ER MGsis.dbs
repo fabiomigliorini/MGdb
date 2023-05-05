@@ -37,7 +37,7 @@
 		<table name="tblauditoriatransmissao" >
 			<column name="codauditoria" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codbaseremota" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="transmitida" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="transmitida" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="resultado" type="text" length="2147483647" decimal="0" jt="12" />
@@ -763,7 +763,7 @@
 			<column name="observacoes" type="varchar" length="500" decimal="0" jt="12" />
 			<column name="debitoacerto" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="creditoacerto" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="acertado" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="acertado" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -808,7 +808,7 @@
 			<column name="codcobrancahistorico" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codpessoa" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="historico" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
-			<column name="emailautomatico" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="emailautomatico" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -916,7 +916,7 @@
 			<column name="codcontacontabil" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="contacontabil" type="varchar" length="100" decimal="0" jt="12" />
 			<column name="numero" type="varchar" length="15" decimal="0" jt="12" />
-			<column name="inativo" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="inativo" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -944,7 +944,7 @@
 			<column name="codecf" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="datamovimento" type="date" length="13" decimal="0" jt="91" mandatory="y" />
 			<column name="numero" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="cancelado" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="cancelado" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="descontoacrescimo" type="numeric" length="14" decimal="2" jt="2" />
@@ -1371,10 +1371,10 @@
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="deposito" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="deposito" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="controlaestoque" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="controlaestoque" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<index name="pk_tblestoquelocal" unique="PRIMARY_KEY" >
@@ -1468,7 +1468,7 @@
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="ignorar" type="boolean" jt="-7" mandatory="y" >
+			<column name="ignorar" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="vendadiaquantidade" type="double precision" length="17" decimal="17" jt="3" />
@@ -1556,7 +1556,7 @@
 			<column name="codestoquemovimentoorigem" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codestoquemes" type="bigint" jt="-5" mandatory="y" />
 			<column name="codestoquemovimentotipo" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="manual" type="boolean" jt="-7" mandatory="y" >
+			<column name="manual" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="data" type="timestamp" length="0" decimal="0" jt="93" mandatory="y" />
@@ -1634,13 +1634,13 @@
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="manual" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="manual" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="atualizaultimaentrada" type="boolean" jt="-7" mandatory="y" >
+			<column name="atualizaultimaentrada" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="transferencia" type="boolean" length="1" decimal="0" jt="-7" >
+			<column name="transferencia" type="boolean" length="1" decimal="0" jt="16" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="tblestoquemovimentotipo_pkey" unique="PRIMARY_KEY" >
@@ -1671,7 +1671,7 @@
 		<table name="tblestoquesaldo" >
 			<column name="codestoquesaldo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codestoquelocalprodutovariacao" type="bigint" jt="-5" mandatory="y" />
-			<column name="fiscal" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" />
+			<column name="fiscal" type="boolean" length="1" decimal="0" jt="16" mandatory="y" />
 			<column name="ultimaconferencia" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="saldoquantidade" type="numeric" length="14" decimal="3" jt="2" />
 			<column name="saldovalor" type="numeric" length="14" decimal="2" jt="2" />
@@ -1817,7 +1817,7 @@
 			<column name="codprodutobarra" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codproduto" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="quantidade_conv" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="importar" type="boolean" length="1" decimal="0" jt="-7" />
+			<column name="importar" type="boolean" length="1" decimal="0" jt="16" />
 			<column name="dataultmvenda_conv" type="timestamp" decimal="6" jt="93" />
 			<column name="ultaltera_conv" type="timestamp" decimal="6" jt="93" />
 			<column name="codigo_conv" type="bigint" length="19" decimal="0" jt="-5" />
@@ -1838,7 +1838,7 @@
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="conciliado" type="boolean" jt="-7" mandatory="y" >
+			<column name="conciliado" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="pk_tblextratobancario_codextratobancario" unique="PRIMARY_KEY" >
@@ -1987,7 +1987,7 @@
 			<column name="codempresa" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codpessoa" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="filial" type="varchar" length="20" decimal="0" jt="12" mandatory="y" />
-			<column name="emitenfe" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="emitenfe" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="acbrnfemonitorcaminho" type="varchar" length="100" decimal="0" jt="12" />
@@ -2018,7 +2018,7 @@
 				<defo><![CDATA[1]]></defo>
 			</column>
 			<column name="validadecertificado" type="date" length="13" decimal="0" jt="91" />
-			<column name="dfe" type="boolean" jt="-7" mandatory="y" >
+			<column name="dfe" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="pagarmesk" type="varchar" length="50" jt="12" />
@@ -2061,25 +2061,25 @@
 		<table name="tblformapagamento" >
 			<column name="codformapagamento" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="formapagamento" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
-			<column name="boleto" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="boleto" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="fechamento" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="fechamento" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="notafiscal" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="notafiscal" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="parcelas" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="diasentreparcelas" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="avista" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="avista" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="formapagamentoecf" type="varchar" length="5" decimal="0" jt="12" />
-			<column name="entrega" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="entrega" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="valecompra" type="boolean" jt="-7" mandatory="y" >
+			<column name="valecompra" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[Habilitado utilização em vale compra]]></comment>
 			</column>
@@ -2087,16 +2087,16 @@
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="lio" type="boolean" jt="-7" mandatory="y" >
+			<column name="lio" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="pix" type="boolean" jt="-7" mandatory="y" >
+			<column name="pix" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="stone" type="boolean" jt="-7" mandatory="y" >
+			<column name="stone" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="integracao" type="boolean" jt="-7" mandatory="y" >
+			<column name="integracao" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="tblformapagamento_pkey" unique="PRIMARY_KEY" >
@@ -2656,7 +2656,7 @@
 13	Voucher alimentação/refeição
 28	Cancelamento de venda]]></comment>
 			</column>
-			<column name="autorizada" type="boolean" jt="-7" mandatory="y" >
+			<column name="autorizada" type="boolean" jt="16" mandatory="y" >
 				<comment><![CDATA[payments.paymentFilelds.statusCode == 1]]></comment>
 			</column>
 			<column name="codlioterminal" type="bigint" jt="-5" />
@@ -2887,7 +2887,7 @@
 			<column name="codmarca" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codimagem" type="bigint" jt="-5" />
 			<column name="marca" type="varchar" length="50" decimal="0" jt="12" />
-			<column name="site" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="site" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
@@ -2899,7 +2899,7 @@
 				<defo><![CDATA[30]]></defo>
 			</column>
 			<column name="codopencart" type="bigint" jt="-5" />
-			<column name="controlada" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="controlada" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -2914,7 +2914,7 @@
 			<column name="vendaanovalor" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="vendaanopercentual" type="numeric" length="7" decimal="4" jt="2" />
 			<column name="vendaultimocalculo" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="abcignorar" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="abcignorar" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="abcposicao" type="bigint" jt="-5" />
@@ -3625,7 +3625,7 @@ Peso em KG]]></comment>
 			<column name="naturezaoperacao" type="varchar" length="50" decimal="0" jt="12" />
 			<column name="codoperacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codestoquemovimentotipo" type="bigint" jt="-5" mandatory="y" />
-			<column name="emitida" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="emitida" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="observacoesnf" type="varchar" length="500" decimal="0" jt="12" />
@@ -3640,22 +3640,22 @@ Peso em KG]]></comment>
 			<column name="finnfe" type="smallint" length="5" decimal="0" jt="5" mandatory="y" >
 				<defo><![CDATA[1]]></defo>
 			</column>
-			<column name="ibpt" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="ibpt" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="estoque" type="boolean" jt="-7" mandatory="y" >
+			<column name="estoque" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="financeiro" type="boolean" jt="-7" mandatory="y" >
+			<column name="financeiro" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="compra" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="compra" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="venda" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="venda" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="vendadevolucao" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="vendadevolucao" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="tblnaturezaoperacao_pkey" unique="PRIMARY_KEY" >
@@ -3709,10 +3709,10 @@ Peso em KG]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codncm2020" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="bit" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="bit" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="fecep" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="fecep" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="inicio" type="date" length="13" decimal="0" jt="91" />
@@ -3807,7 +3807,7 @@ Peso em KG]]></comment>
 			<column name="codnegociostatus" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="observacoes" type="varchar" length="500" decimal="0" jt="12" />
 			<column name="codusuario" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="entrega" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="entrega" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="acertoentrega" type="timestamp" length="0" decimal="0" jt="93" />
@@ -4214,7 +4214,7 @@ Peso em KG]]></comment>
 			<column name="tipo" type="smallint" jt="5" >
 				<comment><![CDATA[tpNF]]></comment>
 			</column>
-			<column name="ignorada" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="ignorada" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="revisao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -4401,12 +4401,12 @@ Peso em KG]]></comment>
 			<column name="cofinsvcofins" prior="cofinsvalor" type="numeric" length="15" decimal="2" jt="2" >
 				<comment><![CDATA[vCOFINS]]></comment>
 			</column>
-			<column name="compoetotal" type="boolean" jt="-7" mandatory="y" >
+			<column name="compoetotal" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="margem" type="numeric" length="6" decimal="2" jt="2" />
 			<column name="complemento" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="modalidadeicmsgarantido" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="modalidadeicmsgarantido" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -4516,11 +4516,11 @@ Peso em KG]]></comment>
 		<table name="tblnotafiscal" >
 			<column name="codnotafiscal" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codnaturezaoperacao" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
-			<column name="emitida" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="emitida" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="nfechave" type="varchar" length="100" decimal="0" jt="12" />
-			<column name="nfeimpressa" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="nfeimpressa" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="serie" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
@@ -4781,7 +4781,7 @@ Peso em KG]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="pedido" type="varchar" length="15" jt="12" />
 			<column name="pedidoitem" type="integer" jt="4" />
-			<column name="certidaosefazmt" type="boolean" length="1" decimal="0" jt="-7" >
+			<column name="certidaosefazmt" type="boolean" length="1" decimal="0" jt="16" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="fethabkg" type="numeric" length="14" decimal="6" jt="2" />
@@ -4910,7 +4910,7 @@ Peso em KG]]></comment>
 			<column name="valorseguro" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valordesconto" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valoroutras" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="download" type="boolean" length="1" decimal="0" jt="-7" >
+			<column name="download" type="boolean" length="1" decimal="0" jt="16" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="protocolo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -5024,7 +5024,7 @@ Peso em KG]]></comment>
 		<table name="tblnotafiscalterceirogrupo" >
 			<column name="codnotafiscalterceirogrupo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codnotafiscalterceiro" type="bigint" jt="-5" mandatory="y" />
-			<column name="conferido" type="boolean" jt="-7" >
+			<column name="conferido" type="boolean" jt="16" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -5079,7 +5079,7 @@ Peso em KG]]></comment>
 			<column name="valordesconto" type="numeric" length="15" decimal="2" jt="2" />
 			<column name="valoroutras" type="numeric" length="15" decimal="2" jt="2" />
 			<column name="valortotal" type="numeric" length="15" decimal="2" jt="2" />
-			<column name="compoetotal" type="boolean" jt="-7" mandatory="y" >
+			<column name="compoetotal" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="csosn" type="smallint" jt="5" />
@@ -5355,7 +5355,7 @@ Código de autorização da bandeira]]></comment>
 				<comment><![CDATA[metadata.installmentQuantity
 Quantidade de parcelas. Campo não será enviado se transação não for de crédito parcelado]]></comment>
 			</column>
-			<column name="jurosloja" type="boolean" jt="-7" >
+			<column name="jurosloja" type="boolean" jt="16" >
 				<defo><![CDATA[true]]></defo>
 				<comment><![CDATA[metadata.installmentType
 true=MerchantFinanced
@@ -5447,7 +5447,7 @@ status = canceled]]></comment>
 			<column name="valorpago" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valorcancelado" prior="valorpagocancelado" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valorpagoliquido" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="fechado" type="boolean" jt="-7" mandatory="y" >
+			<column name="fechado" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[closed]]></comment>
 			</column>
@@ -5458,7 +5458,7 @@ status = canceled]]></comment>
 3-voucher
 4-prepaid]]></comment>
 			</column>
-			<column name="jurosloja" type="boolean" jt="-7" mandatory="y" >
+			<column name="jurosloja" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 				<comment><![CDATA[poi_payment_settings.payment_setup.installment_type
 true=merchant
@@ -5700,19 +5700,19 @@ false=issuer]]></comment>
 			<column name="pessoa" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<column name="fantasia" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
 			<column name="inativo" type="date" length="13" decimal="0" jt="91" />
-			<column name="cliente" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="cliente" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="fornecedor" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="fornecedor" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="fisica" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="fisica" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="codsexo" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="cnpj" type="numeric" length="14" decimal="0" jt="2" />
 			<column name="ie" type="varchar" length="20" decimal="0" jt="12" />
-			<column name="consumidor" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="consumidor" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="contato" type="varchar" length="100" decimal="0" jt="12" />
@@ -5738,12 +5738,12 @@ false=issuer]]></comment>
 			<column name="emailcobranca" type="varchar" length="100" decimal="0" jt="12" />
 			<column name="codformapagamento" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="credito" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="creditobloqueado" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="creditobloqueado" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="observacoes" type="varchar" length="500" jt="12" />
 			<column name="mensagemvenda" type="varchar" length="500" decimal="0" jt="12" />
-			<column name="vendedor" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="vendedor" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="rg" type="varchar" length="30" decimal="0" jt="12" />
@@ -5923,10 +5923,10 @@ false=issuer]]></comment>
 				<defo><![CDATA[0]]></defo>
 			</column>
 			<column name="email" prior="telefone" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
-			<column name="nfe" type="boolean" jt="-7" mandatory="y" >
+			<column name="nfe" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="cobranca" type="boolean" jt="-7" mandatory="y" >
+			<column name="cobranca" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
@@ -5955,13 +5955,13 @@ false=issuer]]></comment>
 			<column name="ordem" type="smallint" jt="5" mandatory="y" >
 				<defo><![CDATA[0]]></defo>
 			</column>
-			<column name="nfe" type="boolean" jt="-7" mandatory="y" >
+			<column name="nfe" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="entrega" type="boolean" jt="-7" mandatory="y" >
+			<column name="entrega" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="cobranca" type="boolean" jt="-7" mandatory="y" >
+			<column name="cobranca" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="cep" type="varchar" length="8" decimal="0" jt="12" />
@@ -6237,7 +6237,7 @@ false=issuer]]></comment>
 			<column name="agenciadigito" type="integer" length="10" decimal="0" jt="4" />
 			<column name="conta" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="contadigito" type="integer" length="10" decimal="0" jt="4" />
-			<column name="emiteboleto" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="emiteboleto" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="codfilial" type="bigint" length="19" decimal="0" jt="-5" />
@@ -6297,10 +6297,10 @@ false=issuer]]></comment>
 			<column name="lancamento" type="timestamp" jt="93" mandatory="y" />
 			<column name="valor" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
 			<column name="observacoes" type="varchar" length="300" jt="12" />
-			<column name="conciliado" type="boolean" jt="-7" mandatory="y" >
+			<column name="conciliado" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="manual" type="boolean" jt="-7" mandatory="y" >
+			<column name="manual" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="codportadortransferencia" type="bigint" jt="-5" />
@@ -6387,6 +6387,14 @@ false=issuer]]></comment>
 				<column name="codportaria195" />
 			</index>
 		</table>
+		<table name="tblportaria195abr2023" >
+			<column name="tabela" type="varchar" decimal="0" jt="12" />
+			<column name="item" type="numeric" jt="2" />
+			<column name="cest" type="varchar" decimal="0" jt="12" />
+			<column name="ncm" type="varchar" decimal="0" jt="12" />
+			<column name="descricao" type="text" decimal="0" jt="12" />
+			<column name="mva" type="numeric" jt="2" />
+		</table>
 		<table name="tblprancheta" >
 			<column name="codprancheta" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="prancheta" type="varchar" length="50" jt="12" mandatory="y" />
@@ -6458,7 +6466,7 @@ false=issuer]]></comment>
 			<column name="codprefixogs1" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="inicial" type="varchar" length="3" jt="12" mandatory="y" />
 			<column name="final" type="varchar" length="3" jt="12" mandatory="y" />
-			<column name="especial" type="boolean" jt="-7" mandatory="y" >
+			<column name="especial" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="descricao" type="varchar" length="200" jt="12" />
@@ -6496,7 +6504,7 @@ false=issuer]]></comment>
 			<column name="codsubgrupoproduto" type="bigint" jt="-5" mandatory="y" />
 			<column name="codmarca" type="bigint" jt="-5" mandatory="y" />
 			<column name="preco" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="importado" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="importado" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="codtributacao" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -6504,7 +6512,7 @@ false=issuer]]></comment>
 			<column name="codtipoproduto" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
 				<defo><![CDATA[0]]></defo>
 			</column>
-			<column name="site" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="site" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="descricaosite" type="text" length="1024" jt="12" />
@@ -6515,13 +6523,13 @@ false=issuer]]></comment>
 			<column name="altura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="largura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="profundidade" type="numeric" length="8" decimal="2" jt="2" />
-			<column name="vendesite" type="boolean" jt="-7" mandatory="y" >
+			<column name="vendesite" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="metakeywordsite" type="varchar" length="200" jt="12" />
 			<column name="metadescriptionsite" type="text" jt="12" />
 			<column name="codprodutoimagem" type="bigint" jt="-5" />
-			<column name="abcignorar" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="abcignorar" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="abcposicao" type="bigint" jt="-5" />
@@ -6537,7 +6545,7 @@ false=issuer]]></comment>
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="revisao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="estoque" type="boolean" jt="-7" mandatory="y" >
+			<column name="estoque" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 				<comment><![CDATA[Controla Estoque]]></comment>
 			</column>
@@ -6674,7 +6682,7 @@ false=issuer]]></comment>
 			<column name="altura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="largura" type="numeric" length="8" decimal="2" jt="2" />
 			<column name="profundidade" type="numeric" length="8" decimal="2" jt="2" />
-			<column name="vendesite" type="boolean" jt="-7" mandatory="y" >
+			<column name="vendesite" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="descricaosite" type="text" length="1024" jt="12" />
@@ -7052,7 +7060,7 @@ false=issuer]]></comment>
 			<column name="establishmentid" type="uuid" jt="102" >
 				<comment><![CDATA[establishment.id]]></comment>
 			</column>
-			<column name="disponivelloja" type="boolean" jt="-7" mandatory="y" >
+			<column name="disponivelloja" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[mamba_released]]></comment>
 			</column>
@@ -7096,7 +7104,7 @@ false=issuer]]></comment>
 			<column name="serialnumber" type="varchar" length="200" jt="12" >
 				<comment><![CDATA[available_pos_list.pos_serial_number]]></comment>
 			</column>
-			<column name="islinked" type="boolean" jt="-7" mandatory="y" >
+			<column name="islinked" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -7162,11 +7170,11 @@ Possivel de 2 a 12 vezes]]></comment>
 1 - Sem Juros (Padrao)
 2 - Com Juros]]></comment>
 			</column>
-			<column name="processada" type="boolean" jt="-7" mandatory="y" >
+			<column name="processada" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[processed - se ja passou pelo POS]]></comment>
 			</column>
-			<column name="ativa" type="boolean" jt="-7" mandatory="y" >
+			<column name="ativa" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[is_active]]></comment>
 			</column>
@@ -7270,7 +7278,7 @@ undone - desfeita, cancelada, desistiu]]></comment>
 2 - Credito
 3 - Voucher]]></comment>
 			</column>
-			<column name="conciliada" type="boolean" jt="-7" mandatory="y" >
+			<column name="conciliada" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[conciliation - se foi conciliada com a adquirente]]></comment>
 			</column>
@@ -7410,25 +7418,25 @@ Pode mudar apos conciliacao]]></comment>
 		<table name="tbltipomovimentotitulo" >
 			<column name="codtipomovimentotitulo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="tipomovimentotitulo" type="varchar" length="20" decimal="0" jt="12" />
-			<column name="implantacao" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="implantacao" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="ajuste" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="ajuste" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="armotizacao" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="armotizacao" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="juros" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="juros" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="desconto" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="desconto" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="pagamento" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="pagamento" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="estorno" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="estorno" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="observacao" type="varchar" length="255" decimal="0" jt="12" />
@@ -7459,7 +7467,7 @@ Pode mudar apos conciliacao]]></comment>
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="estoque" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="estoque" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="tbltipoproduto_pkey" unique="PRIMARY_KEY" >
@@ -7481,18 +7489,18 @@ Pode mudar apos conciliacao]]></comment>
 		<table name="tbltipotitulo" >
 			<column name="codtipotitulo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="tipotitulo" type="varchar" length="20" decimal="0" jt="12" />
-			<column name="pagar" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="pagar" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="receber" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="receber" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="observacoes" type="varchar" length="255" decimal="0" jt="12" />
 			<column name="codtipomovimentotitulo" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="debito" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="debito" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="credito" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="credito" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -7537,11 +7545,11 @@ Pode mudar apos conciliacao]]></comment>
 			<column name="vencimentooriginal" type="date" length="13" decimal="0" jt="91" mandatory="y" />
 			<column name="debito" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="credito" type="numeric" length="14" decimal="2" jt="2" />
-			<column name="gerencial" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="gerencial" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="observacao" type="varchar" length="255" decimal="0" jt="12" />
-			<column name="boleto" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="boleto" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="nossonumero" type="varchar" length="20" decimal="0" jt="12" />
@@ -7838,7 +7846,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codnaturezaoperacao" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codtipoproduto" type="bigint" jt="-5" mandatory="y" />
 			<column name="codestado" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="bit" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="bit" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="ncm" type="varchar" length="10" jt="12" />
@@ -7860,17 +7868,17 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="acumuladordominiovista" type="integer" length="10" decimal="0" jt="4" />
 			<column name="acumuladordominioprazo" type="integer" length="10" decimal="0" jt="4" />
 			<column name="historicodominio" type="varchar" length="512" decimal="0" jt="12" />
-			<column name="movimentacaofisica" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="movimentacaofisica" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
-			<column name="movimentacaocontabil" type="boolean" length="1" decimal="0" jt="-7" mandatory="y" >
+			<column name="movimentacaocontabil" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 			</column>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="certidaosefazmt" type="boolean" jt="-7" mandatory="y" >
+			<column name="certidaosefazmt" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="fethabkg" type="numeric" length="14" decimal="10" jt="2" />
@@ -8383,8 +8391,8 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<table name="tblveiculotipo" >
 			<column name="codveiculotipo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="veiculotipo" type="varchar" length="50" jt="12" mandatory="y" />
-			<column name="tracao" type="boolean" jt="-7" mandatory="y" />
-			<column name="reboque" type="boolean" jt="-7" mandatory="y" />
+			<column name="tracao" type="boolean" jt="16" mandatory="y" />
+			<column name="reboque" type="boolean" jt="16" mandatory="y" />
 			<column name="tiporodado" type="smallint" jt="5" mandatory="y" >
 				<comment><![CDATA[tpRod
 01 - Truck
@@ -11423,8 +11431,8 @@ AS '$libdir/unaccent', $function$unaccent_lexize$function$
 			<input_param jt="-1" type="internal" inOut="-1" />
 		</function>
 	</schema>
-	<connector name="dev@docker" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.0.jar" driver_desc="Standard" host="localhost" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
-	<connector name="prod@mercurio" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.0.jar" driver_desc="Standard" url="jdbc:postgresql://mercurio.mgpapelaria.com.br:5432/mgsis" host="sistema.mgpapelaria.com.br" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
+	<connector name="dev@docker" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.3.jar" driver_desc="Standard" host="localhost" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
+	<connector name="prod@mercurio" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.3.jar" driver_desc="Standard" url="jdbc:postgresql://mercurio.mgpapelaria.com.br:5432/mgsis" host="sistema.mgpapelaria.com.br" port="5432" instance="mgsis" user="mgsis" passwd="bWdzaXM=" useSystemProxy="false" />
 	<layout name="Layout_Autorizacao" id="Layout_93c6439" confirmed="y" show_column_type="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblfilial" color="B7C8E3" x="752" y="64" />
 		<entity schema="mgsis.mgsis" name="tblgrupousuario" color="B7C8E3" x="432" y="384" />
@@ -12147,7 +12155,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuariocriacao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblestado" color="3986C1" x="48" y="512" />
-		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="368" y="144" >
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="368" y="96" >
 			<column name="codfilial" />
 			<column name="codempresa" />
 			<column name="codpessoa" />
@@ -12160,7 +12168,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="stonecode" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblmdfe" color="CAEEC1" x="384" y="352" />
-		<entity schema="mgsis.mgsis" name="tblmdfeenviosefaz" color="CAEEC1" x="160" y="736" />
+		<entity schema="mgsis.mgsis" name="tblmdfeenviosefaz" color="CAEEC1" x="144" y="752" />
 		<entity schema="mgsis.mgsis" name="tblmdfeestado" color="CAEEC1" x="416" y="832" />
 		<entity schema="mgsis.mgsis" name="tblmdfenfe" color="CAEEC1" x="736" y="368" />
 		<entity schema="mgsis.mgsis" name="tblmdfestatus" color="CAEEC1" x="752" y="832" />
@@ -12478,6 +12486,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="C1D8EE" x="880" y="1072" />
 	</layout>
 	<layout name="Layout_PagarMe" id="Layout-26c6" confirmed="y" show_relation="columns" >
+		<comment><![CDATA[PostgreSQL]]></comment>
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="800" y="480" >
 			<column name="codfilial" />
 			<column name="codempresa" />

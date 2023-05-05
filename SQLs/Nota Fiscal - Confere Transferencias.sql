@@ -52,6 +52,6 @@ select
 	coalesce(e.qtd, 0) - coalesce(l.qtd, 0) as qtd_dif
 from emitidas e
 full outer join lancadas l on (l.origem = e.origem and l.destino = e.destino and l.codnaturezaoperacao = e.codnaturezaoperacaodevolucao)
-order by 3, 4, 5, 6, 7, 8, 9 desc
+order by 3 desc, 4, 5, 6, 7, 8, 9 desc
 
 

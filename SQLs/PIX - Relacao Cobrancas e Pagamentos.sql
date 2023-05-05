@@ -205,3 +205,10 @@ where coalesce(to_char(cpf, '00000000000'), to_char(cnpj, '00000000000000')) ili
 SELECT * FROM TBLNEGOCIO WHERE CODNEGOCIO = 2934666
 
 update tblnotafiscal set nfechave = '51221204576775000322650010008263231991736762' where codnotafiscal = 2250023
+
+
+select * from tblpix where valor = 234
+
+select * from tblpagarmepagamento t where valorpagamento = 234
+
+select * from tblpagarmepagamento t where nome ilike '%edson%'
