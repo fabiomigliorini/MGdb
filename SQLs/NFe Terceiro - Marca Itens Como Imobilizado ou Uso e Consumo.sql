@@ -22,7 +22,8 @@ set codprodutobarra = (
 		inner join tblproduto p on (p.codncm = n.codncm)
 		inner join tblprodutobarra pb on (pb.codproduto = p.codproduto)
 		where n.ncm = tblnfeterceiroitem.ncm
-		and p.codtipoproduto = 7 -- USO E CONSUMO
+		and p.codtipoproduto = :codtipoproduto
+		--and p.codtipoproduto = 7 -- USO E CONSUMO
 		--and p.codtipoproduto = 8 -- IMOBILIZADO
 	),
 	complemento = null,
@@ -32,6 +33,9 @@ where tblnfeterceiroitem.codnfeterceiro = :codnfeterceiro
 
 
 select * from tbltipoproduto t order by codtipoproduto 
+
+$nfeTerceiroItem->qcom = $quantidade;
+$nfeTerceiroItem->vuncom = $nti->vprod / $quantidade; 
 
 
 select codnfeterceiro, nsu, nfechave, data, * from tbldistribuicaodfe t where "data" is null

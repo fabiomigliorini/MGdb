@@ -2,7 +2,7 @@
 select 
 	codnegocio, 
 	codstonepretransacao, 
-	' curl https://api.mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || codstonepretransacao, 
+	' curl https://api-mgspa.mgpapelaria.com.br/api/v1/stone-connect/pre-transacao/' || codstonepretransacao, 
 	criacao,
 	* 
 from tblstonepretransacao t 

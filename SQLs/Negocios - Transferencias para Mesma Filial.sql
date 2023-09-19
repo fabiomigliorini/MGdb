@@ -39,7 +39,7 @@ update tblnegocio set codestoquelocal = :codestoquelocal, codfilial = :codfilial
 
 
 
-
+select * from tblnegocio t where codnegocio = 3181872
 
 
 

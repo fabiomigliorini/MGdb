@@ -1,5 +1,5 @@
 ﻿update tblliquidacaotitulo 
-set codportador = (select p.codportador from tblportador p where p.portador ilike '%329%')
+set codportador = (select p.codportador from tblportador p where p.portador ilike '%6147%')
 where codliquidacaotitulo = :codliquidacaotitulo;
 
 update tblmovimentotitulo
@@ -27,3 +27,8 @@ and lt.transacao  != tblmovimentotitulo.transacao ;
 --update tblnfeterceiroitem  set complemento = 522-257.14-12.86 where codnfeterceiroitem  = 335938
 
 select * from tblmovimentotitulo t where codtitulo = 433896
+
+select * from tblliquidacaotitulo t where codliquidacaotitulo = 112858 
+
+
+select * from  tblprodutobarra where codproduto = 71201

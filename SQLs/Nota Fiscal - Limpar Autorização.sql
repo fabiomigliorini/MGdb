@@ -29,5 +29,16 @@ from tblnotafiscal
 where codfilial = :codfilial
 and modelo = :modelo
 and serie = :serie
-and numero = :numero
+and numero in :numero
+and emitida = true
+
+
+UPDATE tblnotafiscal
+set nfeautorizacao = null,
+nfedataautorizacao = null,
+nfeinutilizacao = null
+where codfilial = :codfilial
+and modelo = :modelo
+and serie = :serie
+and numero in :numero
 and emitida = true

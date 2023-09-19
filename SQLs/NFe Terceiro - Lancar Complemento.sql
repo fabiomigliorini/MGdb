@@ -16,7 +16,9 @@
 update tblnfeterceiroitem set complemento = vprod, margem = 40 where codnfeterceiro = 39775
 
 --FOUR STAR / CW
-update tblnfeterceiroitem set complemento = (vprod * 4 * 0.85) - vprod, margem = 40 where codnfeterceiro in (44291)
+update tblnfeterceiroitem set complemento = (vprod * 4 * 0.85) - vprod, margem = 40 where codnfeterceiro in (45935, 45936)
+
+update tblnfeterceiroitem set complemento = (vprod * 2) - vprod, margem = 40 where codnfeterceiro in (45936)
 
 update tblnfeterceiroitem set complemento = (vprod * 4 * 0.8555) - vprod, margem = 40 where codnfeterceiro in (42126)
 
@@ -53,7 +55,7 @@ select sum(vprod) from tblnfeterceiroitem t where codnfeterceiro in (32388)
 --update tblnfeterceiroitem set complemento = vprod - vdesc, margem = 37 where codnfeterceiro in (27610)
 
 -- Rocie / Fartex / Wincy / Rio de Ouro
-update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (43207)
+update tblnfeterceiroitem set complemento = (vprod * 2.5) - vprod, margem = 40 where codnfeterceiro in (45996)
 
 
 -- Bazzi Company

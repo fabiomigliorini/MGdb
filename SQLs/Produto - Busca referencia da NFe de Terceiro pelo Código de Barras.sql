@@ -9,7 +9,7 @@ and npb.criacao >= '2022-01-01'
 group by pb.barras, pv.variacao, pv.referencia, pe.quantidade
 order by 2 asc, 1 asc
 
-select * from tblnfeterceiroitem where cean ilike '78984262%'
+select * from tblnfeterceiroitem where cean ilike '%7898426280907%'
 
 select criacao, * from tblnfeterceiroitem where '7898426273435' in (cean, ceantrib) order by criacao desc nulls last
 

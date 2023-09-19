@@ -2,18 +2,20 @@ select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.venciment
 from tbltitulo t
 inner join tblpessoa p on (p.codpessoa = t.codpessoa)
 inner join tblfilial f on (f.codfilial = t.codfilial)
-where t.debito = :valor
+where t.debito between (:valor * .9) and (:valor * 1.1)
 --where t.credito = :valor
 --where t.credito = 89
 --and saldo > 0
 order by vencimento  desc nulls LAST
 --order by criacao desc nulls LAST
 
-select valoraprazo, valoravista, * 
+select valoraprazo, valoravista, n.valortotal, n.valorprodutos,  * 
 from tblnegocio n
-where n.lancamento between (:data::timestamp - '1 days'::interval) and (:data::timestamp + '48 HOURS'::interval)
-and (n.VALORTOTAL  = :valor or n.valorprodutos = :valor)
-order by codnegocio asc
+--where n.lancamento between (:data::timestamp - '1 days'::interval) and (:data::timestamp + '48 HOURS'::interval)
+--and (n.VALORTOTAL  = :valor or n.valorprodutos  = :valor)
+where n.valorprodutos  between (:valor * .98) and (:valor * 1.02)
+and n.lancamento >= now() - '1 year'::interval
+order by codnegocio desc
 
 
 select p.fantasia, f.filial, t.numero, t.saldo, t.debito, t.credito, t.vencimento, t.criacao, t.codtitulo
@@ -26,7 +28,7 @@ order by criacao desc nulls LAST
 
 select valortotal, valoraprazo, *
 from tblnegocio n
-where n.valortotal = 42
+where n.valortotal = 1020.43
 ---and criacao >= '2021-07-22'
 order by lancamento desc
 
@@ -76,7 +78,7 @@ order by spt.criacao desc
 update tblnotafiscal set nfeautorizacao = null, nfedataautorizacao =null where codnotafiscal = 1959590
 
 
-update tblnegocio set codnegociostatus = 1 where codnegocio = 2467310
+update tblnegocio set codnegociostatus = 1 where codnegocio = 3123942
 
 
 select codpessoa, pessoa, TO_CHAR(cnpj, 'fm00000000000')  from tblpessoa where codgrupocliente = 8 and inativo is null order by pessoa
@@ -97,3 +99,19 @@ select * from tblnegocioformapagamento t where codnegocio = 2930835
 
 
 update tblprodutobarra set codprodutoembalagem = null where codproduto  = 70045
+
+select * from tblnegocio where valortotal  = 5 order by criacao desc nulls last
+
+
+
+select ped.codnegocio, t.parcelas 
+from tblpagarmepagamento t
+inner join tblpagarmepedido ped on (ped.codpagarmepedido = t.codpagarmepedido)
+where t.parcelas >= 7
+
+
+
+select * from tblpessoa where ie is null order by criacao desc
+
+
+select * from tblnegocio where codnegocio = 3126905

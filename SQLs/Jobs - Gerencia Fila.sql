@@ -23,9 +23,11 @@ FROM pg_stat_activity
 
 
 
-select * from tbljobs where attempts > 1
+select * from tbljobs where attempts > 10
 
-delete from tbljobsspa where attempts > 100;
+delete from tbljobsspa where attempts > 10;
+
+delete from tbljobs where attempts > 10;
 
 ALTER SEQUENCE tbljobs_id_seq RESTART WITH 1;
 

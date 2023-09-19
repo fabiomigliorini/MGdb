@@ -15,9 +15,10 @@ select
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
 where pp.status = 1
---where pp.valor = 242.22
---and pos.serial ilike '%6K699667'
---where idpedido = 'or_Qe2POm1IYTW7zJd7'
+--where pp.valor = 19.5
+--and pos.serial ilike '%1731113308'
+--and pos.serial ilike '%1731066478'
+--where idpedido = 'or_pWnqAjWTwT9v81rL'
 --and pp.codfilial = 103
 --and pos.apelido ilike 'Charlie'
 --and pp.idpedido = 'or_rYOVmZYfPuk1JpmL'

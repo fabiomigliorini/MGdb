@@ -23,19 +23,30 @@ order by 4 desc
 --group by date_trunc('month', n.lancamento)
 
 
-update tblnegocio set codnegociostatus = 1 where codnegocio = 2258445
+update tblnegocio 
+set codnegociostatus = 1 
+where codnegocio = 2258445
 
-update tblnfeterceiroitem set nitem = nitem * 100 where codnfeterceiro  = 34550
+update tblnfeterceiroitem 
+set nitem = nitem * 100 
+where codnfeterceiro  = 34550
 
-update tblnfeterceiroitem set margem = 37 where codnfeterceiro  = 34550
+update tblnfeterceiroitem 
+set margem = 37 
+where codnfeterceiro  = 34550
 
 select nextval('tblnfeterceiroitem_codnfeterceiroitem_seq')
 
 
-update tblmarca set controlada = true where marca ilike 'santana' 
+update tblmarca 
+set controlada = true 
+where marca ilike 'santana' 
 
 
-select criacao, cnpj, * from tblpessoa where codusuariocriacao is null order by criacao desc nulls last
+select criacao, cnpj, * 
+from tblpessoa 
+where codusuariocriacao is null 
+order by criacao desc nulls last
 
 
 
@@ -45,3 +56,6 @@ select criacao, cnpj, * from tblpessoa where codusuariocriacao is null order by 
 
 
 
+
+
+select * from tblnotafiscalprodutobarra t where codnotafiscal = 2421081

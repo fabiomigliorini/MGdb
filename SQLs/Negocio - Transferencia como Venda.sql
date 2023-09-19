@@ -44,3 +44,6 @@ inner join tblnegocioprodutobarra npb on (npb.codnegocio = n.codnegocio)
 inner join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegocioprodutobarra)
 where n.codnaturezaoperacao = 15 -- transferencia de saida
 and em.codestoquemovimentotipo not in (4101, 4201); 
+
+
+select * from tblproduto where codproduto = 950500

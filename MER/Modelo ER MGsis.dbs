@@ -2450,6 +2450,22 @@
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
+		<table name="tblibptaxcsv" >
+			<column name="codigo" type="varchar" decimal="0" jt="12" />
+			<column name="ex" type="varchar" decimal="0" jt="12" />
+			<column name="tipo" type="varchar" decimal="0" jt="12" />
+			<column name="descricao" type="varchar" decimal="0" jt="12" />
+			<column name="nacionalfederal" type="real" length="8" decimal="8" jt="7" />
+			<column name="importadosfederal" type="real" length="8" decimal="8" jt="7" />
+			<column name="estadual" type="real" length="8" decimal="8" jt="7" />
+			<column name="municipal" type="real" length="8" decimal="8" jt="7" />
+			<column name="vigenciainicio" type="varchar" decimal="0" jt="12" />
+			<column name="vigenciafim" type="varchar" decimal="0" jt="12" />
+			<column name="chave" type="varchar" decimal="0" jt="12" />
+			<column name="versao" type="varchar" decimal="0" jt="12" />
+			<column name="fonte" type="varchar" decimal="0" jt="12" />
+			<column name="codestado" type="bigint" length="19" decimal="0" jt="-5" />
+		</table>
 		<table name="tblibptaxmt211a" >
 			<column name="codigo" type="varchar" length="1024" decimal="0" jt="12" />
 			<column name="ex" type="varchar" length="1024" decimal="0" jt="12" />
@@ -6040,7 +6056,7 @@ false=issuer]]></comment>
 			<column name="cep" type="varchar" length="8" decimal="0" jt="12" />
 			<column name="endereco" type="varchar" length="100" decimal="0" jt="12" />
 			<column name="numero" type="varchar" length="10" decimal="0" jt="12" />
-			<column name="complemento" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="complemento" type="varchar" length="50" jt="12" />
 			<column name="bairro" type="varchar" length="50" decimal="0" jt="12" />
 			<column name="codcidade" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
@@ -6613,14 +6629,19 @@ false=issuer]]></comment>
 				<defo><![CDATA['C'::bpchar]]></defo>
 			</column>
 			<column name="codcestanterior" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="revisao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="estoque" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
 				<comment><![CDATA[Controla Estoque]]></comment>
+			</column>
+			<column name="codprodutoembalagemcompra" type="bigint" jt="-5" />
+			<column name="codprodutoembalagemtransferencia" prior="codprodutoembalagemvenda" type="bigint" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="conferenciaperiodica" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
 			</column>
 			<index name="tblproduto_pkey" unique="PRIMARY_KEY" >
 				<column name="codproduto" />
@@ -6688,6 +6709,12 @@ false=issuer]]></comment>
 			<fk name="tblproduto_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
+			<fk name="fk_tblproduto_tblprodutoembalagem" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="setNull" update_action="cascade" >
+				<fk_column name="codprodutoembalagemcompra" pk="codprodutoembalagem" />
+			</fk>
+			<fk name="fk_tblproduto_tblprodutoembalagem_0" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="setNull" update_action="cascade" >
+				<fk_column name="codprodutoembalagemtransferencia" pk="codprodutoembalagem" />
+			</fk>
 		</table>
 		<table name="tblprodutobarra" >
 			<column name="codprodutobarra" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -6732,7 +6759,7 @@ false=issuer]]></comment>
 			<fk name="tblprodutobarra_codproduto_fkey" to_schema="mgsis.mgsis" to_table="tblproduto" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codproduto" pk="codproduto" />
 			</fk>
-			<fk name="tblprodutobarra_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" update_action="cascade" >
+			<fk name="tblprodutobarra_codprodutoembalagem_fkey" to_schema="mgsis.mgsis" to_table="tblprodutoembalagem" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codprodutoembalagem" pk="codprodutoembalagem" />
 			</fk>
 			<fk name="fk_tblprodutobarra" to_schema="mgsis.mgsis" to_table="tblprodutovariacao" delete_action="cascade" update_action="cascade" >
@@ -11653,13 +11680,13 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblportador" color="C1D8EE" x="1184" y="288" >
 			<column name="codportador" />
@@ -11741,13 +11768,13 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="96" y="784" >
 			<column name="codproduto" />
@@ -11761,10 +11788,13 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codprodutoimagem" />
 			<column name="abc" />
 			<column name="codcestanterior" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="revisao" />
 			<column name="estoque" />
+			<column name="codprodutoembalagemcompra" />
+			<column name="codprodutoembalagemtransferencia" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="conferenciaperiodica" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="800" y="880" >
 			<column name="codprodutobarra" />
@@ -12266,12 +12296,12 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblveiculo" color="EEC1C1" x="1024" y="768" />
 		<entity schema="mgsis.mgsis" name="tblveiculoconjunto" color="EEC1C1" x="960" y="304" />
@@ -12473,13 +12503,13 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 	</layout>
 	<layout name="Layout_NCM" id="Layout9248750" confirmed="y" show_column_type="y" show_relation="columns" >
@@ -12589,7 +12619,6 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codpessoa" />
 			<column name="pessoa" />
 			<column name="fantasia" />
-			<column name="inativo" />
 			<column name="cliente" />
 			<column name="fornecedor" />
 			<column name="fisica" />
@@ -12601,10 +12630,11 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="inativo" />
 		</entity>
 		<script name="SQL_Editor" id="Editor-106" language="SQL" >
 			<string><![CDATA[ALTER TABLE mgsis.tblpagarmepagamento ADD CONSTRAINT fk_tblpagarmepagamento_tblpagarmepos FOREIGN KEY (  ) REFERENCES mgsis.tblpagarmepos(  )  ON UPDATE CASCADE ;
@@ -12670,15 +12700,15 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<entity schema="mgsis.mgsis" name="tblfamiliaproduto" color="94C3EA" x="848" y="176" />
 		<entity schema="mgsis.mgsis" name="tblgrupoproduto" color="94C3EA" x="592" y="160" />
 		<entity schema="mgsis.mgsis" name="tblimagem" color="3986C1" x="1296" y="208" />
-		<entity schema="mgsis.mgsis" name="tblmarca" color="94C3EA" x="912" y="416" />
-		<entity schema="mgsis.mgsis" name="tblncm" color="94C3EA" x="624" y="992" />
-		<entity schema="mgsis.mgsis" name="tblncmtributacao" color="94C3EA" x="1168" y="448" />
+		<entity schema="mgsis.mgsis" name="tblmarca" color="94C3EA" x="1024" y="448" />
+		<entity schema="mgsis.mgsis" name="tblncm" color="94C3EA" x="704" y="1008" />
+		<entity schema="mgsis.mgsis" name="tblncmtributacao" color="94C3EA" x="1280" y="672" />
 		<entity schema="mgsis.mgsis" name="tblproduto" color="94C3EA" x="368" y="416" />
-		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="94C3EA" x="960" y="1024" />
-		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="94C3EA" x="96" y="880" />
+		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="94C3EA" x="1056" y="1024" />
+		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="94C3EA" x="80" y="912" />
 		<entity schema="mgsis.mgsis" name="tblprodutohistoricopreco" color="94C3EA" x="64" y="528" />
 		<entity schema="mgsis.mgsis" name="tblprodutoimagem" color="94C3EA" x="112" y="272" />
-		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="94C3EA" x="608" y="464" />
+		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="94C3EA" x="688" y="464" />
 		<entity schema="mgsis.mgsis" name="tblsecaoproduto" color="94C3EA" x="1072" y="192" />
 		<entity schema="mgsis.mgsis" name="tblsubgrupoproduto" color="94C3EA" x="352" y="144" />
 		<entity schema="mgsis.mgsis" name="tblunidademedida" color="3986C1" x="48" y="48" />
@@ -12764,13 +12794,13 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="832" y="688" >
 			<column name="codproduto" />
@@ -12784,10 +12814,13 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codprodutoimagem" />
 			<column name="abc" />
 			<column name="codcestanterior" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="revisao" />
 			<column name="estoque" />
+			<column name="codprodutoembalagemcompra" />
+			<column name="codprodutoembalagemtransferencia" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="conferenciaperiodica" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="304" y="560" >
 			<column name="codprodutobarra" />
@@ -12849,13 +12882,13 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
 			<column name="rntrc" />
 			<column name="tipotransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="816" y="752" >
 			<column name="codprodutobarra" />

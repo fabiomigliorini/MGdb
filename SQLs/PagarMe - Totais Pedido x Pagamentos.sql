@@ -56,7 +56,6 @@ pg.codfilial,
 	order by 3, 1, 2
 
 /*
-
 select * from tblpagarmepagamento t where codpagarmepedido in (12)
 
 update tblpagarmepagamento set valorpagamento = null, valorcancelamento = null where codpagarmepedido = 12
@@ -64,18 +63,20 @@ update tblpagarmepagamento set valorpagamento = null, valorcancelamento = null w
 select * from tblpagarmepedido t where codpagarmepedido in (12)
 
 update tblpagarmepedido set valorpago = null, valorcancelado = null, valorpagoliquido = null where codpagarmepedido = 12
-
 */
 
 select codfilial, pagarmesk, pagarmeid from tblfilial where pagarmeid is not null
 
-
 select codpagarmepedido, valor, status, fechado, * from tblpagarmepedido order by codpagarmepedido desc
-
 
 select * from tblpagarmepos t 
 
 select * from information_schema."columns" c where table_name='tblpagarmepedido' order by ordinal_position 
 
 select * from tblpagarmepedido t where idpedido  ilike '%8B9P'
+
+select t2.codnegocio, t.* 
+from tblpagarmepagamento t
+inner join tblpagarmepedido t2 on (t2.codpagarmepedido = t.codpagarmepedido)
+where t.parcelas > 6 
 
