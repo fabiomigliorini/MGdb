@@ -8,10 +8,10 @@ delete from tblnegocioprodutobarra where tblnegocioprodutobarra.codnegocio in
 	--and tblnegocio.codusuario in (select tblusuario.codusuario from tblusuario where usuario ilike 'esc%')
 )
 
-select tblnegocio.codnegocio, coalesce(observacoes || ' - ', '') || 'CANCELAMENTO AUTOMATICO - NEGOCIO NAO FECHADO COM MAIS DE 15 DIAS' 
+select tblnegocio.codnegocio, coalesce(observacoes || ' - ', '') || 'CANCELAMENTO AUTOMATICO - NEGOCIO NAO FECHADO COM MAIS DE 7 DIAS' 
 from tblnegocio 
 where tblnegocio.codnegociostatus = 1
-and tblnegocio.lancamento < (current_date - interval '30 day')
+and tblnegocio.lancamento < (current_date - interval '7 day')
 
 
 update tblnegocio 
@@ -22,6 +22,8 @@ set codnegociostatus = 3
 where tblnegocio.codnegociostatus = 1
 and tblnegocio.lancamento < (current_date - interval '7 day')
 --and tblnegocio.codusuario in (select tblusuario.codusuario from tblusuario where usuario ilike 'esc%')
+returning codnegocio, valortotal, lancamento 
+ 
 
 select * from tblusuario where codusuario = 1
 
