@@ -9,7 +9,7 @@ echo
 echo
 
 echo "DESCOBRINDO ULTIMO BACKUP (senha super@mercurio)"
-BACKUP=$(sshpass -p "$SSHPASS" ssh -o StrictHostKeyChecking=no super@mercurio.mgpapelaria.com.br "ls -1 -t /media/hd/backup/postgres | head -1")
+BACKUP=$(sshpass -p "$SSHPASS" ssh -o StrictHostKeyChecking=no super@mercurio.mgpapelaria.com.br "ls -1 -t /media/sdc1/backup/postgres | head -1")
 if [ $? != 0 ] ; then
   echo erro
   exit
@@ -19,7 +19,7 @@ echo
 echo
 
 echo "COPIANDO ULTIMO BACKUP (senha super@mercurio)"
-sshpass -p "$SSHPASS" rsync -avP super@mercurio.mgpapelaria.com.br:/media/hd/backup/postgres/$BACKUP /tmp/$BACKUP --progress
+sshpass -p "$SSHPASS" rsync -avP super@mercurio.mgpapelaria.com.br:/media/sdc1/backup/postgres/$BACKUP /tmp/$BACKUP --progress
 if [ $? != 0 ] ; then
   echo erro
   exit
