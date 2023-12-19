@@ -55,6 +55,7 @@ pg.codfilial,
 	pos.serial
 	order by 3, 1, 2
 
+	
 /*
 select * from tblpagarmepagamento t where codpagarmepedido in (12)
 
@@ -80,3 +81,13 @@ from tblpagarmepagamento t
 inner join tblpagarmepedido t2 on (t2.codpagarmepedido = t.codpagarmepedido)
 where t.parcelas > 6 
 
+
+
+-- Totais da Maquineta
+select sum(pag.valorpagamento)
+from tblpagarmepos p
+inner join tblpagarmepagamento pag on (pag.codpagarmepos = p.codpagarmepos)
+where p.codfilial = 104
+and p.apelido ilike '%Alfa%'
+and pag.transacao >= '2023-12-18 00:00:00'
+order by pag.transacao desc

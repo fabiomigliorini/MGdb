@@ -20,7 +20,7 @@ nfedataautorizacao = null
 where codfilial = :codfilial
 and modelo = :modelo
 and serie = :serie
-and numero = :numero
+and numero in :numeros
 and emitida = true
 
 
@@ -42,3 +42,4 @@ and modelo = :modelo
 and serie = :serie
 and numero in :numero
 and emitida = true
+

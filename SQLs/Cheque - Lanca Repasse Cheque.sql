@@ -1,11 +1,12 @@
 ﻿--select * from tblportador order by codportador
 
 -- Cria Repasse
-insert into tblchequerepasse (codportador, data, observacoes, criacao, codusuariocriacao) values (1, :data, null, :data, 1);
+insert into tblchequerepasse (codportador, data, observacoes, criacao, codusuariocriacao) values (1, :data, null, :data, 1) returning *;
 
+/*
 select * from tblchequerepasse order by codchequerepasse desc limit 50;
-
 select * from tblchequerepassecheque t order by codchequerepassecheque desc limit 50;
+*/
 
 -- Vincula Cheques ao repasse
 insert into tblchequerepassecheque (codcheque, codchequerepasse, criacao, codusuariocriacao)
@@ -30,7 +31,14 @@ select crc.codchequerepasse, sum(c.valor), count(crc.codchequerepassecheque)
 select * 
 from totais t
 inner join tblchequerepasse cr on (cr.codchequerepasse = t.codchequerepasse)
-order by 1 desc
+order by data desc
+
+select c.codcheque, cr."data", c.valor, c.emissao, c.emissao, c.vencimento, cr.codchequerepasse, cr.observacoes, p.portador 
+from tblchequerepasse cr
+inner join tblchequerepassecheque crc on (crc.codchequerepasse = cr.codchequerepasse)
+inner join tblcheque c on (c.codcheque = crc.codcheque)
+inner join tblportador p on (p.codportador = cr.codportador)
+order by cr."data" desc, c.valor desc, c.codcheque desc
 
 --update tblcheque set valor = 390 where cmc7 = '<74880036<0180040885>000007622962:'
 
@@ -120,12 +128,3 @@ delete from tblchequerepassecheque where codchequerepassecheque in (17644, 17645
 
 delete from tblchequerepassecheque where codchequerepasse = :codchequerepasse 
 
-
-
-select * from tbl
-
-select * from tblcontacontabil t order by alteracao desc nulls 
-
-select * from tblpessoa where codpessoa = 13936
-
-select * from tblnotafiscal where codnotafiscal = 2348647

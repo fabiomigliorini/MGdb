@@ -4,8 +4,8 @@ with pix as (
 	from tblpix pix
 	where pix.nome is not null 
 	and pix.cpf is not null
---	and pix.nome ilike '%andreia%PEREIRA%'
-	and pix.cpf = 00106822101
+	and pix.nome ilike :nome
+	--and pix.cpf = :cpf
 	group by pix.cpf
 )
 insert into tblpessoa (

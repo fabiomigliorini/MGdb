@@ -4,8 +4,8 @@ select ' curl ''https://api-mgspa.mgpapelaria.com.br/api/v1/pix/cob/' || pc.codp
 left join tblpix p on (p.codpixcob = pc.codpixcob)
 left join tblnegocio n on (n.codnegocio = pc.codnegocio)
 left join tblusuario u on (u.codusuario = n.codusuario)
-where pc.codpixcobstatus != 4 -- Expirado
-and p.codpix is null
+where pc.codpixcobstatus not in (2, 4) -- Concluida/Expirado
+--and p.codpix is null
 --and u.usuario = 'igor'
 --and pc.codpixcob = 10032
 order by pc.criacao desc
@@ -13,6 +13,8 @@ order by pc.criacao desc
 --order by pc.criacao desc
 --offset 150
 --limit 50
+
+select * from tblpixcobstatus t 
 
 -- Forca reconsultar
 select count(*)
@@ -29,14 +31,18 @@ select * from tblnegocio where codnegocio = 2873244
 
 
 -- PIXCob concluidos
+with conc as (
 select po.portador, p.horario, p.valor, p.nome, p.txid, n.codnegocio
 from tblpixcob t
 inner join tblnegocio n on (n.codnegocio = t.codnegocio)
 inner join tblusuario u on (u.codusuario = n.codusuario)
 inner join tblpix p on (p.codpixcob = t.codpixcob)
 inner join tblportador po on (po.codportador = p.codportador)
-where t.criacao >= '2021-10-13'
+where t.criacao >= now() - '1 year'::interval
+--and p.valor > 80
 order by p.horario desc, po.portador asc,  p.valor, p.codpix
+)
+select count(*), sum(valor) from conc
 
 -- Totais de PIX Movimentado
 select
@@ -71,6 +77,7 @@ inner join tblusuario u on (u.codusuario = n.codusuario)
 left join tblpix p on (p.codpixcob = t.codpixcob)
 left join tblportador po on (po.codportador = t.codportador)
 inner join tblpixcobstatus pcs on (pcs.codpixcobstatus = t.codpixcobstatus)
+--where t.valororiginal >= 80
 group by date_trunc('month', p.horario)
 --order by t.codpixcobstatus, 2 DESC
 order by 1 desc 
@@ -185,30 +192,3 @@ select codpixcob is null, count(*), min(horario) from tblpix group by codpixcob 
 --)
 --select count(*) from itens
 	
-delete from tblpix where criacao >= '2022-12-20'
-	
-select coalesce(cpf, cnpj), min(nome), count(*), sum(valor), sum(valor) / count(*)
-from tblpix 
-where cpf is not null or cnpj is not null
-group by coalesce(cpf, cnpj) order by 3 desc
-	
-	
-select * from tblmovimentotitulo where debito = 940.95
-
-select * from tblliquidacaotitulo t where codliquidacaotitulo = 00105336
-
-select cpf, cnpj, to_char(cpf, '00000000000'), * 
-from tblpix t 
-where coalesce(to_char(cpf, '00000000000'), to_char(cnpj, '00000000000000')) ilike '%182678%'
-
-
-SELECT * FROM TBLNEGOCIO WHERE CODNEGOCIO = 2934666
-
-update tblnotafiscal set nfechave = '51221204576775000322650010008263231991736762' where codnotafiscal = 2250023
-
-
-select * from tblpix where valor = 234
-
-select * from tblpagarmepagamento t where valorpagamento = 234
-
-select * from tblpagarmepagamento t where nome ilike '%edson%'
