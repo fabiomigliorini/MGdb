@@ -2600,11 +2600,15 @@
 			<column name="failed_at" type="timestamp" decimal="6" jt="93" mandatory="y" >
 				<defo><![CDATA[('now'::text)::timestamp(0) with time zone]]></defo>
 			</column>
+			<column name="uuid" type="text" decimal="0" jt="12" />
 			<index name="pk_tbljobsfailedspa_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 			<index name="tbljobsfailed_queue_0" unique="NORMAL" >
 				<column name="queue" />
+			</index>
+			<index name="tbljobsfailedspa_uuid_idx" unique="UNIQUE_INDEX" >
+				<column name="uuid" />
 			</index>
 		</table>
 		<table name="tbljobsspa" >
@@ -5659,6 +5663,42 @@ false=issuer]]></comment>
 			</fk>
 			<fk name="tblparametrosgerais_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblpdv" >
+			<column name="codpdv" type="bigserial" jt="-5" mandatory="y" />
+			<column name="uuid" type="uuid" jt="102" mandatory="y" />
+			<column name="apelido" type="varchar" length="100" jt="12" />
+			<column name="codfilial" type="bigint" jt="-5" />
+			<column name="ip" type="cidr" jt="1111" />
+			<column name="latitude" type="double precision" jt="3" />
+			<column name="longitude" type="double precision" jt="3" />
+			<column name="precisao" type="double precision" jt="3" />
+			<column name="desktop" type="boolean" jt="16" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="navegador" type="varchar" length="100" jt="12" />
+			<column name="versaonavegador" type="varchar" length="15" jt="12" />
+			<column name="plataforma" type="varchar" length="50" jt="12" />
+			<column name="autorizado" type="boolean" jt="16" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="inativo" type="timestamp" length="0" jt="93" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblpdv" unique="PRIMARY_KEY" >
+				<column name="codpdv" />
+			</index>
+			<fk name="fk_tblpdv_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblpdv_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpdv_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblpedido" >
@@ -12596,6 +12636,10 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="oauth_personal_access_clients" color="3986C1" x="48" y="48" />
 		<entity schema="mgsis.mgsis" name="oauth_refresh_tokens" color="3986C1" x="320" y="48" />
 	</layout>
+	<layout name="Layout_PDV" id="Layout-2151" show_relation="columns" >
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="416" y="48" />
+		<entity schema="mgsis.mgsis" name="tblpdv" color="C1D8EE" x="48" y="64" />
+	</layout>
 	<layout name="Layout_PagarMe" id="Layout-26c6" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="800" y="480" >
@@ -12643,10 +12687,12 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 ]]></string>
 		</script>
 	</layout>
-	<layout name="Layout_Pessoa" id="Layout_156d02e" show_relation="columns" >
+	<layout name="Layout_Pessoa" id="Layout_156d02e" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="EEC1C1" x="1008" y="64" />
 		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="EEC1C1" x="1040" y="288" />
+		<entity schema="mgsis.mgsis" name="tblcidade" color="3986C1" x="96" y="1072" />
 		<entity schema="mgsis.mgsis" name="tblcobrancahistorico" color="C13939" x="1056" y="736" />
+		<entity schema="mgsis.mgsis" name="tblestado" color="3986C1" x="416" y="1088" />
 		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="704" y="352" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="EEC1C1" x="368" y="48" />
 		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="EEC1C1" x="688" y="48" />
