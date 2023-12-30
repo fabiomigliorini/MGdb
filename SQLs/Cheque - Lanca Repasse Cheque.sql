@@ -3,10 +3,7 @@
 -- Cria Repasse
 insert into tblchequerepasse (codportador, data, observacoes, criacao, codusuariocriacao) values (1, :data, null, :data, 1) returning *;
 
-/*
-select * from tblchequerepasse order by codchequerepasse desc limit 50;
-select * from tblchequerepassecheque t order by codchequerepassecheque desc limit 50;
-*/
+select * from tblchequerepasse order by "data"  desc
 
 -- Vincula Cheques ao repasse
 insert into tblchequerepassecheque (codcheque, codchequerepasse, criacao, codusuariocriacao)
@@ -17,7 +14,6 @@ from tblcheque where cmc7 in (
 
 -- Marca Cheque como repassado
 update tblcheque set indstatus = 2 where indstatus = 1 and codcheque in (select crc.codcheque from tblchequerepassecheque crc);
-
 
 -- Consulta Total Cheques do Repasse
 with totais as (
@@ -45,7 +41,9 @@ order by cr."data" desc, c.valor desc, c.codcheque desc
 --update tblchequerepasse set data = :data, criacao = '2019-04-08 11:41' where codchequerepasse = 2336
 --update tblchequerepassecheque set criacao = :data where codchequerepasse = 2286
 
---select * from tblchequerepassecheque where codchequerepasse = 2398
+select * from tblcheque where codcheque = 10910
+
+select * from tblchequerepassecheque  t order by criacao desc 
 
 -- update tblcheque set indstatus = 1 where codcheque = 10135
 

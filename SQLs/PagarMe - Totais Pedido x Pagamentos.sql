@@ -91,3 +91,32 @@ where p.codfilial = 104
 and p.apelido ilike '%Alfa%'
 and pag.transacao >= '2023-12-18 00:00:00'
 order by pag.transacao desc
+
+select fp.formapagamento, sum(nfp.valorpagamento), count(n.codnegocio) 
+from tblnegocio n
+left join tblnegocioformapagamento nfp on (nfp.codnegocio = n.codnegocio)
+left join tblformapagamento fp on (fp.codformapagamento = nfp.codformapagamento)
+where n.codusuario  = 00302161
+and n.lancamento >= '2023-12-18 00:00:00'
+and n.codnegociostatus = 2
+group by fp.formapagamento
+
+
+select n.codnegocio, n.valortotal, fp.codformapagamento, fp.formapagamento, nfp.valorpagamento 
+from tblnegocio n
+left join tblnegocioformapagamento nfp on (nfp.codnegocio = n.codnegocio)
+left join tblformapagamento fp on (fp.codformapagamento = nfp.codformapagamento)
+where n.codusuario  = 00302161
+and n.lancamento >= '2023-12-18 00:00:00'
+and n.codnegociostatus = 2
+and nfp.codformapagamento =1010
+order by n.lancamento desc
+
+
+
+
+select vendedor, * 
+from tblpessoa where vendedor  and inativo is null order by fantasia
+
+
+select * from tblnegocio where codnegocio = 3392417

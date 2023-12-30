@@ -18,3 +18,6 @@ order by nt.codnfeterceiro asc
 --limit 100
 
 
+
+
+

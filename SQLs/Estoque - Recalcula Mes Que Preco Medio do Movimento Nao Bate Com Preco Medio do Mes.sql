@@ -46,3 +46,24 @@ and (
  	abs(round(coalesce(em.entradaquantidade, 0) * coalesce(mes.customedio, 0), 2) - coalesce(em.entradavalor, 0)) > 0.02
  or abs(round(coalesce(em.saidaquantidade  , 0) * coalesce(mes.customedio, 0), 2) - coalesce(em.saidavalor  , 0)) > 0.02
 ) 
+
+
+with tot as (
+  select 
+  	mov.codestoquemes,
+  	sum(mov.entradaquantidade) as entradaquantidade, 
+  	sum(mov.entradavalor) as entradavalor, 
+  	sum(mov.saidaquantidade) as saidaquantidade,
+  	sum(mov.saidavalor) as saidavalor
+  from tblestoquemovimento mov
+  group by mov.codestoquemes
+)
+select 	' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || '&', *
+from tblestoquemes mes
+left join tot on (mes.codestoquemes = tot.codestoquemes)
+where coalesce(tot.entradaquantidade, 0) != coalesce(mes.entradaquantidade, 0) 
+or coalesce(tot.entradavalor, 0) != coalesce(mes.entradavalor, 0)
+or coalesce(tot.saidaquantidade, 0) != coalesce(mes.saidaquantidade, 0)
+or coalesce(tot.saidavalor, 0) != coalesce(mes.saidavalor, 0)
+--and mes.codestoquemes = 3405118
+order by mes.codestoquemes 

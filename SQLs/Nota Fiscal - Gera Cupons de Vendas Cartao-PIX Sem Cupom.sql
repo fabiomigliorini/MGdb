@@ -32,3 +32,23 @@ and nf.valortotal < 1000
 order by 1 desc
 --limit 150
 --offset 0
+
+
+
+select 
+	--nf.codfilial, count(*), sum(nf.valortotal)
+	' time curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/criar" ' ||
+	' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/enviar-sincrono"' ||
+	' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/mail?destinatario=centralfarmafinanceiro%40gmail.com"',
+	valortotal,
+	codnotafiscal 
+--	, 	*
+from tblnotafiscal nf
+where nf.codnaturezaoperacao = 1 -- venda
+and nf.emitida = true 
+and nf.modelo = 65
+and nf.numero = 0
+order by codnotafiscal desc
+
+
+
