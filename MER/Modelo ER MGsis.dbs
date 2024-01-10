@@ -5583,6 +5583,7 @@ status = canceled']]></comment>
 				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
 			</column>
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codpdv" type="bigint" length="64" jt="-5" />
 			<index name="pk_tblpagarmepagamento" unique="PRIMARY_KEY" >
 				<column name="codpagarmepagamento" />
 			</index>
@@ -5603,6 +5604,9 @@ status = canceled']]></comment>
 			</fk>
 			<fk name="fk_tblpagarmepagamento_tblpagarmepos" to_schema="mgsis.mgsis" to_table="tblpagarmepos" update_action="cascade" >
 				<fk_column name="codpagarmepos" pk="codpagarmepos" />
+			</fk>
+			<fk name="fk_tblpagarmepagamento_tblpdv" to_schema="mgsis.mgsis" to_table="tblpdv" update_action="cascade" options="" >
+				<fk_column name="codpdv" pk="codpdv" />
 			</fk>
 		</table>
 		<table name="tblpagarmepedido" >
@@ -5659,6 +5663,7 @@ false=issuer']]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codpdv" type="bigint" length="64" jt="-5" />
 			<index name="pk_tblpagarmepedido" unique="PRIMARY_KEY" >
 				<column name="codpagarmepedido" />
 			</index>
@@ -5679,6 +5684,9 @@ false=issuer']]></comment>
 			</fk>
 			<fk name="fk_tblpagarmepedido_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpagarmepedido_tblpdv" to_schema="mgsis.mgsis" to_table="tblpdv" update_action="cascade" options="" >
+				<fk_column name="codpdv" pk="codpdv" />
 			</fk>
 		</table>
 		<table name="tblpagarmepos" >
@@ -6142,7 +6150,9 @@ false=issuer']]></comment>
 			</fk>
 		</table>
 		<table name="tblpessoaemail" prior="tblpessoatelefone_0" >
-			<column name="codpessoatelefone" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codpessoaemail" type="bigint" length="64" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('tblpessoaemail_codpessoaemail_seq'::regclass)]]></defo>
+			</column>
 			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
 			<column name="ordem" type="smallint" jt="5" mandatory="y" >
 				<defo><![CDATA[0]]></defo>
@@ -6163,7 +6173,7 @@ false=issuer']]></comment>
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codverificacao" type="smallint" jt="5" />
 			<index name="pk_tblpessoatelefone_0" unique="PRIMARY_KEY" >
-				<column name="codpessoatelefone" />
+				<column name="codpessoaemail" />
 			</index>
 			<fk name="fk_tblpessoatelefone_tblusuario_1" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
@@ -6275,6 +6285,7 @@ false=issuer']]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codpdv" type="bigint" length="64" jt="-5" />
 			<index name="pk_tblpix_codpix" unique="PRIMARY_KEY" >
 				<column name="codpix" />
 			</index>
@@ -6305,6 +6316,9 @@ false=issuer']]></comment>
 			<fk name="fk_tblpix_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
+			<fk name="fk_tblpix_tblpdv" to_schema="mgsis.mgsis" to_table="tblpdv" update_action="cascade" options="" >
+				<fk_column name="codpdv" pk="codpdv" />
+			</fk>
 		</table>
 		<table name="tblpixcob" prior="tbl" >
 			<column name="codpixcob" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -6329,6 +6343,7 @@ false=issuer']]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codpdv" type="bigint" length="64" jt="-5" />
 			<index name="pk_tblpixcob_codpixcob" unique="PRIMARY_KEY" >
 				<column name="codpixcob" />
 			</index>
@@ -6361,6 +6376,9 @@ false=issuer']]></comment>
 			</fk>
 			<fk name="fk_tblpixcob_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblpixcob_tblpdv" to_schema="mgsis.mgsis" to_table="tblpdv" update_action="cascade" options="" >
+				<fk_column name="codpdv" pk="codpdv" />
 			</fk>
 		</table>
 		<table name="tblpixcobstatus" prior="tblpixstatus" >
@@ -9562,6 +9580,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tblpermissao_codpermissao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoa_codpessoa_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblpessoacertidao_codpessoacertidao_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblpessoaemail_codpessoaemail_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpix_codpix_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpixcob_codpixcob_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpixcobstatus_codpixcobstatus_seq" options="START WITH 1 INCREMENT BY 1" />

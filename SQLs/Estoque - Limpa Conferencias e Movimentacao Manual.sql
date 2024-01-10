@@ -83,14 +83,6 @@ order by elpv.codestoquelocalprodutovariacao, mes.codestoquesaldo, mes.mes;
 
 
 
-select ' time curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || '  '
-from tblestoquemes mes
-inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
-inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutovariacao = sld.codestoquelocalprodutovariacao)
-inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao )
-where pv.codproduto = :codproduto
-order by elpv.codestoquelocalprodutovariacao, mes.codestoquesaldo, mes.mes;
-
 with tot as (
 	select mov.codestoquemes, sum(mov.entradaquantidade) as entradaquantidade, sum(mov.saidaquantidade) as saidaquantidade
 	from tblprodutovariacao pv
