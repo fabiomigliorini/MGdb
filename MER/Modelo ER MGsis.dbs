@@ -2175,7 +2175,7 @@ padrao: experiencia + 45d]]></comment>
 			<column name="dias" type="smallint" jt="5" >
 				<comment><![CDATA[total de dias de gozo + abono + descontados]]></comment>
 			</column>
-			<column name="obsevacoes" type="text" jt="12" />
+			<column name="observacoes" type="text" jt="12" />
 			<column name="prevista" type="boolean" jt="16" >
 				<comment><![CDATA[true - prevista
 false - efetiva]]></comment>
@@ -6333,7 +6333,9 @@ false=issuer]]></comment>
 			</fk>
 		</table>
 		<table name="tblpessoaconta" prior="tbl" >
-			<column name="codpessoaconta" type="bigint" jt="-5" mandatory="y" />
+			<column name="codpessoaconta" type="bigint" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('tblpessoaconta_codpessoaconta_seq'::regclass)]]></defo>
+			</column>
 			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
 			<column name="banco" type="numeric" length="3" jt="2" />
 			<column name="agencia" type="varchar" length="20" decimal="0" jt="12" />
@@ -6354,6 +6356,8 @@ false=issuer]]></comment>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="titular" type="varchar" jt="12" />
+			<column name="observacoes" type="varchar" jt="12" />
 			<index name="pk_tblpessoaconta" unique="PRIMARY_KEY" >
 				<column name="codpessoaconta" />
 			</index>
@@ -6377,7 +6381,7 @@ false=issuer]]></comment>
 			</column>
 			<column name="email" prior="telefone" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<column name="nfe" type="boolean" jt="16" mandatory="y" >
-				<defo><![CDATA[true]]></defo>
+				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="cobranca" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
@@ -6389,7 +6393,7 @@ false=issuer]]></comment>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codverificacao" type="smallint" jt="5" />
+			<column name="codverificacao" type="integer" length="32" jt="4" />
 			<index name="pk_tblpessoatelefone_0" unique="PRIMARY_KEY" >
 				<column name="codpessoaemail" />
 			</index>
@@ -6410,7 +6414,7 @@ false=issuer]]></comment>
 				<defo><![CDATA[0]]></defo>
 			</column>
 			<column name="nfe" type="boolean" jt="16" mandatory="y" >
-				<defo><![CDATA[true]]></defo>
+				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="entrega" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[true]]></defo>
@@ -6471,7 +6475,7 @@ false=issuer]]></comment>
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="inativo" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codverificacao" type="smallint" jt="5" />
+			<column name="codverificacao" type="integer" length="32" jt="4" />
 			<index name="pk_tblpessoatelefone" unique="PRIMARY_KEY" >
 				<column name="codpessoatelefone" />
 			</index>
@@ -8916,47 +8920,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<options><![CDATA[as vendainicio  from tblnegocio n  inner join tblnegocioprodutobarra npb on (npb.codnegocio = n.codnegocio)  inner join tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)  where n.codnegociostatus = 2 group by pb.codprodutovariacao;  update tmpvendainicio  set vendainicio = '2012-01-01'::date  where vendainicio < '2012-01-01'::date;  update tblprodutovariacao   set vendainicio = tmpvendainicio.vendainicio  from tmpvendainicio  where tblprodutovariacao.codprodutovariacao = tmpvendainicio.codprodutovariacao ;  update tblprodutovariacao   set vendainicio = now()  where tblprodutovariacao.codprodutovariacao not in (select codprodutovariacao from tmpvendainicio)]]></options>
 		</table>
 		<view name="vwboleto" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwboleto AS SELECT ${view},
-    tblportador.agencia,
-    tblportador.agenciadigito,
-    tbltitulo.nossonumero,
-    tblportador.conta,
-    tblportador.contadigito,
-    tbltitulo.vencimento,
-    tbltitulo.saldo,
-    round(((tbltitulo.saldo * (2)::numeric) / (100)::numeric), 2) AS multa,
-    round((((tbltitulo.saldo * (4)::numeric) / (100)::numeric) / (30)::numeric), 2) AS juros,
-    tbltitulo.boleto,
-    tbltitulo.codtitulo,
-    tbltitulo.emissao,
-    tbltitulo.numero,
-    tbltitulo.transacao,
-    tbltitulo.fatura,
-    tblpessoafilial.pessoa AS pessoafilial,
-    tblpessoa.pessoa,
-    tblpessoa.codpessoa,
-    tblpessoa.enderecocobranca,
-    tblpessoa.numerocobranca,
-    tblpessoa.complementocobranca,
-    tblpessoa.bairrocobranca,
-    tblpessoa.cepcobranca,
-    tblcidade.cidade,
-    tblestado.sigla,
-    tblportador.convenio,
-    tblportador.codportador,
-    tblportador.carteira,
-    tblpessoa.fisica,
-    tblpessoa.cnpj,
-    tbltitulo.remessa
-   FROM (((((((tbltitulo
-     LEFT JOIN tblportador ON ((tbltitulo.codportador = tblportador.codportador)))
-     LEFT JOIN tblbanco ON ((tblportador.codbanco = tblbanco.codbanco)))
-     LEFT JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))
-     LEFT JOIN tblpessoa tblpessoafilial ON ((tblfilial.codpessoa = tblpessoafilial.codpessoa)))
-     LEFT JOIN tblpessoa ON ((tbltitulo.codpessoa = tblpessoa.codpessoa)))
-     LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidadecobranca)))
-     LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))
-  WHERE ((tbltitulo.boleto = true) AND (tbltitulo.saldo > (0)::numeric))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblbanco.numerobanco,     tblportador.agencia,     tblportador.agenciadigito,     tbltitulo.nossonumero,     tblportador.conta,     tblportador.contadigito,     tbltitulo.vencimento,     tbltitulo.saldo,     round(((tbltitulo.saldo * (2)::numeric)   (100)::numeric), 2) AS multa,     round((((tbltitulo.saldo * (4)::numeric)   (100)::numeric)   (30)::numeric), 2) AS juros,     tbltitulo.boleto,     tbltitulo.codtitulo,     tbltitulo.emissao,     tbltitulo.numero,     tbltitulo.transacao,     tbltitulo.fatura,     tblpessoafilial.pessoa AS pessoafilial,     tblpessoa.pessoa,     tblpessoa.codpessoa,     tblpessoa.enderecocobranca,     tblpessoa.numerocobranca,     tblpessoa.complementocobranca,     tblpessoa.bairrocobranca,     tblpessoa.cepcobranca,     tblcidade.cidade,     tblestado.sigla,     tblportador.convenio,     tblportador.codportador,     tblportador.carteira,     tblpessoa.fisica,     tblpessoa.cnpj,     tbltitulo.remessa    FROM (((((((tbltitulo      LEFT JOIN tblportador ON ((tbltitulo.codportador = tblportador.codportador)))      LEFT JOIN tblbanco ON ((tblportador.codbanco = tblbanco.codbanco)))      LEFT JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))      LEFT JOIN tblpessoa tblpessoafilial ON ((tblfilial.codpessoa = tblpessoafilial.codpessoa)))      LEFT JOIN tblpessoa ON ((tbltitulo.codpessoa = tblpessoa.codpessoa)))      LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidadecobranca)))      LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))   WHERE ((tbltitulo.boleto = true) AND (tbltitulo.saldo > (0)::numeric))]]></view_script>
 			<column name="numerobanco" type="bigint" />
 			<column name="agencia" type="bigint" />
 			<column name="agenciadigito" type="integer" />
@@ -8991,33 +8955,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="remessa" type="bigint" />
 		</view>
 		<view name="vwboletoretorno" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwboletoretorno AS SELECT ${view},
-    tblboletoretorno.codboletomotivoocorrencia,
-    tblboletotipoocorrencia.ocorrencia,
-    tblboletomotivoocorrencia.motivo,
-    tblboletoretorno.codportador,
-    tblboletoretorno.dataretorno,
-    tblboletoretorno.linha,
-    tblboletoretorno.nossonumero,
-    tblboletoretorno.numero,
-    tblboletoretorno.valor,
-    tblboletoretorno.codbancocobrador,
-    tblbanco.banco AS bancocobrador,
-    tblboletoretorno.agenciacobradora,
-    tblboletoretorno.despesas,
-    tblboletoretorno.outrasdespesas,
-    tblboletoretorno.jurosatraso,
-    tblboletoretorno.abatimento,
-    tblboletoretorno.desconto,
-    tblboletoretorno.pagamento,
-    tblboletoretorno.jurosmora,
-    tblboletoretorno.protesto,
-    tblboletoretorno.codtitulo,
-    tblboletoretorno.arquivo
-   FROM (((tblboletoretorno
-     LEFT JOIN tblboletomotivoocorrencia ON ((tblboletomotivoocorrencia.codboletomotivoocorrencia = tblboletoretorno.codboletomotivoocorrencia)))
-     LEFT JOIN tblboletotipoocorrencia ON ((tblboletotipoocorrencia.codboletotipoocorrencia = tblboletomotivoocorrencia.codboletotipoocorrencia)))
-     LEFT JOIN tblbanco ON ((tblbanco.codbanco = tblboletoretorno.codbancocobrador)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblboletoretorno.codboletoretorno,     tblboletoretorno.codboletomotivoocorrencia,     tblboletotipoocorrencia.ocorrencia,     tblboletomotivoocorrencia.motivo,     tblboletoretorno.codportador,     tblboletoretorno.dataretorno,     tblboletoretorno.linha,     tblboletoretorno.nossonumero,     tblboletoretorno.numero,     tblboletoretorno.valor,     tblboletoretorno.codbancocobrador,     tblbanco.banco AS bancocobrador,     tblboletoretorno.agenciacobradora,     tblboletoretorno.despesas,     tblboletoretorno.outrasdespesas,     tblboletoretorno.jurosatraso,     tblboletoretorno.abatimento,     tblboletoretorno.desconto,     tblboletoretorno.pagamento,     tblboletoretorno.jurosmora,     tblboletoretorno.protesto,     tblboletoretorno.codtitulo,     tblboletoretorno.arquivo    FROM (((tblboletoretorno      LEFT JOIN tblboletomotivoocorrencia ON ((tblboletomotivoocorrencia.codboletomotivoocorrencia = tblboletoretorno.codboletomotivoocorrencia)))      LEFT JOIN tblboletotipoocorrencia ON ((tblboletotipoocorrencia.codboletotipoocorrencia = tblboletomotivoocorrencia.codboletotipoocorrencia)))      LEFT JOIN tblbanco ON ((tblbanco.codbanco = tblboletoretorno.codbancocobrador)))]]></view_script>
 			<column name="codboletoretorno" type="bigint" />
 			<column name="codboletomotivoocorrencia" type="bigint" />
 			<column name="ocorrencia" type="varchar" />
@@ -9043,18 +8981,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="arquivo" type="varchar" />
 		</view>
 		<view name="vwcupomfiscal" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwcupomfiscal AS SELECT ${view},
-    tblcupomfiscal.codecf,
-    tblecf.ecf,
-    tblcupomfiscal.datamovimento,
-    tblcupomfiscal.numero,
-    tblcupomfiscal.cancelado,
-    vwcupomfiscalprodutobarratotais.valortotal,
-    tblcupomfiscal.descontoacrescimo,
-    (COALESCE(vwcupomfiscalprodutobarratotais.valortotal, (0)::numeric) + COALESCE(tblcupomfiscal.descontoacrescimo, (0)::numeric)) AS valortotalfinal
-   FROM ((tblcupomfiscal
-     LEFT JOIN tblecf ON ((tblecf.codecf = tblcupomfiscal.codecf)))
-     LEFT JOIN vwcupomfiscalprodutobarratotais ON ((vwcupomfiscalprodutobarratotais.codcupomfiscal = ${view})))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblcupomfiscal.codcupomfiscal,     tblcupomfiscal.codecf,     tblecf.ecf,     tblcupomfiscal.datamovimento,     tblcupomfiscal.numero,     tblcupomfiscal.cancelado,     ${view}produtobarratotais.valortotal,     tblcupomfiscal.descontoacrescimo,     (COALESCE(${view}produtobarratotais.valortotal, (0)::numeric) + COALESCE(tblcupomfiscal.descontoacrescimo, (0)::numeric)) AS valortotalfinal    FROM ((tblcupomfiscal      LEFT JOIN tblecf ON ((tblecf.codecf = tblcupomfiscal.codecf)))      LEFT JOIN ${view}produtobarratotais ON ((${view}produtobarratotais.codcupomfiscal = tblcupomfiscal.codcupomfiscal)))]]></view_script>
 			<column name="codcupomfiscal" type="bigint" />
 			<column name="codecf" type="bigint" />
 			<column name="ecf" type="varchar" />
@@ -9066,16 +8993,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortotalfinal" type="numeric" />
 		</view>
 		<view name="vwcupomfiscalprodutobarra" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwcupomfiscalprodutobarra AS SELECT ${view},
-    tblcupomfiscalprodutobarra.codcupomfiscal,
-    tblcupomfiscalprodutobarra.codprodutobarra,
-    tblcupomfiscalprodutobarra.aliquotaicms,
-    tblcupomfiscalprodutobarra.quantidade,
-    tblcupomfiscalprodutobarra.valorunitario,
-    tblcupomfiscalprodutobarra.codnegocioprodutobarra,
-    tblnegocioprodutobarra.codnegocio
-   FROM (tblcupomfiscalprodutobarra
-     LEFT JOIN tblnegocioprodutobarra ON ((tblnegocioprodutobarra.codnegocioprodutobarra = tblcupomfiscalprodutobarra.codnegocioprodutobarra)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblcupomfiscalprodutobarra.codcupomfiscalprodutobarra,     tblcupomfiscalprodutobarra.codcupomfiscal,     tblcupomfiscalprodutobarra.codprodutobarra,     tblcupomfiscalprodutobarra.aliquotaicms,     tblcupomfiscalprodutobarra.quantidade,     tblcupomfiscalprodutobarra.valorunitario,     tblcupomfiscalprodutobarra.codnegocioprodutobarra,     tblnegocioprodutobarra.codnegocio    FROM (tblcupomfiscalprodutobarra      LEFT JOIN tblnegocioprodutobarra ON ((tblnegocioprodutobarra.codnegocioprodutobarra = tblcupomfiscalprodutobarra.codnegocioprodutobarra)))]]></view_script>
 			<column name="codcupomfiscalprodutobarra" type="bigint" />
 			<column name="codcupomfiscal" type="bigint" />
 			<column name="codprodutobarra" type="bigint" />
@@ -9086,60 +9004,12 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codnegocio" type="bigint" />
 		</view>
 		<view name="vwcupomfiscalprodutobarratotais" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwcupomfiscalprodutobarratotais AS SELECT ${view},
-    sum((COALESCE(tblcupomfiscalprodutobarra.quantidade, (0)::numeric) * COALESCE(tblcupomfiscalprodutobarra.valorunitario, (0)::numeric))) AS valortotal
-   FROM tblcupomfiscalprodutobarra
-  GROUP BY ${view}]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblcupomfiscalprodutobarra.codcupomfiscal,     sum((COALESCE(tblcupomfiscalprodutobarra.quantidade, (0)::numeric) * COALESCE(tblcupomfiscalprodutobarra.valorunitario, (0)::numeric))) AS valortotal    FROM tblcupomfiscalprodutobarra   GROUP BY tblcupomfiscalprodutobarra.codcupomfiscal]]></view_script>
 			<column name="codcupomfiscal" type="bigint" />
 			<column name="valortotal" type="numeric" />
 		</view>
 		<view name="vwiscolunas" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwiscolunas AS SELECT ${view},
-    c.table_schema,
-    c.table_name,
-    c.column_name,
-    c.ordinal_position,
-    c.column_default,
-    c.is_nullable,
-    c.data_type,
-    c.character_maximum_length,
-    c.character_octet_length,
-    c.numeric_precision,
-    c.numeric_precision_radix,
-    c.numeric_scale,
-    c.datetime_precision,
-    c.interval_type,
-    c.interval_precision,
-    c.character_set_catalog,
-    c.character_set_schema,
-    c.character_set_name,
-    c.collation_catalog,
-    c.collation_schema,
-    c.collation_name,
-    c.domain_catalog,
-    c.domain_schema,
-    c.domain_name,
-    c.udt_catalog,
-    c.udt_schema,
-    c.udt_name,
-    c.scope_catalog,
-    c.scope_schema,
-    c.scope_name,
-    c.maximum_cardinality,
-    c.dtd_identifier,
-    c.is_self_referencing,
-    c.is_identity,
-    c.identity_generation,
-    c.identity_start,
-    c.identity_increment,
-    c.identity_maximum,
-    c.identity_minimum,
-    c.identity_cycle,
-    c.is_generated,
-    c.generation_expression,
-    c.is_updatable
-   FROM information_schema.columns c
-  WHERE ((c.table_schema)::text = 'mgsis'::text)]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT c.table_catalog,     c.table_schema,     c.table_name,     c.column_name,     c.ordinal_position,     c.column_default,     c.is_nullable,     c.data_type,     c.character_maximum_length,     c.character_octet_length,     c.numeric_precision,     c.numeric_precision_radix,     c.numeric_scale,     c.datetime_precision,     c.interval_type,     c.interval_precision,     c.character_set_catalog,     c.character_set_schema,     c.character_set_name,     c.collation_catalog,     c.collation_schema,     c.collation_name,     c.domain_catalog,     c.domain_schema,     c.domain_name,     c.udt_catalog,     c.udt_schema,     c.udt_name,     c.scope_catalog,     c.scope_schema,     c.scope_name,     c.maximum_cardinality,     c.dtd_identifier,     c.is_self_referencing,     c.is_identity,     c.identity_generation,     c.identity_start,     c.identity_increment,     c.identity_maximum,     c.identity_minimum,     c.identity_cycle,     c.is_generated,     c.generation_expression,     c.is_updatable    FROM information_schema.columns c   WHERE ((c.table_schema)::text = 'mgsis'::text)]]></view_script>
 			<column name="table_catalog" type="&quot;sql_identifier&quot;" />
 			<column name="table_schema" type="&quot;sql_identifier&quot;" />
 			<column name="table_name" type="&quot;sql_identifier&quot;" />
@@ -9186,30 +9056,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="is_updatable" type="&quot;yes_or_no&quot;" />
 		</view>
 		<view name="vwliquidacaotitulo" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwliquidacaotitulo AS SELECT ${view},
-    iq.codpessoa,
-    tblpessoa.fantasia,
-    iq.debito,
-    iq.credito,
-    tblliquidacaotitulo.codportador,
-    tblportador.portador,
-    tblliquidacaotitulo.transacao,
-    tblliquidacaotitulo.sistema,
-    tblliquidacaotitulo.estornado,
-    tblliquidacaotitulo.codusuario,
-    tblusuario.usuario
-   FROM ((((tblliquidacaotitulo
-     LEFT JOIN ( SELECT tblmovimentotitulo.codliquidacaotitulo,
-            tbltitulo.codpessoa,
-            sum(tblmovimentotitulo.debito) AS debito,
-            sum(tblmovimentotitulo.credito) AS credito
-           FROM (tblmovimentotitulo
-             JOIN tbltitulo ON ((tbltitulo.codtitulo = tblmovimentotitulo.codtitulo)))
-          WHERE ((tblmovimentotitulo.codtipomovimentotitulo = 600) AND (tblmovimentotitulo.codliquidacaotitulo IS NOT NULL))
-          GROUP BY tblmovimentotitulo.codliquidacaotitulo, tbltitulo.codpessoa) iq ON ((iq.codliquidacaotitulo = ${view})))
-     LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = iq.codpessoa)))
-     LEFT JOIN tblportador ON ((tblportador.codportador = tblliquidacaotitulo.codportador)))
-     LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblliquidacaotitulo.codusuario)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblliquidacaotitulo.codliquidacaotitulo,     iq.codpessoa,     tblpessoa.fantasia,     iq.debito,     iq.credito,     tblliquidacaotitulo.codportador,     tblportador.portador,     tblliquidacaotitulo.transacao,     tblliquidacaotitulo.sistema,     tblliquidacaotitulo.estornado,     tblliquidacaotitulo.codusuario,     tblusuario.usuario    FROM ((((tblliquidacaotitulo      LEFT JOIN ( SELECT tblmovimentotitulo.codliquidacaotitulo,             tbltitulo.codpessoa,             sum(tblmovimentotitulo.debito) AS debito,             sum(tblmovimentotitulo.credito) AS credito            FROM (tblmovimentotitulo              JOIN tbltitulo ON ((tbltitulo.codtitulo = tblmovimentotitulo.codtitulo)))           WHERE ((tblmovimentotitulo.codtipomovimentotitulo = 600) AND (tblmovimentotitulo.codliquidacaotitulo IS NOT NULL))           GROUP BY tblmovimentotitulo.codliquidacaotitulo, tbltitulo.codpessoa) iq ON ((iq.codliquidacaotitulo = tblliquidacaotitulo.codliquidacaotitulo)))      LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = iq.codpessoa)))      LEFT JOIN tblportador ON ((tblportador.codportador = tblliquidacaotitulo.codportador)))      LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblliquidacaotitulo.codusuario)))]]></view_script>
 			<column name="codliquidacaotitulo" type="bigint" />
 			<column name="codpessoa" type="bigint" />
 			<column name="fantasia" type="varchar" />
@@ -9224,56 +9071,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="usuario" type="varchar" />
 		</view>
 		<view name="vwnegocio" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocio AS SELECT ${view},
-    tblnegocio.codpessoa,
-    tblpessoa.fantasia,
-    tblpessoa.pessoa,
-    tblpessoa.telefone1,
-    tblpessoa.telefone2,
-    tblpessoa.telefone3,
-    tblpessoa.cnpj,
-    tblpessoa.fisica,
-    tblpessoa.endereco,
-    tblpessoa.numero,
-    tblpessoa.complemento,
-    tblpessoa.bairro,
-    tblpessoa.cep,
-    tblpessoa.codcidade,
-    tblcidade.cidade,
-    tblcidade.codestado,
-    tblestado.sigla,
-    tblnegocio.codfilial,
-    tblfilial.filial,
-    tblfilial.codpessoa AS codpessoafilial,
-    tblnegocio.lancamento,
-    tblnegocio.codpessoavendedor,
-    tblpessoavendedor.fantasia AS fantasiavendedor,
-    tblnegocio.codoperacao,
-    tbloperacao.operacao,
-    ${view}status,
-    tblnegociostatus.negociostatus,
-    tblnegocio.observacoes,
-    tblnegocio.codusuario,
-    tblusuario.usuario,
-    tblusuario.codecf AS codecfusuario,
-    vwnegocioprodutobarratotais.valortotal,
-    tblnegocio.valordesconto,
-    (COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortotalfinal,
-    vwnegocioformapagamentototais.valorpagamentoavista,
-    vwnegocioformapagamentototais.valorpagamentoaprazo,
-    vwnegocioformapagamentototais.valorpagamentototal,
-    ((vwnegocioformapagamentototais.valorpagamentototal - COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric)) + COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortroco
-   FROM ((((((((((tblnegocio
-     LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = tblnegocio.codpessoa)))
-     LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))
-     LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))
-     LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnegocio.codfilial)))
-     LEFT JOIN tblpessoa tblpessoavendedor ON ((tblpessoavendedor.codpessoa = tblnegocio.codpessoavendedor)))
-     LEFT JOIN tbloperacao ON ((tbloperacao.codoperacao = tblnegocio.codoperacao)))
-     LEFT JOIN tblnegociostatus ON ((tblnegociostatus.codnegociostatus = ${view}status)))
-     LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblnegocio.codusuario)))
-     LEFT JOIN vwnegocioprodutobarratotais ON ((vwnegocioprodutobarratotais.codnegocio = ${view})))
-     LEFT JOIN vwnegocioformapagamentototais ON ((vwnegocioformapagamentototais.codnegocio = ${view})))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocio.codnegocio,     tblnegocio.codpessoa,     tblpessoa.fantasia,     tblpessoa.pessoa,     tblpessoa.telefone1,     tblpessoa.telefone2,     tblpessoa.telefone3,     tblpessoa.cnpj,     tblpessoa.fisica,     tblpessoa.endereco,     tblpessoa.numero,     tblpessoa.complemento,     tblpessoa.bairro,     tblpessoa.cep,     tblpessoa.codcidade,     tblcidade.cidade,     tblcidade.codestado,     tblestado.sigla,     tblnegocio.codfilial,     tblfilial.filial,     tblfilial.codpessoa AS codpessoafilial,     tblnegocio.lancamento,     tblnegocio.codpessoavendedor,     tblpessoavendedor.fantasia AS fantasiavendedor,     tblnegocio.codoperacao,     tbloperacao.operacao,     tblnegocio.codnegociostatus,     tblnegociostatus.negociostatus,     tblnegocio.observacoes,     tblnegocio.codusuario,     tblusuario.usuario,     tblusuario.codecf AS codecfusuario,     ${view}produtobarratotais.valortotal,     tblnegocio.valordesconto,     (COALESCE(${view}produtobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortotalfinal,     ${view}formapagamentototais.valorpagamentoavista,     ${view}formapagamentototais.valorpagamentoaprazo,     ${view}formapagamentototais.valorpagamentototal,     ((${view}formapagamentototais.valorpagamentototal - COALESCE(${view}produtobarratotais.valortotal, (0)::numeric)) + COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortroco    FROM ((((((((((tblnegocio      LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = tblnegocio.codpessoa)))      LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))      LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))      LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnegocio.codfilial)))      LEFT JOIN tblpessoa tblpessoavendedor ON ((tblpessoavendedor.codpessoa = tblnegocio.codpessoavendedor)))      LEFT JOIN tbloperacao ON ((tbloperacao.codoperacao = tblnegocio.codoperacao)))      LEFT JOIN tblnegociostatus ON ((tblnegociostatus.codnegociostatus = tblnegocio.codnegociostatus)))      LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblnegocio.codusuario)))      LEFT JOIN ${view}produtobarratotais ON ((${view}produtobarratotais.codnegocio = tblnegocio.codnegocio)))      LEFT JOIN ${view}formapagamentototais ON ((${view}formapagamentototais.codnegocio = tblnegocio.codnegocio)))]]></view_script>
 			<column name="codnegocio" type="bigint" />
 			<column name="codpessoa" type="bigint" />
 			<column name="fantasia" type="varchar" />
@@ -9315,36 +9113,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valortroco" type="numeric" />
 		</view>
 		<view name="vwnegocio_listagem" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocio_listagem AS SELECT ${view},
-    tblnegocio.codpessoa,
-    tblpessoa.fantasia,
-    tblpessoa.pessoa,
-    tblpessoa.cnpj,
-    tblpessoa.fisica,
-    tblnegocio.codfilial,
-    tblfilial.filial,
-    tblfilial.codpessoa AS codpessoafilial,
-    tblnegocio.lancamento,
-    tblnegocio.codpessoavendedor,
-    tblpessoavendedor.fantasia AS fantasiavendedor,
-    tblnegocio.codoperacao,
-    tbloperacao.operacao,
-    ${view}status,
-    tblnegociostatus.negociostatus,
-    tblnegocio.codusuario,
-    tblusuario.usuario,
-    (COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortotalfinal,
-    ((COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) - COALESCE(vwnegocioformapagamentototais.valorpagamentoaprazo, (0)::numeric)) AS valorpagamentoavista,
-    vwnegocioformapagamentototais.valorpagamentoaprazo
-   FROM ((((((((tblnegocio
-     LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = tblnegocio.codpessoa)))
-     LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnegocio.codfilial)))
-     LEFT JOIN tblpessoa tblpessoavendedor ON ((tblpessoavendedor.codpessoa = tblnegocio.codpessoavendedor)))
-     LEFT JOIN tbloperacao ON ((tbloperacao.codoperacao = tblnegocio.codoperacao)))
-     LEFT JOIN tblnegociostatus ON ((tblnegociostatus.codnegociostatus = ${view}status)))
-     LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblnegocio.codusuario)))
-     LEFT JOIN vwnegocioprodutobarratotais ON ((vwnegocioprodutobarratotais.codnegocio = ${view})))
-     LEFT JOIN vwnegocioformapagamentototais ON ((vwnegocioformapagamentototais.codnegocio = ${view})))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocio.codnegocio,     tblnegocio.codpessoa,     tblpessoa.fantasia,     tblpessoa.pessoa,     tblpessoa.cnpj,     tblpessoa.fisica,     tblnegocio.codfilial,     tblfilial.filial,     tblfilial.codpessoa AS codpessoafilial,     tblnegocio.lancamento,     tblnegocio.codpessoavendedor,     tblpessoavendedor.fantasia AS fantasiavendedor,     tblnegocio.codoperacao,     tbloperacao.operacao,     tblnegocio.codnegociostatus,     tblnegociostatus.negociostatus,     tblnegocio.codusuario,     tblusuario.usuario,     (COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) AS valortotalfinal,     ((COALESCE(vwnegocioprodutobarratotais.valortotal, (0)::numeric) - COALESCE(tblnegocio.valordesconto, (0)::numeric)) - COALESCE(vwnegocioformapagamentototais.valorpagamentoaprazo, (0)::numeric)) AS valorpagamentoavista,     vwnegocioformapagamentototais.valorpagamentoaprazo    FROM ((((((((tblnegocio      LEFT JOIN tblpessoa ON ((tblpessoa.codpessoa = tblnegocio.codpessoa)))      LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnegocio.codfilial)))      LEFT JOIN tblpessoa tblpessoavendedor ON ((tblpessoavendedor.codpessoa = tblnegocio.codpessoavendedor)))      LEFT JOIN tbloperacao ON ((tbloperacao.codoperacao = tblnegocio.codoperacao)))      LEFT JOIN tblnegociostatus ON ((tblnegociostatus.codnegociostatus = tblnegocio.codnegociostatus)))      LEFT JOIN tblusuario ON ((tblusuario.codusuario = tblnegocio.codusuario)))      LEFT JOIN vwnegocioprodutobarratotais ON ((vwnegocioprodutobarratotais.codnegocio = tblnegocio.codnegocio)))      LEFT JOIN vwnegocioformapagamentototais ON ((vwnegocioformapagamentototais.codnegocio = tblnegocio.codnegocio)))]]></view_script>
 			<column name="codnegocio" type="bigint" />
 			<column name="codpessoa" type="bigint" />
 			<column name="fantasia" type="varchar" />
@@ -9368,20 +9137,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="valorpagamentoaprazo" type="numeric" />
 		</view>
 		<view name="vwnegocioformapagamento" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocioformapagamento AS SELECT ${view},
-    tblnegocioformapagamento.codnegocio,
-    tblnegocioformapagamento.valorpagamento,
-    tblnegocioformapagamento.codformapagamento,
-    tblformapagamento.formapagamento,
-    tblformapagamento.boleto,
-    tblformapagamento.fechamento,
-    tblformapagamento.notafiscal,
-    tblformapagamento.parcelas,
-    tblformapagamento.diasentreparcelas,
-    tblformapagamento.avista,
-    tblformapagamento.formapagamentoecf
-   FROM (tblnegocioformapagamento
-     LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblnegocioformapagamento.codformapagamento)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocioformapagamento.codnegocioformapagamento,     tblnegocioformapagamento.codnegocio,     tblnegocioformapagamento.valorpagamento,     tblnegocioformapagamento.codformapagamento,     tblformapagamento.formapagamento,     tblformapagamento.boleto,     tblformapagamento.fechamento,     tblformapagamento.notafiscal,     tblformapagamento.parcelas,     tblformapagamento.diasentreparcelas,     tblformapagamento.avista,     tblformapagamento.formapagamentoecf    FROM (tblnegocioformapagamento      LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblnegocioformapagamento.codformapagamento)))]]></view_script>
 			<column name="codnegocioformapagamento" type="bigint" />
 			<column name="codnegocio" type="bigint" />
 			<column name="valorpagamento" type="numeric" />
@@ -9396,52 +9152,14 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="formapagamentoecf" type="varchar" />
 		</view>
 		<view name="vwnegocioformapagamentototais" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocioformapagamentototais AS SELECT ${view},
-    sum(
-        CASE
-            WHEN (COALESCE(tblformapagamento.avista, true) = true) THEN COALESCE(tblnegocioformapagamento.valorpagamento, (0)::numeric)
-            ELSE (0)::numeric
-        END) AS valorpagamentoavista,
-    sum(
-        CASE
-            WHEN (COALESCE(tblformapagamento.avista, true) = false) THEN COALESCE(tblnegocioformapagamento.valorpagamento, (0)::numeric)
-            ELSE (0)::numeric
-        END) AS valorpagamentoaprazo,
-    sum(tblnegocioformapagamento.valorpagamento) AS valorpagamentototal
-   FROM (tblnegocioformapagamento
-     LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblnegocioformapagamento.codformapagamento)))
-  GROUP BY ${view}]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocioformapagamento.codnegocio,     sum(         CASE             WHEN (COALESCE(tblformapagamento.avista, true) = true) THEN COALESCE(tblnegocioformapagamento.valorpagamento, (0)::numeric)             ELSE (0)::numeric         END) AS valorpagamentoavista,     sum(         CASE             WHEN (COALESCE(tblformapagamento.avista, true) = false) THEN COALESCE(tblnegocioformapagamento.valorpagamento, (0)::numeric)             ELSE (0)::numeric         END) AS valorpagamentoaprazo,     sum(tblnegocioformapagamento.valorpagamento) AS valorpagamentototal    FROM (tblnegocioformapagamento      LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblnegocioformapagamento.codformapagamento)))   GROUP BY tblnegocioformapagamento.codnegocio]]></view_script>
 			<column name="codnegocio" type="bigint" />
 			<column name="valorpagamentoavista" type="numeric" />
 			<column name="valorpagamentoaprazo" type="numeric" />
 			<column name="valorpagamentototal" type="numeric" />
 		</view>
 		<view name="vwnegocioprodutobarra" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocioprodutobarra AS SELECT ${view},
-    tblnegocioprodutobarra.codnegocio,
-    tblnegocioprodutobarra.quantidade,
-    tblnegocioprodutobarra.valorunitario,
-    tblnegocioprodutobarra.valortotal,
-    tblnegocioprodutobarra.codprodutobarra,
-    vwprodutobarra.codprodutoembalagem,
-    vwprodutobarra.codproduto,
-    vwprodutobarra.produto,
-    vwprodutobarra.descricao,
-    vwprodutobarra.referencia,
-    vwprodutobarra.preco,
-    vwprodutobarra.sigla,
-    vwprodutobarra.quantidade AS quantidade_embalagem,
-    vwprodutobarra.importado,
-    vwprodutobarra.ncm,
-    vwprodutobarra.barras,
-    vwprodutobarra.variacao,
-    vwprodutobarra.inativo,
-    vwprodutobarra.marca,
-    vwprodutobarra.codtributacao,
-    vwprodutobarra.tributacao,
-    vwprodutobarra.aliquotaicmsecf
-   FROM (tblnegocioprodutobarra
-     LEFT JOIN vwprodutobarra ON ((vwprodutobarra.codprodutobarra = tblnegocioprodutobarra.codprodutobarra)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocioprodutobarra.codnegocioprodutobarra,     tblnegocioprodutobarra.codnegocio,     tblnegocioprodutobarra.quantidade,     tblnegocioprodutobarra.valorunitario,     tblnegocioprodutobarra.valortotal,     tblnegocioprodutobarra.codprodutobarra,     vwprodutobarra.codprodutoembalagem,     vwprodutobarra.codproduto,     vwprodutobarra.produto,     vwprodutobarra.descricao,     vwprodutobarra.referencia,     vwprodutobarra.preco,     vwprodutobarra.sigla,     vwprodutobarra.quantidade AS quantidade_embalagem,     vwprodutobarra.importado,     vwprodutobarra.ncm,     vwprodutobarra.barras,     vwprodutobarra.variacao,     vwprodutobarra.inativo,     vwprodutobarra.marca,     vwprodutobarra.codtributacao,     vwprodutobarra.tributacao,     vwprodutobarra.aliquotaicmsecf    FROM (tblnegocioprodutobarra      LEFT JOIN vwprodutobarra ON ((vwprodutobarra.codprodutobarra = tblnegocioprodutobarra.codprodutobarra)))]]></view_script>
 			<column name="codnegocioprodutobarra" type="bigint" />
 			<column name="codnegocio" type="bigint" />
 			<column name="quantidade" type="numeric" />
@@ -9467,88 +9185,12 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="aliquotaicmsecf" type="varchar" />
 		</view>
 		<view name="vwnegocioprodutobarratotais" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnegocioprodutobarratotais AS SELECT ${view},
-    sum(tblnegocioprodutobarra.valortotal) AS valortotal
-   FROM tblnegocioprodutobarra
-  GROUP BY ${view}]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnegocioprodutobarra.codnegocio,     sum(tblnegocioprodutobarra.valortotal) AS valortotal    FROM tblnegocioprodutobarra   GROUP BY tblnegocioprodutobarra.codnegocio]]></view_script>
 			<column name="codnegocio" type="bigint" />
 			<column name="valortotal" type="numeric" />
 		</view>
 		<view name="vwnotafiscal" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnotafiscal AS SELECT ${view},
-    tblnaturezaoperacao.naturezaoperacao,
-    tblnotafiscal.modelo,
-    tblnotafiscal.serie,
-    tblnotafiscal.numero,
-    tblnotafiscal.emissao,
-    tblnotafiscal.saida,
-    tblnotafiscal.codoperacao,
-    tblnotafiscal.codfilial,
-    tblfilial.filial,
-    tblfilial.codpessoa AS codpessoafilial,
-    tblpessoafilial.cnpj AS cnpjfilial,
-    tblpessoafilial.ie AS iefilial,
-    tblpessoafilial.pessoa AS pessoafilial,
-    tblpessoafilial.fantasia AS fantasiafilial,
-    tblpessoafilial.telefone1 AS telefone1filial,
-    tblpessoafilial.cep AS cepfilial,
-    tblpessoafilial.endereco AS enderecofilial,
-    tblpessoafilial.numero AS numerofilial,
-    tblpessoafilial.complemento AS complementofilial,
-    tblpessoafilial.bairro AS bairrofilial,
-    tblcidadefilial.codigooficial AS codigooficialfilial,
-    tblcidadefilial.cidade AS cidadefilial,
-    tblestadofilial.sigla AS siglafilial,
-    tblnotafiscal.codpessoa,
-    tblpessoa.fisica,
-    tblpessoa.cnpj,
-    tblpessoa.ie,
-    tblpessoa.pessoa,
-    tblpessoa.fantasia,
-    tblpessoa.telefone1,
-    tblpessoa.cep,
-    tblpessoa.endereco,
-    tblpessoa.numero AS numeropessoa,
-    tblpessoa.complemento,
-    tblpessoa.bairro,
-    tblcidade.codigooficial,
-    tblcidade.cidade,
-    tblestado.sigla,
-    vwnotafiscalprodutobarratotais.valortotal,
-    vwnotafiscalprodutobarratotais.icmsbase,
-    vwnotafiscalprodutobarratotais.icmsvalor,
-    vwnotafiscalprodutobarratotais.ipibase,
-    vwnotafiscalprodutobarratotais.ipivalor,
-    vwnotafiscalprodutobarratotais.icmsstbase,
-    vwnotafiscalprodutobarratotais.icmsstvalor,
-    tblnotafiscal.valorfrete,
-    tblnotafiscal.valorseguro,
-    tblnotafiscal.valordesconto,
-    tblnotafiscal.valoroutras,
-    ((((((COALESCE(vwnotafiscalprodutobarratotais.valortotal, (0)::numeric) + COALESCE(vwnotafiscalprodutobarratotais.icmsstvalor, (0)::numeric)) + COALESCE(tblnotafiscal.valorfrete, (0)::numeric)) + COALESCE(tblnotafiscal.valorseguro, (0)::numeric)) - COALESCE(tblnotafiscal.valordesconto, (0)::numeric)) + COALESCE(tblnotafiscal.valoroutras, (0)::numeric)) + COALESCE(vwnotafiscalprodutobarratotais.ipivalor, (0)::numeric)) AS valortotalfinal,
-    tblnotafiscal.observacoes,
-    tblnotafiscal.nfechave,
-    tblnotafiscal.nfereciboenvio,
-    tblnotafiscal.nfedataenvio,
-    tblnotafiscal.nfeautorizacao,
-    tblnotafiscal.nfedataautorizacao,
-    tblnotafiscal.nfecancelamento,
-    tblnotafiscal.nfedatacancelamento,
-    tblnotafiscal.nfeinutilizacao,
-    tblnotafiscal.nfedatainutilizacao,
-    tblnotafiscal.emitida,
-    tblnotafiscal.frete,
-    tblnotafiscal.volumes
-   FROM (((((((((tblnotafiscal
-     LEFT JOIN tblnaturezaoperacao ON ((tblnaturezaoperacao.codnaturezaoperacao = tblnotafiscal.codnaturezaoperacao)))
-     LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnotafiscal.codfilial)))
-     LEFT JOIN tblpessoa tblpessoafilial ON ((tblpessoafilial.codpessoa = tblfilial.codpessoa)))
-     LEFT JOIN tblcidade tblcidadefilial ON ((tblcidadefilial.codcidade = tblpessoafilial.codcidade)))
-     LEFT JOIN tblestado tblestadofilial ON ((tblestadofilial.codestado = tblcidadefilial.codestado)))
-     LEFT JOIN tblpessoa tblpessoa ON ((tblpessoa.codpessoa = tblnotafiscal.codpessoa)))
-     LEFT JOIN tblcidade tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))
-     LEFT JOIN tblestado tblestado ON ((tblestado.codestado = tblcidade.codestado)))
-     LEFT JOIN vwnotafiscalprodutobarratotais ON ((vwnotafiscalprodutobarratotais.codnotafiscal = ${view})))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnotafiscal.codnotafiscal,     tblnaturezaoperacao.naturezaoperacao,     tblnotafiscal.modelo,     tblnotafiscal.serie,     tblnotafiscal.numero,     tblnotafiscal.emissao,     tblnotafiscal.saida,     tblnotafiscal.codoperacao,     tblnotafiscal.codfilial,     tblfilial.filial,     tblfilial.codpessoa AS codpessoafilial,     tblpessoafilial.cnpj AS cnpjfilial,     tblpessoafilial.ie AS iefilial,     tblpessoafilial.pessoa AS pessoafilial,     tblpessoafilial.fantasia AS fantasiafilial,     tblpessoafilial.telefone1 AS telefone1filial,     tblpessoafilial.cep AS cepfilial,     tblpessoafilial.endereco AS enderecofilial,     tblpessoafilial.numero AS numerofilial,     tblpessoafilial.complemento AS complementofilial,     tblpessoafilial.bairro AS bairrofilial,     tblcidadefilial.codigooficial AS codigooficialfilial,     tblcidadefilial.cidade AS cidadefilial,     tblestadofilial.sigla AS siglafilial,     tblnotafiscal.codpessoa,     tblpessoa.fisica,     tblpessoa.cnpj,     tblpessoa.ie,     tblpessoa.pessoa,     tblpessoa.fantasia,     tblpessoa.telefone1,     tblpessoa.cep,     tblpessoa.endereco,     tblpessoa.numero AS numeropessoa,     tblpessoa.complemento,     tblpessoa.bairro,     tblcidade.codigooficial,     tblcidade.cidade,     tblestado.sigla,     ${view}produtobarratotais.valortotal,     ${view}produtobarratotais.icmsbase,     ${view}produtobarratotais.icmsvalor,     ${view}produtobarratotais.ipibase,     ${view}produtobarratotais.ipivalor,     ${view}produtobarratotais.icmsstbase,     ${view}produtobarratotais.icmsstvalor,     tblnotafiscal.valorfrete,     tblnotafiscal.valorseguro,     tblnotafiscal.valordesconto,     tblnotafiscal.valoroutras,     ((((((COALESCE(${view}produtobarratotais.valortotal, (0)::numeric) + COALESCE(${view}produtobarratotais.icmsstvalor, (0)::numeric)) + COALESCE(tblnotafiscal.valorfrete, (0)::numeric)) + COALESCE(tblnotafiscal.valorseguro, (0)::numeric)) - COALESCE(tblnotafiscal.valordesconto, (0)::numeric)) + COALESCE(tblnotafiscal.valoroutras, (0)::numeric)) + COALESCE(${view}produtobarratotais.ipivalor, (0)::numeric)) AS valortotalfinal,     tblnotafiscal.observacoes,     tblnotafiscal.nfechave,     tblnotafiscal.nfereciboenvio,     tblnotafiscal.nfedataenvio,     tblnotafiscal.nfeautorizacao,     tblnotafiscal.nfedataautorizacao,     tblnotafiscal.nfecancelamento,     tblnotafiscal.nfedatacancelamento,     tblnotafiscal.nfeinutilizacao,     tblnotafiscal.nfedatainutilizacao,     tblnotafiscal.emitida,     tblnotafiscal.frete,     tblnotafiscal.volumes    FROM (((((((((tblnotafiscal      LEFT JOIN tblnaturezaoperacao ON ((tblnaturezaoperacao.codnaturezaoperacao = tblnotafiscal.codnaturezaoperacao)))      LEFT JOIN tblfilial ON ((tblfilial.codfilial = tblnotafiscal.codfilial)))      LEFT JOIN tblpessoa tblpessoafilial ON ((tblpessoafilial.codpessoa = tblfilial.codpessoa)))      LEFT JOIN tblcidade tblcidadefilial ON ((tblcidadefilial.codcidade = tblpessoafilial.codcidade)))      LEFT JOIN tblestado tblestadofilial ON ((tblestadofilial.codestado = tblcidadefilial.codestado)))      LEFT JOIN tblpessoa tblpessoa ON ((tblpessoa.codpessoa = tblnotafiscal.codpessoa)))      LEFT JOIN tblcidade tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))      LEFT JOIN tblestado tblestado ON ((tblestado.codestado = tblcidade.codestado)))      LEFT JOIN ${view}produtobarratotais ON ((${view}produtobarratotais.codnotafiscal = tblnotafiscal.codnotafiscal)))]]></view_script>
 			<column name="codnotafiscal" type="bigint" />
 			<column name="naturezaoperacao" type="varchar" />
 			<column name="modelo" type="smallint" />
@@ -9615,34 +9257,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="volumes" type="integer" />
 		</view>
 		<view name="vwnotafiscalprodutobarra" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnotafiscalprodutobarra AS SELECT ${view},
-    tblnotafiscalprodutobarra.codnotafiscal,
-    tblnotafiscalprodutobarra.codcfop,
-    vwprodutobarra.codproduto,
-    tblnotafiscalprodutobarra.codprodutobarra,
-    COALESCE(tblnotafiscalprodutobarra.descricaoalternativa, (vwprodutobarra.descricao)::character varying) AS descricao,
-    vwprodutobarra.sigla,
-    vwprodutobarra.ncm,
-    tblnotafiscalprodutobarra.quantidade,
-    tblnotafiscalprodutobarra.valorunitario,
-    tblnotafiscalprodutobarra.valortotal,
-    tblnotafiscalprodutobarra.icmsbase,
-    tblnotafiscalprodutobarra.icmspercentual,
-    tblnotafiscalprodutobarra.icmsvalor,
-    tblnotafiscalprodutobarra.ipibase,
-    tblnotafiscalprodutobarra.ipipercentual,
-    tblnotafiscalprodutobarra.ipivalor,
-    tblnotafiscalprodutobarra.icmsstbase,
-    tblnotafiscalprodutobarra.icmsstpercentual,
-    tblnotafiscalprodutobarra.icmsstvalor,
-    tblnotafiscalprodutobarra.csosn,
-    tblnotafiscalprodutobarra.codnegocioprodutobarra,
-    tblnegocioprodutobarra.codnegocio,
-    vwprodutobarra.quantidade AS quantidade_embalagem,
-    vwprodutobarra.barras
-   FROM ((tblnotafiscalprodutobarra
-     LEFT JOIN vwprodutobarra ON ((vwprodutobarra.codprodutobarra = tblnotafiscalprodutobarra.codprodutobarra)))
-     LEFT JOIN tblnegocioprodutobarra ON ((tblnegocioprodutobarra.codnegocioprodutobarra = tblnotafiscalprodutobarra.codnegocioprodutobarra)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnotafiscalprodutobarra.codnotafiscalprodutobarra,     tblnotafiscalprodutobarra.codnotafiscal,     tblnotafiscalprodutobarra.codcfop,     vwprodutobarra.codproduto,     tblnotafiscalprodutobarra.codprodutobarra,     COALESCE(tblnotafiscalprodutobarra.descricaoalternativa, (vwprodutobarra.descricao)::character varying) AS descricao,     vwprodutobarra.sigla,     vwprodutobarra.ncm,     tblnotafiscalprodutobarra.quantidade,     tblnotafiscalprodutobarra.valorunitario,     tblnotafiscalprodutobarra.valortotal,     tblnotafiscalprodutobarra.icmsbase,     tblnotafiscalprodutobarra.icmspercentual,     tblnotafiscalprodutobarra.icmsvalor,     tblnotafiscalprodutobarra.ipibase,     tblnotafiscalprodutobarra.ipipercentual,     tblnotafiscalprodutobarra.ipivalor,     tblnotafiscalprodutobarra.icmsstbase,     tblnotafiscalprodutobarra.icmsstpercentual,     tblnotafiscalprodutobarra.icmsstvalor,     tblnotafiscalprodutobarra.csosn,     tblnotafiscalprodutobarra.codnegocioprodutobarra,     tblnegocioprodutobarra.codnegocio,     vwprodutobarra.quantidade AS quantidade_embalagem,     vwprodutobarra.barras    FROM ((tblnotafiscalprodutobarra      LEFT JOIN vwprodutobarra ON ((vwprodutobarra.codprodutobarra = tblnotafiscalprodutobarra.codprodutobarra)))      LEFT JOIN tblnegocioprodutobarra ON ((tblnegocioprodutobarra.codnegocioprodutobarra = tblnotafiscalprodutobarra.codnegocioprodutobarra)))]]></view_script>
 			<column name="codnotafiscalprodutobarra" type="bigint" />
 			<column name="codnotafiscal" type="bigint" />
 			<column name="codcfop" type="bigint" />
@@ -9670,16 +9285,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="barras" type="varchar" />
 		</view>
 		<view name="vwnotafiscalprodutobarratotais" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwnotafiscalprodutobarratotais AS SELECT ${view},
-    sum(tblnotafiscalprodutobarra.valortotal) AS valortotal,
-    sum(tblnotafiscalprodutobarra.icmsbase) AS icmsbase,
-    sum(tblnotafiscalprodutobarra.icmsvalor) AS icmsvalor,
-    sum(tblnotafiscalprodutobarra.ipibase) AS ipibase,
-    sum(tblnotafiscalprodutobarra.ipivalor) AS ipivalor,
-    sum(tblnotafiscalprodutobarra.icmsstbase) AS icmsstbase,
-    sum(tblnotafiscalprodutobarra.icmsstvalor) AS icmsstvalor
-   FROM tblnotafiscalprodutobarra
-  GROUP BY ${view}]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblnotafiscalprodutobarra.codnotafiscal,     sum(tblnotafiscalprodutobarra.valortotal) AS valortotal,     sum(tblnotafiscalprodutobarra.icmsbase) AS icmsbase,     sum(tblnotafiscalprodutobarra.icmsvalor) AS icmsvalor,     sum(tblnotafiscalprodutobarra.ipibase) AS ipibase,     sum(tblnotafiscalprodutobarra.ipivalor) AS ipivalor,     sum(tblnotafiscalprodutobarra.icmsstbase) AS icmsstbase,     sum(tblnotafiscalprodutobarra.icmsstvalor) AS icmsstvalor    FROM tblnotafiscalprodutobarra   GROUP BY tblnotafiscalprodutobarra.codnotafiscal]]></view_script>
 			<column name="codnotafiscal" type="bigint" />
 			<column name="valortotal" type="numeric" />
 			<column name="icmsbase" type="numeric" />
@@ -9690,35 +9296,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="icmsstvalor" type="numeric" />
 		</view>
 		<view name="vwpessoa" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwpessoa AS SELECT ${view},
-    tblpessoa.pessoa,
-    tblpessoa.fantasia,
-    tblpessoa.inativo,
-    tblpessoa.cliente,
-    tblpessoa.fornecedor,
-    tblpessoa.cnpj,
-    tblpessoa.ie,
-    tblpessoa.contato,
-    tblpessoa.endereco,
-    tblpessoa.numero,
-    tblpessoa.complemento,
-    tblcidade.cidade,
-    tblestado.sigla,
-    tblpessoa.bairro,
-    tblpessoa.cep,
-    tblpessoa.email,
-    tblpessoa.emailcobranca,
-    tblpessoa.emailnfe,
-    tblpessoa.creditobloqueado,
-    tblpessoa.telefone1,
-    tblpessoa.telefone2,
-    tblpessoa.telefone3,
-    tblpessoa.codcidade,
-    tblpessoa.fisica
-   FROM (((tblpessoa
-     LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))
-     LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))
-     LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblpessoa.codformapagamento)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblpessoa.codpessoa,     tblpessoa.pessoa,     tblpessoa.fantasia,     tblpessoa.inativo,     tblpessoa.cliente,     tblpessoa.fornecedor,     tblpessoa.cnpj,     tblpessoa.ie,     tblpessoa.contato,     tblpessoa.endereco,     tblpessoa.numero,     tblpessoa.complemento,     tblcidade.cidade,     tblestado.sigla,     tblpessoa.bairro,     tblpessoa.cep,     tblpessoa.email,     tblpessoa.emailcobranca,     tblpessoa.emailnfe,     tblpessoa.creditobloqueado,     tblpessoa.telefone1,     tblpessoa.telefone2,     tblpessoa.telefone3,     tblpessoa.codcidade,     tblpessoa.fisica    FROM (((tblpessoa      LEFT JOIN tblcidade ON ((tblcidade.codcidade = tblpessoa.codcidade)))      LEFT JOIN tblestado ON ((tblestado.codestado = tblcidade.codestado)))      LEFT JOIN tblformapagamento ON ((tblformapagamento.codformapagamento = tblpessoa.codformapagamento)))]]></view_script>
 			<column name="codpessoa" type="bigint" />
 			<column name="pessoa" type="varchar" />
 			<column name="fantasia" type="varchar" />
@@ -9746,47 +9324,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="fisica" type="boolean" />
 		</view>
 		<view name="vwprodutobarra" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwprodutobarra AS SELECT ${view},
-    tblprodutoembalagem.codprodutoembalagem,
-    tblproduto.codproduto,
-    tblproduto.produto,
-    (((COALESCE(tblproduto.produto, ''::character varying))::text || COALESCE((' '::text || (tblprodutovariacao.variacao)::text), ''::text)) || COALESCE((' C/'::text || rtrim(to_char(tblprodutoembalagem.quantidade, 'FM999G999G999G990D9999'::text), '.'::text)), ''::text)) AS descricao,
-    COALESCE(tblprodutobarra.referencia, tblprodutovariacao.referencia, tblproduto.referencia) AS referencia,
-    COALESCE(tblprodutoembalagem.preco, (tblproduto.preco * COALESCE(tblprodutoembalagem.quantidade, (1)::numeric))) AS preco,
-    tblunidademedida.sigla,
-    tblprodutoembalagem.quantidade,
-    tblproduto.importado,
-    tblncm.ncm,
-    tblprodutobarra.barras,
-    tblprodutobarra.variacao,
-    (COALESCE(tblprodutovariacao.inativo, (tblproduto.inativo)::timestamp without time zone))::date AS inativo,
-    tblmarca.codmarca,
-    tblmarca.marca,
-    tblproduto.codtributacao,
-    tbltributacao.tributacao,
-    tbltributacao.aliquotaicmsecf,
-    tblproduto.site,
-    tblsubgrupoproduto.codsubgrupoproduto,
-    tblsubgrupoproduto.subgrupoproduto,
-    tblgrupoproduto.codgrupoproduto,
-    tblgrupoproduto.grupoproduto,
-    tblfamiliaproduto.codfamiliaproduto,
-    tblfamiliaproduto.familiaproduto,
-    tblsecaoproduto.codsecaoproduto,
-    tblsecaoproduto.secaoproduto,
-    tblprodutovariacao.descontinuado
-   FROM (((((((((((tblprodutobarra
-     JOIN tblprodutovariacao ON ((tblprodutovariacao.codprodutovariacao = tblprodutobarra.codprodutovariacao)))
-     JOIN tblproduto ON ((tblproduto.codproduto = tblprodutovariacao.codproduto)))
-     LEFT JOIN tblprodutoembalagem ON ((tblprodutoembalagem.codprodutoembalagem = tblprodutobarra.codprodutoembalagem)))
-     JOIN tblunidademedida ON ((tblunidademedida.codunidademedida = COALESCE(tblprodutoembalagem.codunidademedida, tblproduto.codunidademedida))))
-     JOIN tblmarca ON ((tblmarca.codmarca = COALESCE(tblprodutovariacao.codmarca, tblproduto.codmarca))))
-     JOIN tbltributacao ON ((tbltributacao.codtributacao = tblproduto.codtributacao)))
-     JOIN tblncm ON ((tblncm.codncm = tblproduto.codncm)))
-     JOIN tblsubgrupoproduto ON ((tblsubgrupoproduto.codsubgrupoproduto = tblproduto.codsubgrupoproduto)))
-     JOIN tblgrupoproduto ON ((tblgrupoproduto.codgrupoproduto = tblsubgrupoproduto.codgrupoproduto)))
-     JOIN tblfamiliaproduto ON ((tblfamiliaproduto.codfamiliaproduto = tblgrupoproduto.codfamiliaproduto)))
-     JOIN tblsecaoproduto ON ((tblsecaoproduto.codsecaoproduto = tblfamiliaproduto.codsecaoproduto)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblprodutobarra.codprodutobarra,     tblprodutoembalagem.codprodutoembalagem,     tblproduto.codproduto,     tblproduto.produto,     (((COALESCE(tblproduto.produto, ''::character varying))::text || COALESCE((' '::text || (tblprodutovariacao.variacao)::text), ''::text)) || COALESCE((' C/'::text || rtrim(to_char(tblprodutoembalagem.quantidade, 'FM999G999G999G990D9999'::text), '.'::text)), ''::text)) AS descricao,     COALESCE(tblprodutobarra.referencia, tblprodutovariacao.referencia, tblproduto.referencia) AS referencia,     COALESCE(tblprodutoembalagem.preco, (tblproduto.preco * COALESCE(tblprodutoembalagem.quantidade, (1)::numeric))) AS preco,     tblunidademedida.sigla,     tblprodutoembalagem.quantidade,     tblproduto.importado,     tblncm.ncm,     tblprodutobarra.barras,     tblprodutobarra.variacao,     (COALESCE(tblprodutovariacao.inativo, (tblproduto.inativo)::timestamp without time zone))::date AS inativo,     tblmarca.codmarca,     tblmarca.marca,     tblproduto.codtributacao,     tbltributacao.tributacao,     tbltributacao.aliquotaicmsecf,     tblproduto.site,     tblsubgrupoproduto.codsubgrupoproduto,     tblsubgrupoproduto.subgrupoproduto,     tblgrupoproduto.codgrupoproduto,     tblgrupoproduto.grupoproduto,     tblfamiliaproduto.codfamiliaproduto,     tblfamiliaproduto.familiaproduto,     tblsecaoproduto.codsecaoproduto,     tblsecaoproduto.secaoproduto,     tblprodutovariacao.descontinuado    FROM (((((((((((tblprodutobarra      JOIN tblprodutovariacao ON ((tblprodutovariacao.codprodutovariacao = tblprodutobarra.codprodutovariacao)))      JOIN tblproduto ON ((tblproduto.codproduto = tblprodutovariacao.codproduto)))      LEFT JOIN tblprodutoembalagem ON ((tblprodutoembalagem.codprodutoembalagem = tblprodutobarra.codprodutoembalagem)))      JOIN tblunidademedida ON ((tblunidademedida.codunidademedida = COALESCE(tblprodutoembalagem.codunidademedida, tblproduto.codunidademedida))))      JOIN tblmarca ON ((tblmarca.codmarca = COALESCE(tblprodutovariacao.codmarca, tblproduto.codmarca))))      JOIN tbltributacao ON ((tbltributacao.codtributacao = tblproduto.codtributacao)))      JOIN tblncm ON ((tblncm.codncm = tblproduto.codncm)))      JOIN tblsubgrupoproduto ON ((tblsubgrupoproduto.codsubgrupoproduto = tblproduto.codsubgrupoproduto)))      JOIN tblgrupoproduto ON ((tblgrupoproduto.codgrupoproduto = tblsubgrupoproduto.codgrupoproduto)))      JOIN tblfamiliaproduto ON ((tblfamiliaproduto.codfamiliaproduto = tblgrupoproduto.codfamiliaproduto)))      JOIN tblsecaoproduto ON ((tblsecaoproduto.codsecaoproduto = tblfamiliaproduto.codsecaoproduto)))]]></view_script>
 			<column name="codprodutobarra" type="bigint" />
 			<column name="codprodutoembalagem" type="bigint" />
 			<column name="codproduto" type="bigint" />
@@ -9818,23 +9356,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="descontinuado" type="timestamp" />
 		</view>
 		<view name="vwprodutotributacao" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwprodutotributacao AS SELECT ${view},
-    tblprodutobarra.codprodutobarra,
-    tbltributacaonaturezaoperacao.codtributacaonaturezaoperacao,
-    tbltributacaonaturezaoperacao.codtributacao,
-    tbltributacaonaturezaoperacao.codnaturezaoperacao,
-    tbltributacaonaturezaoperacao.codcfop,
-    tbltributacaonaturezaoperacao.icmsbase,
-    tbltributacaonaturezaoperacao.icmspercentual,
-    tbltributacaonaturezaoperacao.codestado,
-    tbltributacaonaturezaoperacao.csosn,
-    tbltributacaonaturezaoperacao.acumuladordominiovista,
-    tbltributacaonaturezaoperacao.acumuladordominioprazo,
-    tbltributacaonaturezaoperacao.historicodominio,
-    tblproduto.codtipoproduto
-   FROM ((tblproduto
-     LEFT JOIN tblprodutobarra ON ((tblprodutobarra.codproduto = ${view})))
-     LEFT JOIN tbltributacaonaturezaoperacao ON (((tbltributacaonaturezaoperacao.codtributacao = tblproduto.codtributacao) AND (tbltributacaonaturezaoperacao.codtipoproduto = tblproduto.codtipoproduto))))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblproduto.codproduto,     tblprodutobarra.codprodutobarra,     tbltributacaonaturezaoperacao.codtributacaonaturezaoperacao,     tbltributacaonaturezaoperacao.codtributacao,     tbltributacaonaturezaoperacao.codnaturezaoperacao,     tbltributacaonaturezaoperacao.codcfop,     tbltributacaonaturezaoperacao.icmsbase,     tbltributacaonaturezaoperacao.icmspercentual,     tbltributacaonaturezaoperacao.codestado,     tbltributacaonaturezaoperacao.csosn,     tbltributacaonaturezaoperacao.acumuladordominiovista,     tbltributacaonaturezaoperacao.acumuladordominioprazo,     tbltributacaonaturezaoperacao.historicodominio,     tblproduto.codtipoproduto    FROM ((tblproduto      LEFT JOIN tblprodutobarra ON ((tblprodutobarra.codproduto = tblproduto.codproduto)))      LEFT JOIN tbltributacaonaturezaoperacao ON (((tbltributacaonaturezaoperacao.codtributacao = tblproduto.codtributacao) AND (tbltributacaonaturezaoperacao.codtipoproduto = tblproduto.codtipoproduto))))]]></view_script>
 			<column name="codproduto" type="bigint" />
 			<column name="codprodutobarra" type="bigint" />
 			<column name="codtributacaonaturezaoperacao" type="bigint" />
@@ -9851,51 +9373,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codtipoproduto" type="bigint" />
 		</view>
 		<view name="vwtitulo" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwtitulo AS SELECT ${view},
-    tblfilial.filial,
-    tbltitulo.codtipotitulo,
-    tbltipotitulo.tipotitulo,
-    tbltitulo.numero,
-    tbltitulo.vencimento,
-    tbltitulo.debito,
-    tbltitulo.credito,
-    (COALESCE(tbltitulo.debito, (0)::numeric) - COALESCE(tbltitulo.credito, (0)::numeric)) AS valor,
-    tbltitulo.debitosaldo,
-    tbltitulo.creditosaldo,
-    tbltitulo.saldo,
-    tbltitulo.boleto,
-    tbltitulo.nossonumero,
-    tbltitulo.emissao,
-    tbltitulo.transacao,
-    tbltitulo.fatura,
-    tbltitulo.codportador,
-    tblportador.portador,
-    tbltitulo.codpessoa,
-    tblpessoa.fantasia,
-    tblpessoa.pessoa,
-    tbltitulo.codcontacontabil,
-    tblcontacontabil.contacontabil,
-    tbltitulo.gerencial,
-    tbltitulo.codfilial,
-    tbltitulo.transacaoliquidacao,
-    tblpessoa.cnpj,
-    tbltitulo.codnegocioformapagamento,
-    tblnegocioformapagamento.codnegocio,
-    ${view}agrupamento,
-    tblpessoa.fisica,
-    tblpessoafilial.pessoa AS pessoafilial,
-    tblpessoafilial.cnpj AS cnpjfilial,
-    tblpessoafilial.telefone1 AS telefone1filial,
-    tblpessoafilial.fantasia AS fantasiafilial,
-    tblpessoa.telefone1
-   FROM (((((((tbltitulo
-     LEFT JOIN tbltipotitulo ON ((tbltipotitulo.codtipotitulo = tbltitulo.codtipotitulo)))
-     LEFT JOIN tblportador ON ((tbltitulo.codportador = tblportador.codportador)))
-     LEFT JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))
-     LEFT JOIN tblpessoa ON ((tbltitulo.codpessoa = tblpessoa.codpessoa)))
-     LEFT JOIN tblpessoa tblpessoafilial ON ((tblpessoafilial.codpessoa = tblfilial.codpessoa)))
-     LEFT JOIN tblcontacontabil ON ((tblcontacontabil.codcontacontabil = tbltitulo.codcontacontabil)))
-     LEFT JOIN tblnegocioformapagamento ON ((tblnegocioformapagamento.codnegocioformapagamento = tbltitulo.codnegocioformapagamento)))]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tbltitulo.codtitulo,     tblfilial.filial,     tbltitulo.codtipotitulo,     tbltipotitulo.tipotitulo,     tbltitulo.numero,     tbltitulo.vencimento,     tbltitulo.debito,     tbltitulo.credito,     (COALESCE(tbltitulo.debito, (0)::numeric) - COALESCE(tbltitulo.credito, (0)::numeric)) AS valor,     tbltitulo.debitosaldo,     tbltitulo.creditosaldo,     tbltitulo.saldo,     tbltitulo.boleto,     tbltitulo.nossonumero,     tbltitulo.emissao,     tbltitulo.transacao,     tbltitulo.fatura,     tbltitulo.codportador,     tblportador.portador,     tbltitulo.codpessoa,     tblpessoa.fantasia,     tblpessoa.pessoa,     tbltitulo.codcontacontabil,     tblcontacontabil.contacontabil,     tbltitulo.gerencial,     tbltitulo.codfilial,     tbltitulo.transacaoliquidacao,     tblpessoa.cnpj,     tbltitulo.codnegocioformapagamento,     tblnegocioformapagamento.codnegocio,     tbltitulo.codtituloagrupamento,     tblpessoa.fisica,     tblpessoafilial.pessoa AS pessoafilial,     tblpessoafilial.cnpj AS cnpjfilial,     tblpessoafilial.telefone1 AS telefone1filial,     tblpessoafilial.fantasia AS fantasiafilial,     tblpessoa.telefone1    FROM (((((((tbltitulo      LEFT JOIN tbltipotitulo ON ((tbltipotitulo.codtipotitulo = tbltitulo.codtipotitulo)))      LEFT JOIN tblportador ON ((tbltitulo.codportador = tblportador.codportador)))      LEFT JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))      LEFT JOIN tblpessoa ON ((tbltitulo.codpessoa = tblpessoa.codpessoa)))      LEFT JOIN tblpessoa tblpessoafilial ON ((tblpessoafilial.codpessoa = tblfilial.codpessoa)))      LEFT JOIN tblcontacontabil ON ((tblcontacontabil.codcontacontabil = tbltitulo.codcontacontabil)))      LEFT JOIN tblnegocioformapagamento ON ((tblnegocioformapagamento.codnegocioformapagamento = tbltitulo.codnegocioformapagamento)))]]></view_script>
 			<column name="codtitulo" type="bigint" />
 			<column name="filial" type="varchar" />
 			<column name="codtipotitulo" type="bigint" />
@@ -9935,25 +9413,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="telefone1" type="varchar" />
 		</view>
 		<view name="vwtituloagrupamento_baixados" >
-			<view_script><![CDATA[CREATE OR REPLACE VIEW vwtituloagrupamento_baixados AS SELECT ${view},
-    tbltitulo.codfilial,
-    tbltitulo.codpessoa,
-    tbltitulo.numero,
-    tbltitulo.fatura,
-    tbltitulo.emissao,
-    tbltitulo.vencimento,
-    tblmovimentotitulo.debito,
-    tblmovimentotitulo.credito,
-    tbltitulo.boleto,
-    tbltitulo.nossonumero,
-    tbltitulo.codportador,
-    tbltitulo.gerencial,
-    tblmovimentotitulo.codtituloagrupamento,
-    tblfilial.filial
-   FROM ((tblmovimentotitulo
-     JOIN tbltitulo ON ((${view} = tblmovimentotitulo.codtitulo)))
-     JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))
-  WHERE (tblmovimentotitulo.codtipomovimentotitulo = 901)]]></view_script>
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tbltitulo.codtitulo,     tbltitulo.codfilial,     tbltitulo.codpessoa,     tbltitulo.numero,     tbltitulo.fatura,     tbltitulo.emissao,     tbltitulo.vencimento,     tblmovimentotitulo.debito,     tblmovimentotitulo.credito,     tbltitulo.boleto,     tbltitulo.nossonumero,     tbltitulo.codportador,     tbltitulo.gerencial,     tblmovimentotitulo.codtituloagrupamento,     tblfilial.filial    FROM ((tblmovimentotitulo      JOIN tbltitulo ON ((tbltitulo.codtitulo = tblmovimentotitulo.codtitulo)))      JOIN tblfilial ON ((tblfilial.codfilial = tbltitulo.codfilial)))   WHERE (tblmovimentotitulo.codtipomovimentotitulo = 901)]]></view_script>
 			<column name="codtitulo" type="bigint" />
 			<column name="codfilial" type="bigint" />
 			<column name="codpessoa" type="bigint" />
@@ -9971,49 +9431,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="filial" type="varchar" />
 		</view>
 		<materialized_view name="mvwestoque2019" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view} AS  SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2019-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view}     (p.preco           CASE             WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio             ELSE NULL::numeric         END) AS markup    FROM (((((((tblproduto p      LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))      LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))      LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))      LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))      LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))      LEFT JOIN ( SELECT el.codfilial,             pv.codproduto,             sum(em.saldoquantidade) AS saldoquantidade,             sum(em.saldovalor) AS saldovalor,             (sum(em.saldovalor)                   CASE                     WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)                     ELSE NULL::numeric                 END) AS customedio            FROM (((((tblestoquelocalprodutovariacao elpv              JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))              JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))              JOIN tblfilial f ON ((f.codfilial = el.codfilial)))              JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))              JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes                    FROM tblestoquemes em2                   WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2019-12-31'::date))                   ORDER BY em2.mes DESC                  LIMIT 1))))           WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))   ORDER BY p.produto, p.codproduto, fiscal.codfilial
  SELECT p.codproduto,
     p.produto,
     p.inativo,
@@ -10068,49 +9486,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="markup" type="numeric" />
 		</materialized_view>
 		<materialized_view name="mvwestoque2020" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view} AS  SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2020-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view}     (p.preco           CASE             WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio             ELSE NULL::numeric         END) AS markup    FROM (((((((tblproduto p      LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))      LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))      LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))      LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))      LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))      LEFT JOIN ( SELECT el.codfilial,             pv.codproduto,             sum(em.saldoquantidade) AS saldoquantidade,             sum(em.saldovalor) AS saldovalor,             (sum(em.saldovalor)                   CASE                     WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)                     ELSE NULL::numeric                 END) AS customedio            FROM (((((tblestoquelocalprodutovariacao elpv              JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))              JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))              JOIN tblfilial f ON ((f.codfilial = el.codfilial)))              JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))              JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes                    FROM tblestoquemes em2                   WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2020-12-31'::date))                   ORDER BY em2.mes DESC                  LIMIT 1))))           WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))   ORDER BY p.produto, p.codproduto, fiscal.codfilial
  SELECT p.codproduto,
     p.produto,
     p.inativo,
@@ -10165,49 +9541,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="markup" type="numeric" />
 		</materialized_view>
 		<materialized_view name="mvwestoque2021" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view} AS  SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2021-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view}     (p.preco           CASE             WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio             ELSE NULL::numeric         END) AS markup    FROM (((((((tblproduto p      LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))      LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))      LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))      LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))      LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))      LEFT JOIN ( SELECT el.codfilial,             pv.codproduto,             sum(em.saldoquantidade) AS saldoquantidade,             sum(em.saldovalor) AS saldovalor,             (sum(em.saldovalor)                   CASE                     WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)                     ELSE NULL::numeric                 END) AS customedio            FROM (((((tblestoquelocalprodutovariacao elpv              JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))              JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))              JOIN tblfilial f ON ((f.codfilial = el.codfilial)))              JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))              JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes                    FROM tblestoquemes em2                   WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2021-12-31'::date))                   ORDER BY em2.mes DESC                  LIMIT 1))))           WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))   ORDER BY p.produto, p.codproduto, fiscal.codfilial
  SELECT p.codproduto,
     p.produto,
     p.inativo,
@@ -10262,49 +9596,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="markup" type="numeric" />
 		</materialized_view>
 		<materialized_view name="mvwestoque2022" >
-			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view} AS  SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2022-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint, (105)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${view}     (p.preco           CASE             WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio             ELSE NULL::numeric         END) AS markup    FROM (((((((tblproduto p      LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))      LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))      LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))      LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))      LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))      LEFT JOIN ( SELECT el.codfilial,             pv.codproduto,             sum(em.saldoquantidade) AS saldoquantidade,             sum(em.saldovalor) AS saldovalor,             (sum(em.saldovalor)                   CASE                     WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)                     ELSE NULL::numeric                 END) AS customedio            FROM (((((tblestoquelocalprodutovariacao elpv              JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))              JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))              JOIN tblfilial f ON ((f.codfilial = el.codfilial)))              JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))              JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes                    FROM tblestoquemes em2                   WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2022-12-31'::date))                   ORDER BY em2.mes DESC                  LIMIT 1))))           WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint, (105)::bigint]))           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))   ORDER BY p.produto, p.codproduto, fiscal.codfilial
  SELECT p.codproduto,
     p.produto,
     p.inativo,
@@ -10510,6 +9802,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tblpermissao_codpermissao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoa_codpessoa_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblpessoacertidao_codpessoacertidao_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblpessoaconta_codpessoaconta_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoaemail_codpessoaemail_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpix_codpix_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpixcob_codpixcob_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -10607,14 +9900,27 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<trigger name="tbltituloau" table="tbltitulo" id="Trigger4846967" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER tbltituloau AFTER UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloau();]]></string>
 		</trigger>
-		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
+		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text_serial$function$
+AS '$libdir/tablefunc', $function$connectby_text$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="integer" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
+		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
+ RETURNS SETOF record
+ LANGUAGE c
+ STABLE STRICT
+AS '$libdir/tablefunc', $function$connectby_text$function$
+;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
@@ -10636,32 +9942,19 @@ AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 			<input_param jt="-1" type="integer" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
-		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
+		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
+AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="integer" inOut="-1" />
-		</function>
-		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
- RETURNS SETOF record
- LANGUAGE c
- STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
-;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="criatriggers_geraauditoria" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.criatriggers_geraauditoria(brecria boolean DEFAULT false)
@@ -10699,14 +9992,13 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
+		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab_hash$function$
+AS '$libdir/tablefunc', $function$crosstab$function$
 ;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab" id="Function_1a50" isSystem="false" params_known="y" >
@@ -10719,13 +10011,14 @@ AS '$libdir/tablefunc', $function$crosstab$function$
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
 		</function>
-		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
+		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab$function$
+AS '$libdir/tablefunc', $function$crosstab_hash$function$
 ;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab2" id="Function_1f2b" isSystem="false" params_known="y" >
@@ -11283,6 +10576,89 @@ END;
 $function$
 ;]]></string>
 		</function>
+		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
+ RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+	pcodecf bigint;
+BEGIN
+	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Geral' as tipo
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
+	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
+	  from tblecfreducaoz
+	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblecfreducaoz.movimento = pmovimento
+	   and tblecfreducaoz.crz = pcrz
+	 group by 
+	       tblecfreducaoz.codecfreducaoz
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     ;
+	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
+/*
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscalprodutobarra.aliquotaicms
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+*/
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Cancelado' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = true
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Desconto' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(descontoacrescimo)  as total
+	  from tblcupomfiscal 
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
+         
+END;
+$function$
+;]]></string>
+			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
+		</function>
 		<function name="fnlistatotaisecfreducaoz" id="Function-25ba" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint, pdesejado numeric)
  RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric, diferenca numeric)
@@ -11369,89 +10745,6 @@ $function$
 			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
 			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 			<input_param name="diferenca" jt="-1" type="numeric" inOut="-1" />
-		</function>
-		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
- RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
- LANGUAGE plpgsql
-AS $function$
-DECLARE
-	pcodecf bigint;
-BEGIN
-	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Geral' as tipo
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
-	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
-	  from tblecfreducaoz
-	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblecfreducaoz.movimento = pmovimento
-	   and tblecfreducaoz.crz = pcrz
-	 group by 
-	       tblecfreducaoz.codecfreducaoz
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     ;
-	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
-/*
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscalprodutobarra.aliquotaicms
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-*/
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Cancelado' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = true
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Desconto' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(descontoacrescimo)  as total
-	  from tblcupomfiscal 
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
-         
-END;
-$function$
-;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 		</function>
 		<function name="fntblmovimentotituloaiauad" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblmovimentotituloaiauad()
@@ -11564,12 +10857,12 @@ AS $function$
 				valoraprazo = coalesce(totais.valoraprazo, 0),
 				valorTotal  = coalesce(tblNegocio.valorProdutos, 0) - coalesce(tblNegocio.valorDesconto, 0) + coalesce(tblNegocio.valorFrete, 0) + coalesce(totais.valorJuros, 0)
 				from totais 
-				where tblnegocio.codnegocio = pCodNegocio
-				 AND tblNegocio.codpdv is null;
+				where tblnegocio.codnegocio = pCodNegocio;
 				RETURN TRUE;
 			END;
 			$function$
 ;]]></string>
+			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 		</function>
 		<function name="fntblnegocio_atualiza_valorprodutos" id="Function-df1" isSystem="false" params_known="y" >
@@ -11583,19 +10876,18 @@ AS $function$
 				-- calcula total produtos
 				SELECT 
 				  INTO vValorProdutos
-					   SUM(COALESCE(tblNegocioProdutoBarra.valorProdutos, tblNegocioProdutoBarra.valortotal, 0))
+					   SUM(COALESCE(tblNegocioProdutoBarra.valortotal, 0))
 				FROM tblNegocioProdutoBarra
-				WHERE tblNegocioProdutoBarra.codNegocio = pCodNegocio
-				AND tblNegocioProdutoBarra.inativo is null;
+				WHERE tblNegocioProdutoBarra.codNegocio = pCodNegocio;
 				-- Atualiza Tabela com valores calculados
 				UPDATE tblNegocio
 				   SET valorProdutos       = coalesce(vValorProdutos, 0)
-				 WHERE tblNegocio.CodNegocio = pCodNegocio
-				 AND tblNegocio.codpdv is null;
+				 WHERE tblNegocio.CodNegocio = pCodNegocio;
 				RETURN TRUE;
 			END;
 			$function$
 ;]]></string>
+			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 		</function>
 		<function name="fntblnegocio_atualiza_valortotal" id="Function-59e" isSystem="false" params_known="y" >
@@ -11606,27 +10898,14 @@ AS $function$
 			BEGIN
 				-- Atualiza Tabela com valores calculados
 				UPDATE tblNegocio
-				   SET valorAVista = 
-				   		coalesce(tblNegocio.valorProdutos, 0) 
-				   		- coalesce(tblNegocio.valorDesconto, 0) 
-				   		- coalesce(tblNegocio.valorAPrazo, 0) 
-				   		+ coalesce(tblNegocio.valorFrete, 0) 
-					 	+ coalesce(tblNegocio.valorSeguro, 0) 
-					 	+ coalesce(tblNegocio.valorOutras, 0) 
-				   		+ coalesce(tblNegocio.valorJuros, 0)
-					 , valorTotal  = 
-					 	coalesce(tblNegocio.valorProdutos, 0) 
-					 	- coalesce(tblNegocio.valorDesconto, 0) 
-					 	+ coalesce(tblNegocio.valorFrete, 0) 
-					 	+ coalesce(tblNegocio.valorSeguro, 0) 
-					 	+ coalesce(tblNegocio.valorOutras, 0) 
-					 	+ coalesce(tblNegocio.valorJuros, 0)
-				 WHERE tblNegocio.CodNegocio = pCodNegocio
-				 AND tblNegocio.codpdv is null;
+				   SET valorAVista = coalesce(tblNegocio.valorProdutos, 0) - coalesce(tblNegocio.valorDesconto, 0) - coalesce(tblNegocio.valorAPrazo, 0) + coalesce(tblNegocio.valorFrete, 0) + coalesce(tblNegocio.valorJuros, 0)
+					 , valorTotal  = coalesce(tblNegocio.valorProdutos, 0) - coalesce(tblNegocio.valorDesconto, 0) + coalesce(tblNegocio.valorFrete, 0) + coalesce(tblNegocio.valorJuros, 0)
+				 WHERE tblNegocio.CodNegocio = pCodNegocio;
 				RETURN TRUE;
 			END;
 			$function$
 ;]]></string>
+			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 			<input_param name="pcodnegocio" jt="-1" type="bigint" inOut="1" />
 		</function>
 		<function name="fntblnegocioaiau_valorprodutos_valoraprazo_valordesconto" id="Function4846928" isSystem="false" params_known="n" >
@@ -12065,15 +11344,6 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 			<input_param jt="-1" type="double precision" inOut="-1" />
 			<input_param jt="-1" type="double precision" inOut="-1" />
 		</function>
-		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
- RETURNS text
- LANGUAGE c
- STABLE PARALLEL SAFE STRICT
-AS '$libdir/unaccent', $function$unaccent_dict$function$
-;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
 		<function name="unaccent" id="Function_26c8" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(regdictionary, text)
  RETURNS text
@@ -12082,6 +11352,15 @@ AS '$libdir/unaccent', $function$unaccent_dict$function$
 AS '$libdir/unaccent', $function$unaccent_dict$function$
 ;]]></string>
 			<input_param jt="-1" type="regdictionary" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
+		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
+ RETURNS text
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/unaccent', $function$unaccent_dict$function$
+;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="unaccent_init" id="Function_425" isSystem="false" params_known="y" >
