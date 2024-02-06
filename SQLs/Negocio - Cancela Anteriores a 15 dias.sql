@@ -16,11 +16,11 @@ and tblnegocio.lancamento < (current_date - interval '7 day')
 
 update tblnegocio 
 set codnegociostatus = 3
-, observacoes = coalesce(observacoes || ' - ', '') || 'CANCELAMENTO AUTOMATICO - NEGOCIO NAO FECHADO COM MAIS DE 7 DIAS'
+, observacoes = coalesce(observacoes || ' - ', '') || 'CANCELAMENTO AUTOMATICO - NEGOCIO NAO FECHADO COM MAIS DE 30 DIAS'
 , alteracao = now()
 , codusuarioalteracao = 1
 where tblnegocio.codnegociostatus = 1
-and tblnegocio.lancamento < (current_date - interval '7 day')
+and tblnegocio.lancamento < (current_date - interval '30 day')
 --and tblnegocio.codusuario in (select tblusuario.codusuario from tblusuario where usuario ilike 'esc%')
 returning codnegocio, valortotal, lancamento 
  

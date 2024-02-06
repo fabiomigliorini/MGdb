@@ -1,15 +1,10 @@
-﻿/*
-select extract(year from datamovimento), extract(month from datamovimento), count(*)  
-from tblcupomfiscal 
-group by extract(year from datamovimento), extract(month from datamovimento)
-order by 1 desc, 2 desc
-*/
-
-select extract(year from emissao), extract(month from emissao), modelo, count(*)  
-from tblnotafiscal
-where emitida = true
---and modelo = 55
-group by extract(year from emissao), extract(month from emissao), modelo
-order by 1 desc, 2 desc, 3
-
-
+﻿            select mp.codproduto, mp.codprodutovariacao, mp.codprodutoembalagem, mp.saldoquantidade, floor(sum(es.saldoquantidade) / coalesce(pe.quantidade, 1))
+            from tblmercosproduto mp
+            inner join tblproduto p on (p.codproduto = mp.codproduto)
+            left join tblprodutoembalagem pe on (pe.codprodutoembalagem = mp.codprodutoembalagem)
+            inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocal in (102001, 101001) and elpv.codprodutovariacao = mp.codprodutovariacao)
+            inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = false)
+            where mp.inativo is null
+            group by mp.codproduto, mp.codprodutovariacao, mp.codprodutoembalagem, pe.quantidade, mp.saldoquantidade 
+            having mp.saldoquantidade != floor(sum(es.saldoquantidade) / coalesce(pe.quantidade, 1))
+            order by codproduto, codprodutovariacao, codprodutoembalagem 

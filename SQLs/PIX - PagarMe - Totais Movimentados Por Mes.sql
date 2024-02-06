@@ -25,3 +25,5 @@ select
 from tblpagarmepagamento pag
 group by date_trunc('month', pag.transacao)
 order by 1 desc
+
+

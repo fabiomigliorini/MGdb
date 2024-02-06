@@ -11,7 +11,7 @@ with sld as (
 	from tblprodutovariacao pv
 	inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 	inner join tblestoquesaldo sld on (sld.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
-	where pv.codproduto = 74950
+	where pv.codproduto = 69118
 )
 select
 	sld.codestoquesaldo,

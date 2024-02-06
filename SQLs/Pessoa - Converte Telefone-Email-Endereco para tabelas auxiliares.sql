@@ -5,8 +5,12 @@ select setval('tblpessoaendereco_codpessoaendereco_seq', 1, false);
 select setval('tblpessoatelefone_codpessoatelefone_seq', 1, false);
 select setval('tblpessoaemail_codpessoaemail_seq', 1, false);
 
+
+
 /*
 create sequence tblpessoaemail_codpessoaemail_seq
+
+
 drop sequence tblpessoaemail_codpessoatelefone_seq
 */
 
@@ -304,3 +308,13 @@ and d.ddd is not null
 -- apaga tabela temporaria
 drop table tmpddd
 */
+
+select * from tblnegocio
+
+select * from tblpessoatelefone where criacao <= date_trunc('day', now())
+
+select * from tblpessoa where codpessoa = 15703
+
+select * from tblmercoscliente t 
+
+

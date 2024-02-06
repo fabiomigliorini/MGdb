@@ -18,37 +18,24 @@ select * from pendentes order by codnegocio desc
 --limit 200 offset 400
 
 -- transmite as notas
-select 
-	--nf.codfilial, count(*), sum(nf.valortotal)
-	' time curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/criar" && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/enviar-sincrono"'
-from tblnotafiscal nf
-where nf.codnaturezaoperacao = 1 -- venda
-and nf.emitida = true 
-and nf.modelo = 65
-and nf.numero = 0
-and nf.codpessoa = 1
-and nf.valortotal < 1000
---group by nf.codfilial 
-order by 1 desc
---limit 150
---offset 0
-
-
-
-select 
-	--nf.codfilial, count(*), sum(nf.valortotal)
-	' time curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/criar" ' ||
-	' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/enviar-sincrono"' ||
-	' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/mail?destinatario=centralfarmafinanceiro%40gmail.com"',
+with pendentes as (
+	select 
+	codfilial, 
 	valortotal,
-	codnotafiscal 
---	, 	*
-from tblnotafiscal nf
-where nf.codnaturezaoperacao = 1 -- venda
-and nf.emitida = true 
-and nf.modelo = 65
-and nf.numero = 0
-order by codnotafiscal desc
+	nf.codnotafiscal,
+	' time curl --max-time 2 "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/criar" -H "Accept: application/json" | head -n 10' ||
+	' && curl --max-time 2 "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/enviar-sincrono" -H "Accept: application/json"| head -n 10' 
+	--' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/mail?destinatario=centralfarmafinanceiro%40gmail.com" -H "Accept: application/json"'
+	from tblnotafiscal nf
+	where nf.codnaturezaoperacao = 1 -- venda
+	and nf.emitida = true 
+	and nf.modelo = 65
+	and nf.numero = 0
+	and nf.codpessoa = 1
+	and nf.valortotal < 1000
+)
+select * from pendentes order by codnotafiscal desc
 
+select count(*), sum(valortotal) from pendentes
 
 

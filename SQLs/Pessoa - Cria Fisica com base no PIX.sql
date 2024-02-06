@@ -3,9 +3,9 @@ with pix as (
 	select pix.cpf, max(pix.nome) as nome, count(*) as quantidade
 	from tblpix pix
 	where pix.nome is not null 
-	and pix.cpf is not null
-	--and pix.nome ilike :nome
-	and pix.cpf = :cpf
+	--and pix.cpf is not null
+	and pix.nome ilike :nome
+	--and pix.cpf = :cpf
 	group by pix.cpf
 )
 insert into tblpessoa (
@@ -57,6 +57,12 @@ from pix
 left join tblpessoa pe on (pe.cnpj = pix.cpf)
 where pe.codpessoa is null
 
-
-
 select notafiscal, * from tblpessoa where codpessoa = 14601
+
+
+
+select * from tblvalecompraformapagamento t where codvalecompra in (00002759, 2811)
+
+select * from tbltitulo t where codvalecompraformapagamento in (2756, 2808)
+
+select * from tblformapagamento t 
