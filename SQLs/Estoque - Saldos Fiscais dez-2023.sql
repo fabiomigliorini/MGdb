@@ -116,13 +116,15 @@ from mvwestoque2023  e
 where e.quant > 0
 order by codfilial
 
+
 refresh materialized view mvwestoque2023
 
 select codproduto, produto, preco, sum(quant) as quant, avg(custo) as custo, sum(valor) as valor, avg(markup) as markup 
 from mvwestoque2023
+where codproduto = :codproduto
 group by codproduto, produto, preco
-order by valor desc
-
+order by 6 desc
+limit 1000
 
 /*
 101	2073605.92
@@ -215,3 +217,12 @@ select * from tblmovimentotitulo t where codtitulo = 475351 order by criacao des
 
 
 select * from tblliquidacaotitulo t where codliquidacaotitulo = 107611
+
+select *
+from tblestoquemovimento t 
+where manual 
+and entradaquantidade is null
+and entradavalor is null
+and saidaquantidade is null 
+and saidavalor is null
+--and codestoquemes = 4889529

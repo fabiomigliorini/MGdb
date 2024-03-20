@@ -34,8 +34,34 @@ with pendentes as (
 	and nf.codpessoa = 1
 	and nf.valortotal < 1000
 )
-select * from pendentes order by codnotafiscal desc
+select * from pendentes order by codnotafiscal asc
 
 select count(*), sum(valortotal) from pendentes
+
+select * from tblmeta order by periodofinal desc
+
+
+
+
+select * from tblferiado order by data desc
+
+
+select * from tblgrupousuariousuario t 
+
+
+select * 
+from tblusuario u
+where u.inativo is null
+and u.codusuario not in (
+	select guu.codusuario 
+	from tblgrupousuariousuario guu 
+	where guu.codgrupousuario = 4
+)
+
+
+
+s
+
+
 
 

@@ -11,7 +11,7 @@
 	inner join tblfilial f2 on (f2.codpessoa = nf.codpessoa)
 	inner join tblnaturezaoperacao nat on (nat.codnaturezaoperacao = nf.codnaturezaoperacao)
 	where nf.emitida = false
-	and nf.emissao >= date_trunc('month', now() - '2 months'::interval)
+	and nf.emissao >= date_trunc('month', now() - '3 months'::interval)
 	and nf.codpessoa in (select f2.codpessoa from tblfilial f2)
 	and nf.nfeinutilizacao is null
 	and nf.nfecancelamento is null
@@ -32,7 +32,7 @@ emitidas as (
 	inner join tblfilial f2 on (f2.codpessoa = nf.codpessoa)
 	inner join tblnaturezaoperacao nat on (nat.codnaturezaoperacao = nf.codnaturezaoperacao)
 	where nf.emitida = true
-	and nf.emissao >= date_trunc('month', now() - '2 months'::interval)
+	and nf.emissao >= date_trunc('month', now() - '3 months'::interval)
 	and nf.codpessoa in (select f2.codpessoa from tblfilial f2)
 	and nf.nfeinutilizacao is null
 	and nf.nfecancelamento is null
@@ -52,6 +52,10 @@ select
 	coalesce(e.qtd, 0) - coalesce(l.qtd, 0) as qtd_dif
 from emitidas e
 full outer join lancadas l on (l.origem = e.origem and l.destino = e.destino and l.codnaturezaoperacao = e.codnaturezaoperacaodevolucao)
-order by 3 desc, 4, 5, 6, 7, 8, 9 desc
+order by 3 desc, 6, 4, 5, 7, 8, 9 desc
+
+
+
+
 
 

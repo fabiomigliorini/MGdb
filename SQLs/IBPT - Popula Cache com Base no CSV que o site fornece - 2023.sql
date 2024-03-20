@@ -1,5 +1,7 @@
 truncate table tblibptaxcsv;
 
+select table_name, pg_size_pretty(pg_total_relation_size(table_name::varchar)), pg_total_relation_size(table_name::varchar) from information_schema.tables where table_schema = 'mgsis' order by 3 desc
+
 copy tblibptaxcsv (codigo, ex, tipo, descricao, nacionalfederal, importadosfederal, estadual, municipal, vigenciainicio, vigenciafim, chave, versao, fonte) from '/tmp/host/ibpt/TabelaIBPTaxAC24.1.A.csv' delimiter ';' encoding 'windows-1251' csv header;
 update tblibptaxcsv set codestado = (select e.codestado from tblestado e where sigla = 'AC') where codestado is null;
 
@@ -129,7 +131,22 @@ update tblnegocio set codnegociostatus  = 1 where codnegocio = 3367166;
 
 select * from tblibptcache
 
+select vigenciafim, count(*) from tblibptcache group by vigenciafim
+
+
 update tblibptcache set vigenciafim = '2024-02-29' where vigenciafim ='2024-01-31'
 
 
+select count(*) from tblibptaxcsv
+
+select count(*) from tblnegocio 
+
+select count(*) from tblnegocioprodutobarra
+
+select count(*) from tblnegocioformapagamento
+
+
+SELECT pg_size_pretty( pg_total_relation_size('tblibptaxcsv'))
 */
+
+

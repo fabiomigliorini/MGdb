@@ -20,6 +20,19 @@ and elpv.codprodutovariacao in (select mp.codprodutovariacao from tblmercosprodu
 and es.saldoquantidade < 0
 order by p.produto, pv.variacao, el.estoquelocal
 
+
+select p.codproduto, p.produto, pv.variacao, el.estoquelocal, es.saldoquantidade 
+from tblestoquelocalprodutovariacao elpv
+inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = false)
+inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal)
+inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao)
+inner join tblproduto p on (p.codproduto = pv.codproduto)
+where elpv.codestoquelocal in (101001, 102001)
+and elpv.codprodutovariacao in (select mp.codprodutovariacao from tblmercosproduto mp where mp.inativo is null)
+and es.saldoquantidade > 0
+and es.saldoquantidade <= 3
+order by p.produto, pv.variacao, el.estoquelocal
+
 select * from tblnegocio where codnegocio = 03380612
 
 update tblnegocio set codnegociostatus = 1 where codnegocio = 3380612

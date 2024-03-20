@@ -4,8 +4,22 @@ delete from tbljobs where tbljobs.id not in (select min(id) from tbljobs dup gro
 select 'lara', queue, count(*), min(id) id, max(id) id, max(attempts) attempts  from tbljobs group by queue union all
 select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa group by queue order by queue
 
-/*
 
+
+/*
+--select * from tblnegocio where codnegocio = 2714461
+
+select * from tblnegocioprodutobarra t where codnegocioprodutobarra = 2667894
+
+select * from tblprodutobarra t where codprodutobarra = 6279
+
+delete
+from tbljobs t 
+where payload like '%EstoqueCalculaCustoMedio%'
+and payload not like '%ciclo\\";i:1;%'
+
+
+delete from tbljobs where payload ilike '%EstoqueCalculaCustoMedio%' and payload ilike '%ciclo\";i:15;%'
 
 update tbljobs set reserved_at = null, reserved = 0 where 1=1
 
@@ -104,4 +118,13 @@ update tbljobs set queue = 'medium' where id in (select j2.id from tbljobs j2 wh
 
 -- update tbljobs set queue = 'low' where tbljobs.id in (select j2.id from tbljobs j2 where j2.queue = 'parado_nf' order by j2.payload desc limit 100)
 
-**/
+
+select justificativa, * from tblmovimentotitulo
+
+select estornado  from tbltitulo
+
+alter table tblnegocio add justificativa varchar(200);
+
+select justificativa, * from tblnegocio where justificativa is not null
+***/
+
