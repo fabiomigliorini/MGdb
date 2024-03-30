@@ -111,16 +111,19 @@ from tblpessoa p
 left join tblpessoaemail pe on (upper(trim(coalesce(p.email, ''))) = upper(trim(coalesce(pe.email, ''))) and pe.codpessoa = p.codpessoa)
 where p.email is not null
 and p.email != 'nfe@mgpapelaria.com.br'
-and pe.codpessoaemail is null;
+and pe.codpessoaemail is null
+order by codpessoa 
+;
 
 
 -- Email NFe
 INSERT INTO mgsis.tblpessoaemail
 (codpessoa, ordem, email, nfe, cobranca, apelido, verificacao, criacao, codusuariocriacao, alteracao, codusuarioalteracao, inativo)
+
 select 
 	p.codpessoa, 
 	(select coalesce(max(t2.ordem), 0) + 1 from tblpessoaemail t2 where t2.codpessoa = p.codpessoa) as ordem, 
-	p.emailnfe, 
+	p.emailcobranca , 
 	true as nfe, 
 	false as cobranca, 
 	null as apelido, 
@@ -131,9 +134,9 @@ select
 	p.codusuarioalteracao, 
 	null inativo
 from tblpessoa p
-left join tblpessoaemail pe on (upper(trim(coalesce(p.emailnfe, ''))) = upper(trim(coalesce(pe.email, ''))) and pe.codpessoa = p.codpessoa)
-where p.emailnfe is not null
-and p.emailnfe != 'nfe@mgpapelaria.com.br'
+left join tblpessoaemail pe on (upper(trim(coalesce(p.emailcobranca , ''))) = upper(trim(coalesce(pe.email, ''))) and pe.codpessoa = p.codpessoa)
+where p.emailcobranca  is not null
+and p.emailcobranca  != 'nfe@mgpapelaria.com.br'
 and pe.codpessoaemail is null;
 
 -- MARCA PRIMEIRO EMAIL NFE COMO NAO NFE PROS CLIENTES QUE FICARAM COM 2 ENDERECOS DE NFE
@@ -183,6 +186,7 @@ where codpessoaemail in (
 -- telefone1
 INSERT INTO mgsis.tblpessoatelefone
 (codpessoa, ordem, tipo, pais, ddd, telefone, apelido, verificacao, criacao, codusuariocriacao, alteracao, codusuarioalteracao, inativo)
+
 select 
 	p.codpessoa, 
 	0 as ordem, 

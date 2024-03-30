@@ -26,4 +26,18 @@ from tblpagarmepagamento pag
 group by date_trunc('month', pag.transacao)
 order by 1 desc
 
+select 
+	date_trunc('month', pag.transacao)::varchar as mes,
+	case tipo 
+		when 1 then 'debito'
+		when 2 then 
+			case when (parcelas > 1) then 'parcelado' else 'credito' end
+		when 3 then 'voucher'
+		when 4 then 'prepago'
+		else 'outro' end as tipo,
+	sum(coalesce(valorpagamento, 0)) - sum(coalesce(valorcancelamento , 0)) as valor 
+from tblpagarmepagamento pag
+group by date_trunc('month', pag.transacao), tipo, parcelas > 1
+order by 1 desc, 2 asc
+
 

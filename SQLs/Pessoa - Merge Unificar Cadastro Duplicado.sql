@@ -14,6 +14,8 @@ update tblcobrancahistorico set codpessoa = :manter where codpessoa = :eliminar;
 
 update tblliquidacaotitulo set codpessoa = :manter where codpessoa = :eliminar;
 
+update tbltituloagrupamento set codpessoa = :manter where codpessoa = :eliminar;
+
 delete from tblpessoa where codpessoa = :eliminar;
 
 select mc.codmercoscliente, p.codpessoa, p.pessoa, p.cnpj, dup.codpessoa, dup.pessoa
@@ -29,3 +31,12 @@ group by cnpj, fisica, ie
 having count(*) > 1
 order by 7 desc;
 
+select * 
+from tblpdv t 
+order by criacao desc
+
+
+select * from tblpixcob t where valororiginal  = 26.9 order by criacao desc
+
+
+select * from tblnaturezaoperacao t 

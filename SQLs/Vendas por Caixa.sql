@@ -12,7 +12,7 @@ inner join tblfilial f ON (f.codfilial = n.codfilial)
 where n.codnegociostatus = 2
 and n.lancamento between :inicio and :fim
 and nat.venda = 1
-and n.codfilial = 105
+--and n.codfilial = 105
 group by
 	date_trunc('month', n.lancamento),
 	f.filial,

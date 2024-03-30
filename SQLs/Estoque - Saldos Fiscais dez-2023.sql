@@ -104,6 +104,38 @@ where e.codproduto in (
 	where e2.quant < 0
 )
 
+refresh materialized view mvwestoque2023
+
+select *
+from mvwestoque2023  e
+where e.codproduto in (
+	select e2.codproduto
+	from mvwestoque2023 e2
+	where e2.quant != 0
+	and e2.custo = 0
+)
+
+refresh materialized view mvwestoque2023
+
+select *
+from mvwestoque2023 e2
+where e2.quant != 0
+and e2.custo = 0
+
+select mov.codestoquemes, *
+from tblestoquemovimento mov
+inner join tblestoquemes mes on (mes.codestoquemes = mov.codestoquemes)
+inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
+inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutovariacao = sld.codestoquelocalprodutovariacao)
+inner join tblprodutovariacao pv on (pv.codprodutovariacao = elpv.codprodutovariacao and pv.codproduto = :codproduto)
+--inner join tblproduto p on (p.codproduto = pv.codproduto)
+where mov.codestoquemovimentotipo = 1002
+and mov.manual
+and mov.entradaquantidade > 0
+and coalesce(mov.entradavalor, 0) = 0
+
+
+select * from tblestoquemovimentotipo t 
 
 -- Totais do Estoque
 select cast(codfilial as varchar), sum(e.valor)
@@ -116,13 +148,16 @@ from mvwestoque2023  e
 where e.quant > 0
 order by codfilial
 
+
 refresh materialized view mvwestoque2023
 
 select codproduto, produto, preco, sum(quant) as quant, avg(custo) as custo, sum(valor) as valor, avg(markup) as markup 
 from mvwestoque2023
+--where codproduto = :codproduto
+where produto ilike '%refil cola quente%'
 group by codproduto, produto, preco
-order by valor desc
-
+order by 6 desc
+limit 1000
 
 /*
 101	2073605.92
@@ -215,3 +250,17 @@ select * from tblmovimentotitulo t where codtitulo = 475351 order by criacao des
 
 
 select * from tblliquidacaotitulo t where codliquidacaotitulo = 107611
+
+select *
+from tblestoquemovimento t 
+where manual 
+and entradaquantidade is null
+and entradavalor is null
+and saidaquantidade is null 
+and saidavalor is null
+--and codestoquemes = 4889529
+
+
+
+
+select * from tblnegocioformapagamento t 

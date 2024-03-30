@@ -65,9 +65,9 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
-and n.saida >= '2016-01-01 00:00:00'
+--and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2023-01-01 00:00:00'
---and n.saida >= now() - '180 days'::interval 
+and n.saida >= now() - '60 days'::interval 
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
@@ -86,9 +86,9 @@ inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where n.emitida = true
 and (n.nfeautorizacao is null or n.nfeinutilizacao is not null or n.nfecancelamento is not null)
---and n.saida >= '2016-01-01 00:00:00'
+and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2022-05-01 00:00:00'
-and n.saida >= now() - '180 days'::interval  
+--and n.saida >= now() - '180 days'::interval  
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
@@ -105,8 +105,8 @@ left join tblprodutoembalagem pe on (pe.codprodutoembalagem = pb.codprodutoembal
 inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 inner join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
---where n.saida >= '2016-01-01 00:00:00'
-where n.saida >= now() - '180 days'::interval 
+where n.saida >= '2016-01-01 00:00:00'
+--where n.saida >= now() - '180 days'::interval 
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
@@ -177,3 +177,6 @@ inner join tblestoquemes em on (em.codestoquesaldo = es.codestoquesaldo)
 inner join tblestoquemovimento mov on (mov.codestoquemes = em.codestoquemes)
 where elpv.codprodutovariacao = 3419
 order by 1, 2
+
+
+update tblnotafiscal set nfeinutilizacao = :protocolo, nfedatainutilizacao = to_timestamp(:data, 'DD/MM/YYYY HH24:MI:SS')  where codnotafiscal = :codnotafiscal 

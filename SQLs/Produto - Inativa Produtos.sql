@@ -17,4 +17,4 @@ and tblproduto.codproduto not in (
 	inner join tblprodutobarra pb on (npb.codprodutobarra = pb.codprodutobarra)
 	where n.lancamento >= date_trunc('month', now() - '3 years'::interval)
 )
-returning tblproduto.codproduto, tblproduto.inativo
+returning tblproduto.codproduto, tblproduto.produto, tblproduto.inativo
