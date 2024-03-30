@@ -57,7 +57,7 @@ with sld as (
 	inner join tblproduto p on (p.codproduto = pv.codproduto)
 	inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 	inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao)
-	where pv.codproduto in (49867, 49866)-- produto
+	where pv.codproduto in (307422, 107438, 30725, 45283, 5090, 7757, 3428)-- produto
 	and elpv.codestoquelocal != 101001
 --	and es.fiscal = true
 )
@@ -119,6 +119,37 @@ inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codes
 inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2023-12-31' order by iq.mes desc limit 1) )
 where e.quant = pas.quant 
 and e.valor = pas.valor
+
+
+-- Zerar produtos com saldo mas valor zerado
+drop table tmpestoquezerar ;
+create table tmpestoquezerar as 
+select 
+	e.codproduto, 
+	el.codestoquelocal, 
+	pv.codprodutovariacao, 
+	elpv.codestoquelocalprodutovariacao, 
+	es.codestoquesaldo,
+	mes.saldoquantidade, 
+	mes.codestoquemes,
+	mes.customedio,
+	mes.mes,
+	p.preco,
+	--CASE WHEN coalesce(mes.customedio, 0) > (p.preco * 0.8) THEN p.preco * 0.7
+	--   WHEN coalesce(mes.customedio, 0) < (p.preco * 0.4) THEN p.preco * 0.7
+	CASE WHEN coalesce(mes.customedio, 0) = 0 THEN p.preco * 0.7
+	     ELSE mes.customedio 
+	END	as custoutilizar
+	--sum (atu.valor)
+from mvwestoque2023 e
+inner join tblprodutovariacao pv on (pv.codproduto = e.codproduto)
+inner join tblproduto p on (p.codproduto = pv.codproduto)
+inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
+inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
+inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
+inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2023-12-31' order by iq.mes desc limit 1) )
+where e.valor = 0 
+and e.quant != 0
 
 
 -- 2) Cria o Mes de dez/2023 caso nao exista

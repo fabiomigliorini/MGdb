@@ -1,7 +1,7 @@
 ﻿
 delete from tbljobsspa where tbljobsspa.id not in (select min(id) from tbljobsspa dup group by dup.payload);
 delete from tbljobs where tbljobs.id not in (select min(id) from tbljobs dup group by dup.payload);
-select 'lara', queue, count(*), min(id) id, max(id) id, max(attempts) attempts  from tbljobs group by queue union all
+select 'lara', queue, count(*), min(id) id, max(id) id, max(attempts) attempts from tbljobs group by queue union all
 select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa group by queue order by queue
 
 

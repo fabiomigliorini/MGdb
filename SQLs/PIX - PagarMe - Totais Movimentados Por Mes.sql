@@ -39,3 +39,5 @@ select
 from tblpagarmepagamento pag
 group by date_trunc('month', pag.transacao), tipo, parcelas > 1
 order by 1 desc, 2 asc
+
+
