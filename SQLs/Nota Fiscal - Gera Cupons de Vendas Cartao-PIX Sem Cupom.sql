@@ -12,6 +12,7 @@ with pendentes as (
 	and n.codnegociostatus = 2
 	and fp.integracao = true
 	and nfpb.codnotafiscalprodutobarra is null
+	and npb.inativo is null
 	order by 1 desc 
 )
 select * from pendentes order by codnegocio desc 
