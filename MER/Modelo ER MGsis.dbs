@@ -3806,6 +3806,7 @@ Peso em KG]]></comment>
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codnegocioformapagamento" type="bigint" length="64" jt="-5" />
 			<index name="tblmovimentotitulo_pkey" unique="PRIMARY_KEY" >
 				<column name="codmovimentotitulo" />
 			</index>
@@ -3874,6 +3875,9 @@ Peso em KG]]></comment>
 			</fk>
 			<fk name="fk_tblmovimentotitulo_tbltituloboleto" to_schema="mgsis.mgsis" to_table="tbltituloboleto" update_action="cascade" >
 				<fk_column name="codtituloboleto" pk="codtituloboleto" />
+			</fk>
+			<fk name="fk_tblmovimentotitulo_tblnegocioformapagamento" to_schema="mgsis.mgsis" to_table="tblnegocioformapagamento" update_action="cascade" >
+				<fk_column name="codnegocioformapagamento" pk="codnegocioformapagamento" />
 			</fk>
 		</table>
 		<table name="tblnaturezaoperacao" >
@@ -4275,7 +4279,17 @@ Peso em KG]]></comment>
 			</fk>
 		</table>
 		<table name="tblnegocioformapagamento" >
-			<comment><![CDATA[tBand\n01=Visa\n02=Mastercard\n03=American Express\n04=Sorocred\n05=Diners Club\n06=Elo\n07=Hipercard\n08=Aura\n09=Cabal\n99=Outros]]></comment>
+			<comment><![CDATA[tBand
+01=Visa
+02=Mastercard
+03=American Express
+04=Sorocred
+05=Diners Club
+06=Elo
+07=Hipercard
+08=Aura
+09=Cabal
+99=Outros]]></comment>
 			<column name="codnegocioformapagamento" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="uuid" type="uuid" jt="102" mandatory="y" >
 				<defo><![CDATA[gen_random_uuid()]]></defo>
@@ -4340,6 +4354,7 @@ Peso em KG]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="codtitulo" type="bigint" length="64" jt="-5" />
 			<index name="tblnegocioformapagamento_pkey" unique="PRIMARY_KEY" >
 				<column name="codnegocioformapagamento" />
 			</index>
@@ -4397,6 +4412,9 @@ Peso em KG]]></comment>
 			<fk name="fk_tblnegocioformapagamento_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
 				<fk_column name="codpessoa" pk="codpessoa" />
 			</fk>
+			<fk name="fk_tblnegocioformapagamento_tbltitulo" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
+				<fk_column name="codtitulo" pk="codtitulo" />
+			</fk>
 		</table>
 		<table name="tblnegocioprodutobarra" >
 			<column name="codnegocioprodutobarra" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -4408,7 +4426,7 @@ Peso em KG]]></comment>
 			<column name="codnegocioprodutobarradevolucao" type="bigint" jt="-5" />
 			<column name="quantidade" type="numeric" length="14" decimal="3" jt="2" mandatory="y" />
 			<column name="valorunitario" type="numeric" length="22" decimal="10" jt="2" mandatory="y" />
-			<column name="valorprodutos" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorprodutos" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
 			<column name="percentualdesconto" type="numeric" length="5" decimal="2" jt="2" />
 			<column name="valordesconto" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valorfrete" type="numeric" length="14" decimal="2" jt="2" />
@@ -5318,7 +5336,11 @@ false = 1]]></comment>
 			</fk>
 		</table>
 		<table name="tblnotafiscalterceiro" >
-			<comment><![CDATA[finNFe\n1=NF-e normal;\n2=NF-e complementar;\n3=NF-e de ajuste;\n4=Devolução/Retorno.]]></comment>
+			<comment><![CDATA[finNFe
+1=NF-e normal;
+2=NF-e complementar;
+3=NF-e de ajuste;
+4=Devolução/Retorno.]]></comment>
 			<column name="codnotafiscalterceiro" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codnotafiscal" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="codnegocio" type="bigint" jt="-5" />
@@ -5626,7 +5648,12 @@ false = 1]]></comment>
 			</fk>
 		</table>
 		<table name="tblnotafiscalterceiropagamento" >
-			<comment><![CDATA[tBand\n01=Visa\n02=Mastercard\n03=American Express\n04=Sorocred\n99=Outros]]></comment>
+			<comment><![CDATA[tBand
+01=Visa
+02=Mastercard
+03=American Express
+04=Sorocred
+99=Outros]]></comment>
 			<column name="codnotafiscalterceiropagamento" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codnotafiscalterceiro" type="bigint" jt="-5" mandatory="y" />
 			<column name="forma" type="smallint" jt="5" mandatory="y" >
@@ -5775,7 +5802,8 @@ false = 1]]></comment>
 			</fk>
 		</table>
 		<table name="tblpagarmepagamento" >
-			<comment><![CDATA[metadata.initiatorTransactionKey\nCódigo identificador da transação do POS]]></comment>
+			<comment><![CDATA[metadata.initiatorTransactionKey
+Código identificador da transação do POS]]></comment>
 			<column name="codpagarmepagamento" type="bigserial" jt="-5" mandatory="y" />
 			<column name="codpagarmepedido" type="bigint" jt="-5" />
 			<column name="nsu" type="varchar" length="20" jt="12" >
@@ -6055,6 +6083,7 @@ false=issuer]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="observacoes" type="text" jt="12" />
 			<index name="pk_tblpdv" unique="PRIMARY_KEY" >
 				<column name="codpdv" />
 			</index>
@@ -6069,7 +6098,7 @@ false=issuer]]></comment>
 			</fk>
 		</table>
 		<table name="tblpedido" >
-			<comment><![CDATA[10 - Pendente\n20 - Atendido\n90 - Cancelado]]></comment>
+			<comment><![CDATA[10 - Compra\n20 - Transferencia\n30 - Venda]]></comment>
 			<column name="codpedido" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="indtipo" type="smallint" length="5" decimal="0" jt="5" mandatory="y" >
 				<comment><![CDATA[10 - Compra
@@ -6194,7 +6223,10 @@ false=issuer]]></comment>
 			</fk>
 		</table>
 		<table name="tblpessoa" >
-			<comment><![CDATA[Código de Regime Tributário\n1=Simples Nacional;\n2=Simples Nacional, excesso sublimite de receita bruta;\n3=Regime Normal.]]></comment>
+			<comment><![CDATA[Código de Regime Tributário
+1=Simples Nacional;
+2=Simples Nacional, excesso sublimite de receita bruta;
+3=Regime Normal.]]></comment>
 			<column name="codpessoa" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="pessoa" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<column name="fantasia" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
@@ -6767,7 +6799,7 @@ false=issuer]]></comment>
 			</fk>
 		</table>
 		<table name="tblportador" >
-			<comment><![CDATA[client_id]]></comment>
+			<comment><![CDATA[client_secret]]></comment>
 			<column name="codportador" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="portador" type="varchar" length="50" decimal="0" jt="12" />
 			<column name="codbanco" type="bigint" length="19" decimal="0" jt="-5" />
@@ -7891,7 +7923,8 @@ undone - desfeita, cancelada, desistiu]]></comment>
 			</fk>
 		</table>
 		<table name="tblstonetransacaoparcela" prior="tbl" >
-			<comment><![CDATA[prevision_liquidation_date\nPode mudar apos conciliacao]]></comment>
+			<comment><![CDATA[prevision_liquidation_date
+Pode mudar apos conciliacao]]></comment>
 			<column name="codstonetransacaoparcela" type="bigserial" jt="-5" mandatory="y" />
 			<column name="codstonetransacao" type="bigint" jt="-5" mandatory="y" />
 			<column name="numero" type="smallint" jt="5" >
@@ -8952,7 +8985,13 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			</fk>
 		</table>
 		<table name="tblveiculotipo" >
-			<comment><![CDATA[tpCar\n00 - Nao Aplicavel\n01 - Aberto\n02 - Fechada / Bau\n03 - Graneleira\n04 - Porta Container\n05 - Sider]]></comment>
+			<comment><![CDATA[tpCar
+00 - Nao Aplicavel
+01 - Aberto
+02 - Fechada / Bau
+03 - Graneleira
+04 - Porta Container
+05 - Sider]]></comment>
 			<column name="codveiculotipo" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="veiculotipo" type="varchar" length="50" jt="12" mandatory="y" />
 			<column name="tracao" type="boolean" jt="16" mandatory="y" />
@@ -13525,17 +13564,17 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="oauth_refresh_tokens" color="3986C1" x="323" y="51" />
 	</layout>
 	<layout name="Layout_PDV" id="Layout-2151" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="mvwestoque2023" color="3986C1" x="153" y="68" />
 		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="3986C1" x="187" y="646" />
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="68" y="935" />
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="765" y="204" />
+		<entity schema="mgsis.mgsis" name="tblmovimentotitulo" color="3986C1" x="1428" y="884" />
 		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="3986C1" x="51" y="1598" />
 		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="476" y="408" />
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="765" y="697" />
 		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="3986C1" x="391" y="1071" />
 		<entity schema="mgsis.mgsis" name="tblpagarmebandeira" color="3986C1" x="782" y="1683" />
 		<entity schema="mgsis.mgsis" name="tblpagarmepagamento" color="3986C1" x="425" y="1530" />
-		<entity schema="mgsis.mgsis" name="tblpagarmepedido" color="3986C1" x="782" y="1173" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepedido" color="3986C1" x="782" y="1207" />
 		<entity schema="mgsis.mgsis" name="tblpagarmepos" color="3986C1" x="1071" y="1530" />
 		<entity schema="mgsis.mgsis" name="tblpdv" color="C1D8EE" x="119" y="238" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="476" y="51" >
@@ -13555,9 +13594,10 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="1088" y="765" />
 		<entity schema="mgsis.mgsis" name="tblpixcob" color="3986C1" x="1020" y="323" />
 		<entity schema="mgsis.mgsis" name="tblpixcobstatus" color="3986C1" x="1071" y="1156" />
-		<entity schema="mgsis.mgsis" name="tmpdiasmes" color="3986C1" x="1377" y="510" />
+		<entity schema="mgsis.mgsis" name="tbltitulo" color="3986C1" x="1377" y="51" />
+		<entity schema="mgsis.mgsis" name="tmpdiasmes" color="3986C1" x="1632" y="510" />
 		<entity schema="mgsis.mgsis" name="tmpestoquelocalprodutovariacaovenda" color="3986C1" x="1428" y="697" />
-		<entity schema="mgsis.mgsis" name="tmpvendainicio" color="3986C1" x="1428" y="408" />
+		<entity schema="mgsis.mgsis" name="tmpvendainicio" color="3986C1" x="1632" y="408" />
 	</layout>
 	<layout name="Layout_PagarMe" id="Layout-26c6" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
@@ -13764,6 +13804,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codstonetransacao" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codtitulo" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblstonebandeira" color="C4EEC1" x="68" y="255" />
 		<entity schema="mgsis.mgsis" name="tblstonefilial" color="C4EEC1" x="391" y="68" />
