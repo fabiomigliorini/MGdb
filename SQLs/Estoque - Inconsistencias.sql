@@ -10,7 +10,9 @@ left join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegociop
 where n.codnegociostatus = 2
 and n.lancamento >= '2016-04-01 00:00:00'
 --and n.lancamento >= '2020-01-01 00:00:00'
---and n.lancamento >= now() - '365 days'::interval 
+--and n.lancamento >= now() - '360 days'::interval 
+--and n.lancamento >= now() - '180 days'::interval
+and npb.inativo is null
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
@@ -27,7 +29,7 @@ inner join tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)
 inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnegocioprodutobarra = npb.codnegocioprodutobarra)
-where n.codnegociostatus != 2
+where (n.codnegociostatus != 2 or npb.inativo is not null)
 and n.lancamento >= '2016-04-01 00:00:00'
 --and n.lancamento >= now() - '180 days'::interval 
 and tp.estoque = true
@@ -52,6 +54,7 @@ and n.lancamento >= '2016-04-01 00:00:00'
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
+--and p.codproduto = 75324
 and round((coalesce(em.entradaquantidade, 0) + coalesce(em.saidaquantidade, 0)), 1) != round((npb.quantidade * coalesce(pe.quantidade, 1)), 1)
 order by p.codproduto, n.codfilial, n.codnegocio, p.produto
 
@@ -65,9 +68,9 @@ inner join tblproduto p on (p.codproduto = pb.codproduto)
 inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
---and n.saida >= '2016-01-01 00:00:00'
+and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2023-01-01 00:00:00'
-and n.saida >= now() - '60 days'::interval 
+--and n.saida >= now() - '60 days'::interval 
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
@@ -86,7 +89,7 @@ inner join tbltipoproduto tp on (tp.codtipoproduto = p.codtipoproduto)
 left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotafiscalprodutobarra)
 where n.emitida = true
 and (n.nfeautorizacao is null or n.nfeinutilizacao is not null or n.nfecancelamento is not null)
-and n.saida >= '2016-01-01 00:00:00'
+--and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2022-05-01 00:00:00'
 --and n.saida >= now() - '180 days'::interval  
 and tp.estoque = true

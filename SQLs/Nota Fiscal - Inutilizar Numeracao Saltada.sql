@@ -22,14 +22,14 @@ insert into tblnotafiscal
 select 
 	num as numero, 
 	:codfilial as codfilial, 
-	:codestoquelocal as codestoquelocal, 
+	:codfilial * 1000 + 1 as codestoquelocal, 
 	:modelo as modelo, 
 	true as emitida, 
 	date_trunc('day', now()) as emissao, 
 	date_trunc('day', now()) as saida, 
 	1 as codpessoa, 
 	1 as codnaturezaoperacao, 
-	:serie as serie
+	1 as serie
 	--num, nf.numero, nf.codnotafiscal
 --from generate_series(2, 5) num
 from generate_series(:numero_inicial, :numero_final) num
@@ -74,15 +74,16 @@ limit 1100
 select ' curl https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/inutilizar?justificativa=falha+de+sistema%2C+saltou+numeracao &' as comando, numero
 from tblnotafiscal nf
 where nf.emitida = true
-and nf.codfilial = :codfilial
-and nf.modelo = :modelo
+--and nf.codfilial = :codfilial
+--and nf.modelo = :modelo
 and nf.serie = :serie
 --and nf.saida = date_trunc('day', now())
 and nf.nfeautorizacao is null
 and nf.nfecancelamento is null
 and nf.nfeinutilizacao is null
-and nf.numero between :numero_inicial and :numero_final
---and nf.numero > 10002
+--and nf.numero between :numero_inicial and :numero_final
+and nf.numero != 0
+and nf.valorprodutos = 0
 order by numero
 limit 200
 
@@ -133,7 +134,8 @@ nfedataautorizacao = null
 where emitida = true 
 and codfilial = 102
 and modelo = 65
-and numero in (580622, 580623, 580624, 580625, 580626, 584506, 584507)
+and numero in (720889)
+returning *
 
 update tblnegocio set codfilial = :codfilial, codestoquelocal = :codestoquelocal where codnegocio = :codnegocio 
 

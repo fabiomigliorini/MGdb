@@ -10,7 +10,7 @@ where codnotafiscal = :codnotafiscal
 
 select * from tblcest
 
-
+select * from tblnotafiscal where codnotafiscal = :codnotafiscal 
 --select * from tblibptcache t where vigenciafim is null
 
 
@@ -42,4 +42,5 @@ and modelo = :modelo
 and serie = :serie
 and numero in :numero
 and emitida = true
+
 

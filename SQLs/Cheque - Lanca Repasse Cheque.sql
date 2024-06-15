@@ -1,19 +1,38 @@
 ﻿--select * from tblportador order by codportador
 
--- Cria Repasse
-insert into tblchequerepasse (codportador, data, observacoes, criacao, codusuariocriacao) values (1, :data, null, :data, 1) returning *;
+create unique index tblchequerepasse_codportador_data on tblchequerepasse (codportador, data)
 
-select * from tblchequerepasse order by "data"  desc
+
+insert into tblchequerepasse 
+	(codportador, data, observacoes, criacao, codusuariocriacao) 
+select 
+	:codportador, :data, null, :data, 1
+where not exists (
+	SELECT * 
+	FROM tblchequerepasse 
+	WHERE codportador = :codportador 
+	and data = :data )
+returning *;
 
 -- Vincula Cheques ao repasse
-insert into tblchequerepassecheque (codcheque, codchequerepasse, criacao, codusuariocriacao)
-select codcheque, :codchequerepasse, :data, 1
+insert into tblchequerepassecheque 
+	(codcheque, codchequerepasse, criacao, codusuariocriacao)
+select 
+	codcheque, 
+	(SELECT cr.codchequerepasse 
+	FROM tblchequerepasse cr 
+	WHERE cr.codportador = :codportador 
+	and cr.data = :data), 
+	:data, 
+	1
 from tblcheque where cmc7 in (
 	:cmc7
-);
+)
+returning *
+;
 
 -- Marca Cheque como repassado
-update tblcheque set indstatus = 2 where indstatus = 1 and codcheque in (select crc.codcheque from tblchequerepassecheque crc);
+update tblcheque set indstatus = 2 where indstatus = 1 and codcheque in (select crc.codcheque from tblchequerepassecheque crc) returning *;
 
 -- Consulta Total Cheques do Repasse
 with totais as (

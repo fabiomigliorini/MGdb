@@ -6,6 +6,7 @@ select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa g
 
 
 
+
 /*
 --select * from tblnegocio where codnegocio = 2714461
 
@@ -18,6 +19,8 @@ from tbljobs t
 where payload like '%EstoqueCalculaCustoMedio%'
 and payload not like '%ciclo\\";i:1;%'
 
+
+delete from tbljobs where attempts > 100
 
 delete from tbljobs where payload ilike '%EstoqueCalculaCustoMedio%' and payload ilike '%ciclo\";i:15;%'
 

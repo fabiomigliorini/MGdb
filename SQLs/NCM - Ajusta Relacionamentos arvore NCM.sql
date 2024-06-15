@@ -42,6 +42,7 @@ update tblcest set codncm = (select n.codncm from tblncm n where n.ncm = tblcest
 
 select * from tblncm where ncm = descricao order by ncm
 
-*/
 
 select * from tblncm order by criacao desc nulls last 
+
+*/
