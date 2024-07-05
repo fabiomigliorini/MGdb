@@ -1,7 +1,7 @@
 UPDATE tblnotafiscal
-set nfeautorizacao = null,
-nfedataautorizacao = null
-where codnotafiscal = :codnotafiscal 
+   set nfeautorizacao = null,
+       nfedataautorizacao = null
+ where codnotafiscal = :codnotafiscal 
 
 
 update tblnotafiscalprodutobarra 
@@ -10,7 +10,9 @@ where codnotafiscal = :codnotafiscal
 
 select * from tblcest
 
-select * from tblnotafiscal where codnotafiscal = :codnotafiscal 
+select * 
+from tblnotafiscal 
+where codnotafiscal = :codnotafiscal 
 --select * from tblibptcache t where vigenciafim is null
 
 

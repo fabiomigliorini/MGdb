@@ -14,7 +14,7 @@ select
 	pp.codnegocio 
 from tblpagarmepedido pp
 left join tblpagarmepos pos on (pos.codpagarmepos = pp.codpagarmepos)
-where pp.status = 1
+where pp.status = 3
 --where pp.valor = 19.5
 --and pos.serial ilike '%1731113308'
 --and pos.serial ilike '%1731066478'

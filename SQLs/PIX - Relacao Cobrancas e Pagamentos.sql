@@ -8,7 +8,7 @@ where pc.codpixcobstatus not in (2, 4) -- Concluida/Expirado
 --and p.codpix is null
 --and u.usuario = 'igor'
 --and pc.codpixcob = 10032
-order by pc.criacao asc
+order by pc.criacao desc
 --order by pc.criacao asc
 --order by pc.criacao desc
 --offset 150

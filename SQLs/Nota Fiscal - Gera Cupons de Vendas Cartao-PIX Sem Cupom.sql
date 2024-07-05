@@ -34,17 +34,27 @@ with pendentes as (
 	from tblnotafiscal nf
 	where nf.codnaturezaoperacao = 1 -- venda
 	and nf.emitida = true 
-	and nf.modelo = 65
+	--and nf.modelo = 65
+	and nf.modelo = 55
 	and nf.numero = 0
-	and nf.codpessoa = 1
+	--and nf.codpessoa = 1
+	and nf.codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
 	and nf.valortotal < 1000
 )
-select * from pendentes order by codnotafiscal asc
+select * from pendentes order by codnotafiscal desc
 
 select count(*), sum(valortotal) from pendentes
 
 select * from tblmeta order by periodofinal desc
 
+
+update tblnotafiscal 
+set modelo = 55,
+codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
+where numero = 0
+and codpessoa = 1
+and modelo = 65
+and codnaturezaoperacao = 1
 
 
 
