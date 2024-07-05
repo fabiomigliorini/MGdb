@@ -60,12 +60,12 @@ echo
 echo
 
 echo "VOLTANDO BACKUP"
-docker-compose exec mgdb su - postgres -c "zcat /tmp/host/$BACKUP | psql"
+docker compose exec mgdb su - postgres -c "zcat /tmp/host/$BACKUP | psql"
 
 echo
 echo
 
 echo "AJUSTANDO CADASTROS PARA MODO DESENVOLVIMENTO"
-docker-compose exec mgdb su - postgres -c "psql -U mgsis -f /opt/www/MGdb/ajusta-cadastros.sql"
+docker compose exec mgdb su - postgres -c "psql -U mgsis -f /opt/www/MGdb/ajusta-cadastros.sql"
 echo
 echo
