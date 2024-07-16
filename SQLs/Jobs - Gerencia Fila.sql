@@ -6,7 +6,6 @@ select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa g
 
 
 
-
 /*
 --select * from tblnegocio where codnegocio = 2714461
 
