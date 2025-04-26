@@ -4,7 +4,7 @@ delete from tblnegocioprodutobarra where tblnegocioprodutobarra.codnegocio in
 	select tblnegocio.codnegocio 
 	from tblnegocio 
 	where tblnegocio.codnegociostatus = 1
-	and tblnegocio.lancamento < (current_date - interval '30 day')
+	and tblnegocio.lancamento < (current_date - interval '15 day')
 	--and tblnegocio.codusuario in (select tblusuario.codusuario from tblusuario where usuario ilike 'esc%')
 )
 
@@ -20,7 +20,7 @@ set codnegociostatus = 3
 , alteracao = now()
 , codusuarioalteracao = 1
 where tblnegocio.codnegociostatus = 1
-and tblnegocio.lancamento < (current_date - interval '30 day')
+and tblnegocio.lancamento < (current_date - interval '15 day')
 --and tblnegocio.codusuario in (select tblusuario.codusuario from tblusuario where usuario ilike 'esc%')
 returning codnegocio, valortotal, lancamento 
  

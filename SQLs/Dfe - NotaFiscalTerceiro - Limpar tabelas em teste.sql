@@ -1,4 +1,4 @@
-sdelete from tbldistribuicaodfeevento where 1=1;
+delete from tbldistribuicaodfeevento where 1=1;
 delete from tbldfeevento where 1=1;
 delete from tbldistribuicaodfe where 1=1;
 delete from tbldfetipo where 1=1;
