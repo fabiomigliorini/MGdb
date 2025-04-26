@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="PostgreSQL" id="Project4820597" database="PostgreSQL" >
+<project name="PostgreSQL" database="PostgreSQL" id="Project4820597" >
 	<schema name="mgsis" catalogname="mgsis" >
 		<udt name="tablefunc_crosstab_2" udt_java_type="12" udt_precision="NONE" >
 			<udt_script><![CDATA[CREATE TYPE ${name} AS (row_name text, category_1 text, category_2 text)]]></udt_script>
@@ -1372,6 +1372,47 @@ padrao: experiencia + 45d]]></comment>
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
+		<table name="tbldominioacumulador" prior="tbl" >
+			<column name="coddominioacumulador" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codfilial" type="bigint" jt="-5" mandatory="y" />
+			<column name="codcfop" type="bigint" jt="-5" mandatory="y" />
+			<column name="icmscst" type="numeric" length="3" jt="2" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="movimentacaofisica" type="boolean" jt="16" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="movimentacaocontabil" type="boolean" jt="16" mandatory="y" >
+				<defo><![CDATA[true]]></defo>
+			</column>
+			<column name="acumuladoravista" prior="acumuladordominiovista" type="integer" length="10" decimal="0" jt="4" />
+			<column name="acumuladorprazo" prior="acumuladordominioprazo" type="integer" length="10" decimal="0" jt="4" />
+			<column name="historico" prior="historicodominio" type="varchar" length="512" decimal="0" jt="12" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tbldominioacumulador" unique="PRIMARY_KEY" >
+				<column name="coddominioacumulador" />
+			</index>
+			<index name="unq_tbldominioacumulador" unique="UNIQUE_KEY" >
+				<column name="codfilial" />
+				<column name="codcfop" />
+				<column name="icmscst" />
+			</index>
+			<fk name="fk_tbldominioacumulador_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tbldominioacumulador_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" options="" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tbldominioacumulador_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tbldominioacumulador_tblcfop" to_schema="mgsis.mgsis" to_table="tblcfop" update_action="cascade" >
+				<fk_column name="codcfop" pk="codcfop" />
+			</fk>
+		</table>
 		<table name="tblecf" >
 			<column name="codecf" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="ecf" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
@@ -2004,7 +2045,7 @@ padrao: experiencia + 45d]]></comment>
 		<table name="tblextratobancario" prior="tblportadorextratobancario" >
 			<column name="codextratobancario" type="bigserial" jt="-5" mandatory="y" />
 			<column name="codportador" type="bigint" jt="-5" mandatory="y" />
-			<column name="codextratobancariotipomovimento" type="bigint" jt="-5" mandatory="y" />
+			<column name="codextratobancariotipomovimento" type="bigint" length="64" jt="-5" />
 			<column name="lancamento" type="timestamp" jt="93" mandatory="y" />
 			<column name="valor" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
 			<column name="fitid" type="varchar" length="100" jt="12" />
@@ -2017,6 +2058,20 @@ padrao: experiencia + 45d]]></comment>
 			<column name="conciliado" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
+			<column name="indicadortipolancamento" type="varchar" length="1" jt="12" />
+			<column name="movimento" type="timestamp" length="0" jt="93" />
+			<column name="codigoagenciaorigem" type="varchar" length="4" jt="12" />
+			<column name="numerolote" type="varchar" length="5" jt="12" />
+			<column name="codigohistorico" type="varchar" length="3" jt="12" />
+			<column name="textodescricaohistorico" type="text" jt="12" />
+			<column name="indicadorsinallancamento" type="varchar" length="1" jt="12" />
+			<column name="textoinformacaocomplementar" type="text" jt="12" />
+			<column name="numerocpfcnpjcontrapartida" type="varchar" length="14" jt="12" />
+			<column name="indicadortipopessoacontrapartida" type="varchar" length="1" jt="12" />
+			<column name="codigobancocontrapartida" type="varchar" length="3" jt="12" />
+			<column name="codigoagenciacontrapartida" type="varchar" length="3" jt="12" />
+			<column name="numerocontacontrapartida" type="varchar" length="20" jt="12" />
+			<column name="textodvcontacontrapartida" type="varchar" length="1" jt="12" />
 			<index name="pk_tblextratobancario_codextratobancario" unique="PRIMARY_KEY" >
 				<column name="codextratobancario" />
 			</index>
@@ -2300,10 +2355,6 @@ false - efetiva]]></comment>
 				<defo><![CDATA[false]]></defo>
 				<comment><![CDATA[Habilitado utilização em vale compra]]></comment>
 			</column>
-			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
-			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="lio" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
@@ -2316,6 +2367,13 @@ false - efetiva]]></comment>
 			<column name="integracao" type="boolean" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
+			<column name="safrapay" type="boolean" jt="16" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<index name="tblformapagamento_pkey" unique="PRIMARY_KEY" >
 				<column name="codformapagamento" />
 			</index>
@@ -3755,8 +3813,8 @@ Peso em KG]]></comment>
 			<column name="codmetafilial" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
 			<column name="codmeta" type="bigint" jt="-5" mandatory="y" />
 			<column name="codfilial" type="bigint" jt="-5" mandatory="y" />
-			<column name="valormetafilial" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
-			<column name="valormetavendedor" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
+			<column name="valormetafilial" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valormetavendedor" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="observacoes" type="text" jt="12" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -3831,6 +3889,31 @@ Peso em KG]]></comment>
 			</fk>
 			<fk name="fk_tblmetafilialpessoa_3" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblmetavendedor" prior="tbl" >
+			<column name="codmetavendedor" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codmeta" type="bigint" jt="-5" mandatory="y" />
+			<column name="codpessoa" type="bigint" jt="-5" mandatory="y" />
+			<column name="valormeta" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<index name="pk_tblmetavendedor" unique="PRIMARY_KEY" >
+				<column name="codmetavendedor" />
+			</index>
+			<fk name="fk_tblmetavendedor_tblmeta" to_schema="mgsis.mgsis" to_table="tblmeta" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codmeta" pk="codmeta" />
+			</fk>
+			<fk name="fk_tblmetavendedor_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="fk_tblmetavendedor_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" options="" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblmetavendedor_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" options="" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblmovimentotitulo" >
@@ -4161,6 +4244,8 @@ Peso em KG]]></comment>
 			</column>
 			<column name="codpdv" type="bigint" jt="-5" />
 			<column name="justificativa" type="varchar" length="200" jt="12" />
+			<column name="confissao" prior="conferencia" type="timestamp" length="0" jt="93" />
+			<column name="codusuarioconfissao" type="bigint" jt="-5" />
 			<index name="tblnegocio_pkey" unique="PRIMARY_KEY" >
 				<column name="codnegocio" />
 			</index>
@@ -4231,6 +4316,10 @@ Peso em KG]]></comment>
 			<index name="unq_tblnegocio" unique="UNIQUE_INDEX" >
 				<column name="uuid" />
 			</index>
+			<index name="tblnegocio_codnegociostatus_ano_confissao_mes" unique="NORMAL" >
+				<column name="codnegociostatus" />
+				<column name="confissao" />
+			</index>
 			<fk name="tblnegocio_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
@@ -4275,6 +4364,9 @@ Peso em KG]]></comment>
 			</fk>
 			<fk name="fk_tblnegocio_tblpdv" to_schema="mgsis.mgsis" to_table="tblpdv" >
 				<fk_column name="codpdv" pk="codpdv" />
+			</fk>
+			<fk name="fk_tblnegocio_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioconfissao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblnegociocaixamercadoria" >
@@ -4393,11 +4485,12 @@ Peso em KG]]></comment>
 			<column name="codliopedido" type="bigint" jt="-5" />
 			<column name="codpixcob" type="bigint" jt="-5" />
 			<column name="codstonetransacao" type="bigint" jt="-5" />
+			<column name="codtitulo" type="bigint" length="64" jt="-5" />
+			<column name="codsauruspedido" type="bigint" jt="-5" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
-			<column name="codtitulo" type="bigint" length="64" jt="-5" />
 			<index name="tblnegocioformapagamento_pkey" unique="PRIMARY_KEY" >
 				<column name="codnegocioformapagamento" />
 			</index>
@@ -4427,6 +4520,10 @@ Peso em KG]]></comment>
 			</index>
 			<index name="unq_tblnegocioformapagamento" unique="UNIQUE_KEY" >
 				<column name="uuid" />
+			</index>
+			<index name="tblnegocioformapagamento_codnegocio_autorizacao" unique="NORMAL" >
+				<column name="codnegocio" />
+				<column name="autorizacao" />
 			</index>
 			<fk name="tblnegocioformapagamento_codformapagamento_fkey" to_schema="mgsis.mgsis" to_table="tblformapagamento" update_action="cascade" >
 				<fk_column name="codformapagamento" pk="codformapagamento" />
@@ -4458,6 +4555,9 @@ Peso em KG]]></comment>
 			<fk name="fk_tblnegocioformapagamento_tbltitulo" to_schema="mgsis.mgsis" to_table="tbltitulo" update_action="cascade" >
 				<fk_column name="codtitulo" pk="codtitulo" />
 			</fk>
+			<fk name="fk_tblnegocioformapagamento_tblsauruspedido" to_schema="mgsis.mgsis" to_table="tblsauruspedido" update_action="cascade" >
+				<fk_column name="codsauruspedido" pk="codsauruspedido" />
+			</fk>
 		</table>
 		<table name="tblnegocioprodutobarra" >
 			<column name="codnegocioprodutobarra" type="bigserial" length="19" decimal="0" jt="-5" mandatory="y" />
@@ -4483,6 +4583,7 @@ Peso em KG]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="observacoes" type="text" jt="12" />
 			<index name="tblnegocioprodutobarra_pkey" unique="PRIMARY_KEY" >
 				<column name="codnegocioprodutobarra" />
 			</index>
@@ -4907,7 +5008,7 @@ Peso em KG]]></comment>
 04=Sorocred
 99=Outros]]></comment>
 			</column>
-			<column name="caut" prior="autorizacao" type="varchar" length="30" jt="12" >
+			<column name="caut" prior="autorizacao" type="varchar" length="40" jt="12" >
 				<comment><![CDATA[cAut]]></comment>
 			</column>
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -5013,6 +5114,7 @@ Peso em KG]]></comment>
 			<column name="placa" type="varchar" length="7" decimal="0" jt="12" />
 			<column name="codestadoplaca" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="cpf" type="numeric" length="11" jt="2" />
+			<column name="ipidevolucaovalor" type="numeric" length="14" decimal="2" jt="2" />
 			<index name="tblnotafiscal_pkey" unique="PRIMARY_KEY" >
 				<column name="codnotafiscal" />
 			</index>
@@ -5225,6 +5327,9 @@ false = 1]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" jt="93" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="descricao" type="varchar" length="100" jt="12" >
+				<comment><![CDATA[xPag - Necessario quando tPag 99 (outros)]]></comment>
+			</column>
 			<index name="pk_tblnotafiscalpagamento" unique="PRIMARY_KEY" >
 				<column name="codnotafiscalpagamento" />
 			</index>
@@ -5301,6 +5406,8 @@ false = 1]]></comment>
 			<column name="valorseguro" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valordesconto" type="numeric" length="14" decimal="2" jt="2" />
 			<column name="valoroutras" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="ipidevolucaovalor" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="devolucaopercentual" type="numeric" length="5" decimal="2" jt="2" />
 			<index name="tblnotafiscalprodutobarra_pkey" unique="PRIMARY_KEY" >
 				<column name="codnotafiscalprodutobarra" />
 			</index>
@@ -5328,7 +5435,7 @@ false = 1]]></comment>
 			<fk name="tblnotafiscalprodutobarra_codcfop_fkey" to_schema="mgsis.mgsis" to_table="tblcfop" update_action="cascade" >
 				<fk_column name="codcfop" pk="codcfop" />
 			</fk>
-			<fk name="tblnotafiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" update_action="cascade" >
+			<fk name="tblnotafiscalprodutobarra_codnegocioprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnegocioprodutobarra" delete_action="setNull" update_action="cascade" >
 				<fk_column name="codnegocioprodutobarra" pk="codnegocioprodutobarra" />
 			</fk>
 			<fk name="tblnotafiscalprodutobarra_codnotafiscal_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscal" delete_action="cascade" update_action="cascade" >
@@ -6322,6 +6429,11 @@ false=issuer]]></comment>
 			<column name="vendedor" type="boolean" length="1" decimal="0" jt="16" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
+			<column name="comissao" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[1 - Filial
+2 - Sinopel]]></comment>
+			</column>
 			<column name="rg" type="varchar" length="30" decimal="0" jt="12" />
 			<column name="desconto" type="numeric" length="4" decimal="2" jt="2" />
 			<column name="notafiscal" type="smallint" length="5" decimal="0" jt="5" mandatory="y" >
@@ -6602,15 +6714,16 @@ false=issuer]]></comment>
 			<column name="tipo" type="smallint" length="1024" jt="5" mandatory="y" >
 				<defo><![CDATA[2]]></defo>
 				<comment><![CDATA[1 - Fixo
-2 - Celular]]></comment>
+2 - Celular
+3 - Outro]]></comment>
 			</column>
 			<column name="pais" type="numeric" length="3" jt="2" mandatory="y" >
 				<defo><![CDATA[55]]></defo>
 			</column>
-			<column name="ddd" type="numeric" length="3" jt="2" mandatory="y" >
+			<column name="ddd" type="numeric" length="3" jt="2" >
 				<defo><![CDATA[66]]></defo>
 			</column>
-			<column name="telefone" type="numeric" length="20" jt="2" mandatory="y" />
+			<column name="telefone" type="varchar" length="20" jt="12" mandatory="y" />
 			<column name="apelido" prior="nome" type="varchar" length="100" jt="12" />
 			<column name="verificacao" type="timestamp" length="0" jt="93" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -7032,7 +7145,7 @@ false=issuer]]></comment>
 			<column name="codpranchetacategoria" type="bigserial" jt="-5" mandatory="y" />
 			<column name="codpranchetacategoriapai" type="bigint" jt="-5" />
 			<column name="ordem" type="integer" jt="4" mandatory="y" />
-			<column name="imagem" type="varchar" length="200" jt="12" />
+			<column name="imagem" type="varchar" length="20000" jt="12" />
 			<column name="categoria" type="varchar" length="50" jt="12" mandatory="y" />
 			<column name="observacoes" type="text" jt="12" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" jt="93" />
@@ -7140,6 +7253,11 @@ false=issuer]]></comment>
 			</column>
 			<column name="codestoquelocal" type="bigint" jt="-5" mandatory="y" >
 				<defo><![CDATA[101001]]></defo>
+			</column>
+			<column name="comissao" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[1 - Vendedor
+2 - Xerox]]></comment>
 			</column>
 			<index name="tblproduto_pkey" unique="PRIMARY_KEY" >
 				<column name="codproduto" />
@@ -7565,6 +7683,235 @@ false=issuer]]></comment>
 			</fk>
 			<fk name="fk_tblregulamentoicmsstmt_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblsaurusbandeira" prior="codsaurusbandeira" >
+			<column name="codsaurusbandeira" type="bigserial" jt="-5" mandatory="y" />
+			<column name="tband" type="smallint" jt="5" >
+				<comment><![CDATA[Codigo da bandeira para geracao da NFe]]></comment>
+			</column>
+			<column name="bandeira" type="varchar" length="100" jt="12" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<index name="pk_tblsaurusbandeira" unique="PRIMARY_KEY" >
+				<column name="codsaurusbandeira" />
+			</index>
+			<fk name="fk_tblsaurusbandeira_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsaurusbandeira_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblsauruspagamento" prior="tblsaurus" >
+			<column name="codsauruspagamento" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codsauruspedido" type="bigint" jt="-5" mandatory="y" />
+			<column name="codsauruspinpad" type="bigint" jt="-5" />
+			<column name="id" type="uuid" jt="102" mandatory="y" />
+			<column name="nsu" type="varchar" length="20" jt="12" />
+			<column name="autorizacao" type="varchar" length="20" jt="12" >
+				<comment><![CDATA[codAut]]></comment>
+			</column>
+			<column name="controle" type="varchar" length="20" jt="12" >
+				<comment><![CDATA[codControle]]></comment>
+			</column>
+			<column name="transacao" type="timestamp" jt="93" >
+				<comment><![CDATA[dTransacao]]></comment>
+			</column>
+			<column name="status" type="smallint" jt="5" mandatory="y" >
+				<comment><![CDATA[0 - EmAberto
+1 - Confirmada
+2 - Estornada
+3 - ConfirmacaoPendente
+4 - EstornoPendente
+5 - EstornoAberto
+6 - ConfirmacaoEstornoPendente
+7 - Ignorado]]></comment>
+			</column>
+			<column name="cartao" type="varchar" length="20" jt="12" >
+				<comment><![CDATA[numCartao]]></comment>
+			</column>
+			<column name="valor" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorjuros" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valortotal" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="valorparcela" type="numeric" length="14" decimal="2" jt="2" />
+			<column name="modpagamento" type="smallint" jt="5" >
+				<comment><![CDATA[1- Dinheiro
+2 - Cheque
+3 - Crédito
+4 - Débito
+5 - CreditoProprio
+10 - ValeAlimentacao
+11 - ValeRefeicao
+12 - ValePresente
+13 - ValeCombustivel
+98 - BoletoBancario
+99 - Outros]]></comment>
+			</column>
+			<column name="codsaurusbandeira" type="bigint" jt="-5" />
+			<column name="parcelas" type="smallint" jt="5" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<index name="pk_tblsauruspagamento" unique="PRIMARY_KEY" >
+				<column name="codsauruspagamento" />
+			</index>
+			<fk name="fk_tblsauruspagamento_tblsauruspedido" to_schema="mgsis.mgsis" to_table="tblsauruspedido" update_action="cascade" >
+				<fk_column name="codsauruspedido" pk="codsauruspedido" />
+			</fk>
+			<fk name="fk_tblsauruspagamento_tblsauruspinpad" to_schema="mgsis.mgsis" to_table="tblsauruspinpad" update_action="cascade" >
+				<fk_column name="codsauruspinpad" pk="codsauruspinpad" />
+			</fk>
+			<fk name="fk_tblsauruspagamento_tblsaurusbandeira" to_schema="mgsis.mgsis" to_table="tblsaurusbandeira" update_action="cascade" >
+				<fk_column name="codsaurusbandeira" pk="codsaurusbandeira" />
+			</fk>
+			<fk name="fk_tblsauruspagamento_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsauruspagamento_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblsauruspdv" prior="tbl" >
+			<column name="codsauruspdv" type="bigserial" jt="-5" mandatory="y" />
+			<column name="apelido" type="varchar" length="50" jt="12" />
+			<column name="id" prior="chave" type="uuid" jt="102" mandatory="y" >
+				<comment><![CDATA[chavedopdv]]></comment>
+			</column>
+			<column name="chavepublica" type="varchar" length="500" jt="12" >
+				<comment><![CDATA[chave publica do PDV recebida no endpoint  FunctionPdv]]></comment>
+			</column>
+			<column name="numero" type="smallint" jt="5" mandatory="y" />
+			<column name="codfilial" type="bigint" jt="-5" mandatory="y" />
+			<column name="autorizacao" type="varchar" length="500" jt="12" >
+				<comment><![CDATA[Chave Publica da Autorizacao recebida no endpoint FunctionAutorizacao]]></comment>
+			</column>
+			<column name="vencimento" type="timestamp" jt="93" />
+			<column name="contratoid" type="uuid" jt="102" />
+			<column name="inativo" type="timestamp" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<index name="pk_tblsauruspdv" unique="PRIMARY_KEY" >
+				<column name="codsauruspdv" />
+			</index>
+			<fk name="fk_tblsauruspdv_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" delete_action="restrict" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblsauruspdv_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsauruspdv_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblsauruspedido" prior="tblsaurospedido" >
+			<column name="codsauruspedido" type="bigserial" jt="-5" mandatory="y" />
+			<column name="idpedido" type="uuid" jt="102" />
+			<column name="id" type="uuid" jt="102" />
+			<column name="codsauruspdv" type="bigint" jt="-5" mandatory="y" />
+			<column name="codnegocio" type="bigint" jt="-5" mandatory="y" />
+			<column name="valor" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
+			<column name="valorjuros" type="numeric" length="14" decimal="2" jt="2" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="valortotal" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
+			<column name="valorparcela" type="numeric" length="14" decimal="2" jt="2" mandatory="y" />
+			<column name="idfaturapag" type="uuid" jt="102" mandatory="y" >
+				<comment><![CDATA[Identificação da fatura gerada pelo PDV]]></comment>
+			</column>
+			<column name="modpagamento" type="smallint" jt="5" mandatory="y" >
+				<comment><![CDATA[1- Dinheiro
+2 - Cheque
+3 - Crédito *
+4 - Débito *
+5 - CreditoProprio
+10 - ValeAlimentacao
+11 - ValeRefeicao
+12 - ValePresente
+13 - ValeCombustivel
+98 - BoletoBancario
+99 - Outros]]></comment>
+			</column>
+			<column name="parcelas" type="smallint" jt="5" mandatory="y" />
+			<column name="status" type="smallint" jt="5" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[0 - Pendente
+1 - Processando
+2 - Aprovado
+3 - Cancelado]]></comment>
+			</column>
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<index name="pk_tblsaurospedido" unique="PRIMARY_KEY" >
+				<column name="codsauruspedido" />
+			</index>
+			<fk name="fk_tblsauruspedido_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
+				<fk_column name="codnegocio" pk="codnegocio" />
+			</fk>
+			<fk name="fk_tblsauruspedido_tblsauruspdv" to_schema="mgsis.mgsis" to_table="tblsauruspdv" update_action="cascade" >
+				<fk_column name="codsauruspdv" pk="codsauruspdv" />
+			</fk>
+			<fk name="fk_tblsauruspedido_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsauruspedido_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblsauruspinpad" prior="tblsaurusp" >
+			<column name="codsauruspinpad" type="bigserial" jt="-5" mandatory="y" />
+			<column name="codfilial" type="bigint" jt="-5" />
+			<column name="codsauruspdv" type="bigint" jt="-5" />
+			<column name="apelido" type="varchar" length="20" jt="12" />
+			<column name="id" type="uuid" jt="102" mandatory="y" />
+			<column name="serial" type="varchar" length="50" jt="12" />
+			<column name="observacoes" type="varchar" length="9999999" jt="12" />
+			<column name="inativo" type="timestamp" jt="93" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="criacao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="alteracao" type="timestamp" length="0" jt="93" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<index name="pk_tblsauruspinpad" unique="PRIMARY_KEY" >
+				<column name="codsauruspinpad" />
+			</index>
+			<fk name="fk_tblsauruspinpad_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsauruspinpad_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblsauruspinpad_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblsauruspinpad_tblsauruspdv" to_schema="mgsis.mgsis" to_table="tblsauruspdv" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codsauruspdv" pk="codsauruspdv" />
 			</fk>
 		</table>
 		<table name="tblsecaoproduto" >
@@ -10153,54 +10500,11 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
- SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2019-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
   ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
 			<column name="codproduto" type="bigint" />
 			<column name="produto" type="varchar" />
 			<column name="inativo" type="date" />
-			<column name="preco" type="numeric" />
+			<column name="preco" type="varchar" />
 			<column name="codfilial" type="bigint" />
 			<column name="quant" type="numeric" />
 			<column name="custo" type="numeric" />
@@ -10250,54 +10554,11 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
- SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2020-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
   ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
 			<column name="codproduto" type="bigint" />
 			<column name="produto" type="varchar" />
 			<column name="inativo" type="date" />
-			<column name="preco" type="numeric" />
+			<column name="preco" type="varchar" />
 			<column name="codfilial" type="bigint" />
 			<column name="quant" type="numeric" />
 			<column name="custo" type="numeric" />
@@ -10347,54 +10608,11 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
- SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2021-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
   ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
 			<column name="codproduto" type="bigint" />
 			<column name="produto" type="varchar" />
 			<column name="inativo" type="date" />
-			<column name="preco" type="numeric" />
+			<column name="preco" type="varchar" />
 			<column name="codfilial" type="bigint" />
 			<column name="quant" type="numeric" />
 			<column name="custo" type="numeric" />
@@ -10444,54 +10662,11 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
- SELECT p.codproduto,
-    p.produto,
-    p.inativo,
-    p.preco,
-    fiscal.codfilial,
-    fiscal.saldoquantidade AS quant,
-    fiscal.customedio AS custo,
-    fiscal.saldovalor AS valor,
-    (p.preco /
-        CASE
-            WHEN (fiscal.customedio <> (0)::numeric) THEN fiscal.customedio
-            ELSE NULL::numeric
-        END) AS markup
-   FROM (((((((tblproduto p
-     LEFT JOIN tblmarca m ON ((m.codmarca = p.codmarca)))
-     LEFT JOIN tblsubgrupoproduto sgp ON ((sgp.codsubgrupoproduto = p.codsubgrupoproduto)))
-     LEFT JOIN tblgrupoproduto gp ON ((gp.codgrupoproduto = sgp.codgrupoproduto)))
-     LEFT JOIN tblfamiliaproduto fp ON ((fp.codfamiliaproduto = gp.codfamiliaproduto)))
-     LEFT JOIN tblsecaoproduto sp ON ((sp.codsecaoproduto = fp.codsecaoproduto)))
-     LEFT JOIN ( SELECT el.codfilial,
-            pv.codproduto,
-            sum(em.saldoquantidade) AS saldoquantidade,
-            sum(em.saldovalor) AS saldovalor,
-            (sum(em.saldovalor) /
-                CASE
-                    WHEN (sum(em.saldoquantidade) <> (0)::numeric) THEN sum(em.saldoquantidade)
-                    ELSE NULL::numeric
-                END) AS customedio
-           FROM (((((tblestoquelocalprodutovariacao elpv
-             JOIN tblprodutovariacao pv ON ((pv.codprodutovariacao = elpv.codprodutovariacao)))
-             JOIN tblestoquelocal el ON ((el.codestoquelocal = elpv.codestoquelocal)))
-             JOIN tblfilial f ON ((f.codfilial = el.codfilial)))
-             JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
-             JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
-                   FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2022-12-31'::date))
-                  ORDER BY em2.mes DESC
-                 LIMIT 1))))
-          WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint, (105)::bigint]))
-          GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
-     LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
-  WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
   ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
 			<column name="codproduto" type="bigint" />
 			<column name="produto" type="varchar" />
 			<column name="inativo" type="date" />
-			<column name="preco" type="numeric" />
+			<column name="preco" type="varchar" />
 			<column name="codfilial" type="bigint" />
 			<column name="quant" type="numeric" />
 			<column name="custo" type="numeric" />
@@ -10541,8 +10716,19 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
           GROUP BY el.codfilial, pv.codproduto) fiscal ON ((fiscal.codproduto = p.codproduto)))
      LEFT JOIN tblncm n ON ((n.codncm = p.codncm)))
   WHERE ((p.codtipoproduto = 0) AND (fiscal.saldoquantidade <> (0)::numeric))
-  ORDER BY p.produto, p.codproduto, fiscal.codfilial
- SELECT p.codproduto,
+  ORDER BY p.produto, p.codproduto, fiscal.codfilial]]></view_script>
+			<column name="codproduto" type="bigint" />
+			<column name="produto" type="varchar" />
+			<column name="inativo" type="date" />
+			<column name="preco" type="varchar" />
+			<column name="codfilial" type="bigint" />
+			<column name="quant" type="numeric" />
+			<column name="custo" type="numeric" />
+			<column name="valor" type="numeric" />
+			<column name="markup" type="numeric" />
+		</materialized_view>
+		<materialized_view name="mvwestoque2024" >
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${materializedView} AS  SELECT p.codproduto,
     p.produto,
     p.inativo,
     p.preco,
@@ -10577,7 +10763,7 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
              JOIN tblestoquesaldo es ON (((es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao) AND (es.fiscal = true))))
              JOIN tblestoquemes em ON ((em.codestoquemes = ( SELECT em2.codestoquemes
                    FROM tblestoquemes em2
-                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2023-12-31'::date))
+                  WHERE ((em2.codestoquesaldo = es.codestoquesaldo) AND (em2.mes <= '2024-12-31'::date))
                   ORDER BY em2.mes DESC
                  LIMIT 1))))
           WHERE (f.codfilial = ANY (ARRAY[(101)::bigint, (102)::bigint, (103)::bigint, (104)::bigint, (105)::bigint]))
@@ -10588,12 +10774,58 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="codproduto" type="bigint" />
 			<column name="produto" type="varchar" />
 			<column name="inativo" type="date" />
-			<column name="preco" type="numeric" />
+			<column name="preco" type="varchar" />
 			<column name="codfilial" type="bigint" />
 			<column name="quant" type="numeric" />
 			<column name="custo" type="numeric" />
 			<column name="valor" type="numeric" />
 			<column name="markup" type="numeric" />
+		</materialized_view>
+		<materialized_view name="mwvendas" >
+			<view_script><![CDATA[CREATE MATERIALIZED VIEW ${materializedView} AS  SELECT n.codnegocio,
+    (n.lancamento)::date AS dia,
+    n.codfilial,
+    f.filial,
+    npb.codprodutobarra,
+    pb.barras,
+    p.codproduto,
+    p.produto,
+    n.codpessoavendedor,
+    v.fantasia AS vendedor,
+    nat.codnaturezaoperacao,
+    nat.naturezaoperacao,
+    npb.quantidade,
+    ((COALESCE(npb.valorprodutos, (0)::numeric) - COALESCE(npb.valordesconto, (0)::numeric)) * (
+        CASE
+            WHEN (nat.codoperacao = 1) THEN '-1'::integer
+            ELSE 1
+        END)::numeric) AS valorvenda,
+    p.comissao AS comissaoproduto,
+    COALESCE((v.comissao)::integer, 1) AS comissaovendedor
+   FROM ((((((tblnegocio n
+     JOIN tblfilial f ON ((f.codfilial = n.codfilial)))
+     JOIN tblnegocioprodutobarra npb ON ((npb.codnegocio = n.codnegocio)))
+     JOIN tblprodutobarra pb ON ((pb.codprodutobarra = npb.codprodutobarra)))
+     JOIN tblproduto p ON ((p.codproduto = pb.codproduto)))
+     JOIN tblnaturezaoperacao nat ON (((nat.codnaturezaoperacao = n.codnaturezaoperacao) AND (nat.venda OR nat.vendadevolucao))))
+     LEFT JOIN tblpessoa v ON ((v.codpessoa = n.codpessoavendedor)))
+  WHERE ((n.codnegociostatus = 2) AND (f.codempresa = 1) AND (npb.inativo IS NULL))]]></view_script>
+			<column name="codnegocio" type="bigint" />
+			<column name="dia" type="date" />
+			<column name="codfilial" type="bigint" />
+			<column name="filial" type="varchar" />
+			<column name="codprodutobarra" type="bigint" />
+			<column name="barras" type="varchar" />
+			<column name="codproduto" type="bigint" />
+			<column name="produto" type="varchar" />
+			<column name="codpessoavendedor" type="bigint" />
+			<column name="vendedor" type="varchar" />
+			<column name="codnaturezaoperacao" type="bigint" />
+			<column name="naturezaoperacao" type="varchar" />
+			<column name="quantidade" type="varchar" />
+			<column name="valorvenda" type="numeric" />
+			<column name="comissaoproduto" type="smallint" />
+			<column name="comissaovendedor" type="integer" />
 		</materialized_view>
 		<sequence name="oauth_personal_access_clients_id_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblauditoria_codauditoria_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -10816,54 +11048,14 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 		<sequence name="tblveiculoconjunto_codveiculoconjunto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblveiculoconjuntoveiculo_codveiculoconjuntoveiculo_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblveiculotipo_codveiculotipo_seq" options="START WITH 1 INCREMENT BY 1" />
-		<trigger name="tblmovimentotituloaiauad" table="tblmovimentotitulo" id="Trigger4846959" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblmovimentotituloaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblmovimentotitulo FOR EACH ROW EXECUTE FUNCTION fntblmovimentotituloaiauad();]]></string>
-		</trigger>
-		<trigger name="tblnegocioaiau_valorprodutos_valoraprazo_valordesconto_valorfre" table="tblnegocio" id="Trigger_c51" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblnegocioaiau_valorprodutos_valoraprazo_valordesconto_valorfre AFTER INSERT OR UPDATE OF valorprodutos, valoraprazo, valordesconto, valorfrete ON mgsis.tblnegocio FOR EACH ROW EXECUTE FUNCTION fntblnegocioaiau_valorprodutos_valoraprazo_valordesconto();]]></string>
-		</trigger>
-		<trigger name="tblnegocioformapagamentoaiauad" table="tblnegocioformapagamento" id="Trigger4846961" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblnegocioformapagamentoaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnegocioformapagamento FOR EACH ROW EXECUTE FUNCTION fntblnegocioformapagamentoaiauad();]]></string>
-		</trigger>
-		<trigger name="tblnegocioprodutobarraaiauad" table="tblnegocioprodutobarra" id="Trigger4846961" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblnegocioprodutobarraaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnegocioprodutobarra FOR EACH ROW EXECUTE FUNCTION fntblnegocioprodutobarraaiauad();]]></string>
-		</trigger>
-		<trigger name="tblnotafiscalaiau_valorprodutos" table="tblnotafiscal" id="Trigger4846962" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblnotafiscalaiau_valorprodutos AFTER INSERT OR UPDATE OF valorprodutos, valorfrete, valorseguro, valordesconto, valoroutras, icmsstvalor, ipivalor ON mgsis.tblnotafiscal FOR EACH ROW EXECUTE FUNCTION fntblnotafiscalaiau_valorprodutos();]]></string>
-		</trigger>
-		<trigger name="tblnotafiscalprodutobarraaiauad" table="tblnotafiscalprodutobarra" id="Trigger4846963" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tblnotafiscalprodutobarraaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnotafiscalprodutobarra FOR EACH ROW EXECUTE FUNCTION fntblnotafiscalprodutobarraaiauad();]]></string>
-		</trigger>
-		<trigger name="tbltituloai" table="tbltitulo" id="Trigger4846967" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tbltituloai AFTER INSERT ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloai();]]></string>
-		</trigger>
-		<trigger name="tbltituloaiauad" table="tbltitulo" id="Trigger4846967" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tbltituloaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloaiauad();]]></string>
-		</trigger>
-		<trigger name="tbltituloau" table="tbltitulo" id="Trigger4846967" isSystem="false" >
-			<string><![CDATA[CREATE TRIGGER tbltituloau AFTER UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloau();]]></string>
-		</trigger>
-		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
+		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
+AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-			<input_param jt="-1" type="integer" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
-		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
- RETURNS SETOF record
- LANGUAGE c
- STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text$function$
-;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
@@ -10885,19 +11077,32 @@ AS '$libdir/tablefunc', $function$connectby_text_serial$function$
 			<input_param jt="-1" type="integer" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
-		<function name="connectby" id="Function_24d2" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, text, integer)
+		<function name="connectby" id="Function_3d7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$connectby_text_serial$function$
+AS '$libdir/tablefunc', $function$connectby_text$function$
 ;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="integer" inOut="-1" />
+		</function>
+		<function name="connectby" id="Function_d45" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.connectby(text, text, text, text, integer, text)
+ RETURNS SETOF record
+ LANGUAGE c
+ STABLE STRICT
+AS '$libdir/tablefunc', $function$connectby_text$function$
+;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
+			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="criatriggers_geraauditoria" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.criatriggers_geraauditoria(brecria boolean DEFAULT false)
@@ -10935,13 +11140,14 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
+		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab$function$
+AS '$libdir/tablefunc', $function$crosstab_hash$function$
 ;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab" id="Function_1a50" isSystem="false" params_known="y" >
@@ -10954,14 +11160,13 @@ AS '$libdir/tablefunc', $function$crosstab$function$
 			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="integer" inOut="-1" />
 		</function>
-		<function name="crosstab" id="Function_878" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text, text)
+		<function name="crosstab" id="Function_22e4" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.crosstab(text)
  RETURNS SETOF record
  LANGUAGE c
  STABLE STRICT
-AS '$libdir/tablefunc', $function$crosstab_hash$function$
+AS '$libdir/tablefunc', $function$crosstab$function$
 ;]]></string>
-			<input_param jt="-1" type="text" inOut="-1" />
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="crosstab2" id="Function_1f2b" isSystem="false" params_known="y" >
@@ -11519,89 +11724,6 @@ END;
 $function$
 ;]]></string>
 		</function>
-		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
- RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
- LANGUAGE plpgsql
-AS $function$
-DECLARE
-	pcodecf bigint;
-BEGIN
-	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Geral' as tipo
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
-	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
-	  from tblecfreducaoz
-	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblecfreducaoz.movimento = pmovimento
-	   and tblecfreducaoz.crz = pcrz
-	 group by 
-	       tblecfreducaoz.codecfreducaoz
-	     , tblecfreducaoz.codecf
-	     , tblecfreducaoz.movimento
-	     ;
-	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
-/*
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscalprodutobarra.aliquotaicms
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-*/
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Cancelado' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
-	  from tblcupomfiscal 
-	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = true
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	INSERT INTO tmpListaTotaisEcfReducaoZ 
-	select 
-	       'Desconto' as tipo
-	     , tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     , sum(descontoacrescimo)  as total
-	  from tblcupomfiscal 
-	 where tblcupomfiscal.datamovimento = pmovimento
-	   and tblcupomfiscal.codecf = pcodecf
-	   and tblcupomfiscal.cancelado = false
-	 group by tblcupomfiscal.codecf
-	     , tblcupomfiscal.datamovimento
-	     ;
-	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
-         
-END;
-$function$
-;]]></string>
-			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
-			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
-			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
-			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
-		</function>
 		<function name="fnlistatotaisecfreducaoz" id="Function-25ba" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint, pdesejado numeric)
  RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric, diferenca numeric)
@@ -11688,6 +11810,89 @@ $function$
 			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
 			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 			<input_param name="diferenca" jt="-1" type="numeric" inOut="-1" />
+		</function>
+		<function name="fnlistatotaisecfreducaoz" id="Function-c99" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fnlistatotaisecfreducaoz(pmovimento date, pcrz bigint)
+ RETURNS TABLE(tipo text, codecf bigint, movimento date, valor numeric)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+	pcodecf bigint;
+BEGIN
+	CREATE TEMPORARY TABLE tmpListaTotaisEcfReducaoZ (tipo text, codecf bigint, movimento date, valor numeric(20,3)) ON COMMIT DROP;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Geral' as tipo
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))
+	--     , sum(coalesce(quantidade, 0) * coalesce(valorunitario)) - 6804.93
+	  from tblecfreducaoz
+	 inner join tblcupomfiscal on (tblcupomfiscal.codecf = tblecfreducaoz.codecf and tblcupomfiscal.datamovimento = tblecfreducaoz.movimento)
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblecfreducaoz.movimento = pmovimento
+	   and tblecfreducaoz.crz = pcrz
+	 group by 
+	       tblecfreducaoz.codecfreducaoz
+	     , tblecfreducaoz.codecf
+	     , tblecfreducaoz.movimento
+	     ;
+	SELECT INTO pCodEcf max(tmpListaTotaisEcfReducaoZ.codEcf) FROM tmpListaTotaisEcfReducaoZ;
+/*
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       tblcupomfiscalprodutobarra.aliquotaicms as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscalprodutobarra.aliquotaicms
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+*/
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Cancelado' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(coalesce(quantidade, 0) * coalesce(valorunitario))  as total
+	  from tblcupomfiscal 
+	 inner join tblcupomfiscalprodutobarra on (tblcupomfiscalprodutobarra.codcupomfiscal = tblcupomfiscal.codcupomfiscal)
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = true
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	INSERT INTO tmpListaTotaisEcfReducaoZ 
+	select 
+	       'Desconto' as tipo
+	     , tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     , sum(descontoacrescimo)  as total
+	  from tblcupomfiscal 
+	 where tblcupomfiscal.datamovimento = pmovimento
+	   and tblcupomfiscal.codecf = pcodecf
+	   and tblcupomfiscal.cancelado = false
+	 group by tblcupomfiscal.codecf
+	     , tblcupomfiscal.datamovimento
+	     ;
+	RETURN QUERY SELECT * FROM tmpListaTotaisEcfReducaoZ;
+         
+END;
+$function$
+;]]></string>
+			<input_param name="pmovimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="pcrz" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="tipo" jt="-1" type="text" inOut="-1" />
+			<input_param name="codecf" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="movimento" jt="-1" type="date" inOut="-1" />
+			<input_param name="valor" jt="-1" type="numeric" inOut="-1" />
 		</function>
 		<function name="fntblmovimentotituloaiauad" id="Function4846928" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblmovimentotituloaiauad()
@@ -11937,7 +12142,7 @@ AS $function$
 			$function$
 ;]]></string>
 		</function>
-		<function name="fntblnotafiscal_atualiza_valorprodutos" id="Function_7ee" isSystem="false" params_known="y" >
+		<function name="fntblnotafiscal_atualiza_valorprodutos" id="Function-aa0" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblnotafiscal_atualiza_valorprodutos(pcodnotafiscal bigint)
  RETURNS boolean
  LANGUAGE plpgsql
@@ -11950,6 +12155,7 @@ DECLARE
 	vIcmsStValor   numeric (14,2);
 	vIpiBase       numeric (14,2);
 	vIpiValor      numeric (14,2);
+    vIpiDevolValor numeric (14,2);
 	vDesconto      numeric (14,2);
 	vFrete         numeric (14,2);
 	vSeguro        numeric (14,2);
@@ -11964,6 +12170,7 @@ BEGIN
 		, vIcmsStValor
 		, vIpiBase
 		, vIpiValor
+		, vIpiDevolValor
 		, vDesconto
 		, vFrete
 		, vSeguro
@@ -11975,6 +12182,7 @@ BEGIN
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.IcmsStValor, 0))
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.IpiBase, 0))
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.IpiValor, 0))
+		, SUM(COALESCE(tblNotaFiscalProdutoBarra.IpiDevolucaoValor, 0))
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.valordesconto, 0))
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.valorfrete, 0))
 		, SUM(COALESCE(tblNotaFiscalProdutoBarra.valorseguro, 0))
@@ -11990,6 +12198,7 @@ BEGIN
 		, IcmsStValor    = coalesce(vIcmsStValor  , 0)
 		, IpiBase        = coalesce(vIpiBase      , 0)
 		, IpiValor       = coalesce(vIpiValor     , 0)
+		, IpiDevolucaoValor = coalesce(vIpiDevolValor     , 0)
 		, valordesconto  = coalesce(vDesconto     , 0)
 		, valorfrete     = coalesce(vFrete        , 0)
 		, valorseguro    = coalesce(vSeguro       , 0)
@@ -11999,9 +12208,9 @@ BEGIN
 END;
 $function$
 ;]]></string>
-			<input_param name="pcodnotafiscal" jt="-1" type="bigint" inOut="-1" />
+			<input_param name="pcodnotafiscal" jt="-1" type="bigint" inOut="1" />
 		</function>
-		<function name="fntblnotafiscal_atualiza_valortotal" id="Function4846929" isSystem="false" params_known="n" >
+		<function name="fntblnotafiscal_atualiza_valortotal" id="Function4846929" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblnotafiscal_atualiza_valortotal(pcodnotafiscal bigint)
  RETURNS boolean
  LANGUAGE plpgsql
@@ -12013,6 +12222,7 @@ AS $function$
 						coalesce(tblNotaFiscal.valorProdutos, 0)
 						+ coalesce(tblNotaFiscal.icmsstvalor, 0)
 						+ coalesce(tblNotaFiscal.ipivalor, 0)
+						+ coalesce(tblNotaFiscal.ipidevolucaovalor, 0)
 						+ coalesce(tblNotaFiscal.valorfrete, 0)
 						+ coalesce(tblNotaFiscal.valorseguro, 0)
 						- coalesce(tblNotaFiscal.valordesconto, 0)
@@ -12022,6 +12232,7 @@ AS $function$
 			END;
 			$function$
 ;]]></string>
+			<input_param name="pcodnotafiscal" jt="-1" type="bigint" inOut="1" />
 		</function>
 		<function name="fntblnotafiscalaiau_valorprodutos" id="Function4846929" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.fntblnotafiscalaiau_valorprodutos()
@@ -12301,6 +12512,15 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 			<input_param jt="-1" type="double precision" inOut="-1" />
 			<input_param jt="-1" type="double precision" inOut="-1" />
 		</function>
+		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
+ RETURNS text
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/unaccent', $function$unaccent_dict$function$
+;]]></string>
+			<input_param jt="-1" type="text" inOut="-1" />
+		</function>
 		<function name="unaccent" id="Function_26c8" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(regdictionary, text)
  RETURNS text
@@ -12309,15 +12529,6 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 AS '$libdir/unaccent', $function$unaccent_dict$function$
 ;]]></string>
 			<input_param jt="-1" type="regdictionary" inOut="-1" />
-			<input_param jt="-1" type="text" inOut="-1" />
-		</function>
-		<function name="unaccent" id="Function_17e7" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.unaccent(text)
- RETURNS text
- LANGUAGE c
- STABLE PARALLEL SAFE STRICT
-AS '$libdir/unaccent', $function$unaccent_dict$function$
-;]]></string>
 			<input_param jt="-1" type="text" inOut="-1" />
 		</function>
 		<function name="unaccent_init" id="Function_425" isSystem="false" params_known="y" >
@@ -12340,6 +12551,102 @@ AS '$libdir/unaccent', $function$unaccent_lexize$function$
 			<input_param jt="-1" type="internal" inOut="-1" />
 			<input_param jt="-1" type="internal" inOut="-1" />
 			<input_param jt="-1" type="internal" inOut="-1" />
+		</function>
+		<trigger name="tblmovimentotituloaiauad" table="tblmovimentotitulo" id="Trigger4846959" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblmovimentotituloaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblmovimentotitulo FOR EACH ROW EXECUTE FUNCTION fntblmovimentotituloaiauad();]]></string>
+		</trigger>
+		<trigger name="tblnegocioaiau_valorprodutos_valoraprazo_valordesconto_valorfre" table="tblnegocio" id="Trigger_c51" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblnegocioaiau_valorprodutos_valoraprazo_valordesconto_valorfre AFTER INSERT OR UPDATE OF valorprodutos, valoraprazo, valordesconto, valorfrete ON mgsis.tblnegocio FOR EACH ROW EXECUTE FUNCTION fntblnegocioaiau_valorprodutos_valoraprazo_valordesconto();]]></string>
+		</trigger>
+		<trigger name="tblnegocioformapagamentoaiauad" table="tblnegocioformapagamento" id="Trigger4846961" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblnegocioformapagamentoaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnegocioformapagamento FOR EACH ROW EXECUTE FUNCTION fntblnegocioformapagamentoaiauad();]]></string>
+		</trigger>
+		<trigger name="tblnegocioprodutobarraaiauad" table="tblnegocioprodutobarra" id="Trigger4846961" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblnegocioprodutobarraaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnegocioprodutobarra FOR EACH ROW EXECUTE FUNCTION fntblnegocioprodutobarraaiauad();]]></string>
+		</trigger>
+		<trigger name="tblnotafiscalaiau_valorprodutos" table="tblnotafiscal" id="Trigger4846962" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblnotafiscalaiau_valorprodutos AFTER INSERT OR UPDATE OF valorprodutos, valorfrete, valorseguro, valordesconto, valoroutras, icmsstvalor, ipivalor ON mgsis.tblnotafiscal FOR EACH ROW EXECUTE FUNCTION fntblnotafiscalaiau_valorprodutos();]]></string>
+		</trigger>
+		<trigger name="tblnotafiscalprodutobarraaiauad" table="tblnotafiscalprodutobarra" id="Trigger4846963" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tblnotafiscalprodutobarraaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblnotafiscalprodutobarra FOR EACH ROW EXECUTE FUNCTION fntblnotafiscalprodutobarraaiauad();]]></string>
+		</trigger>
+		<trigger name="tbltituloai" table="tbltitulo" id="Trigger4846967" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tbltituloai AFTER INSERT ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloai();]]></string>
+		</trigger>
+		<trigger name="tbltituloaiauad" table="tbltitulo" id="Trigger4846967" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tbltituloaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloaiauad();]]></string>
+		</trigger>
+		<trigger name="tbltituloau" table="tbltitulo" id="Trigger4846967" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER tbltituloau AFTER UPDATE ON mgsis.tbltitulo FOR EACH ROW EXECUTE FUNCTION fntbltituloau();]]></string>
+		</trigger>
+	</schema>
+	<schema name="public" >
+		<comment><![CDATA[standard public schema]]></comment>
+		<function name="inttobool" id="Function-17b2" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.inttobool(integer, boolean)
+ RETURNS boolean
+ LANGUAGE plpgsql
+AS $function$
+begin
+  if $1=0 and not $2 then
+  return true;
+  elsif $1<>0 and $2 then
+  return true;
+  else
+          return false;
+  end if;
+end;
+$function$
+;]]></string>
+			<input_param jt="-1" type="integer" inOut="1" />
+			<input_param jt="-1" type="boolean" inOut="1" />
+		</function>
+		<function name="inttobool" id="Function-e03" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.inttobool(boolean, integer)
+ RETURNS boolean
+ LANGUAGE plpgsql
+AS $function$
+begin
+  return inttobool($2, $1);
+end;
+$function$
+;]]></string>
+			<input_param jt="-1" type="boolean" inOut="1" />
+			<input_param jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="notinttobool" id="Function-e6b" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.notinttobool(integer, boolean)
+ RETURNS boolean
+ LANGUAGE plpgsql
+AS $function$
+begin
+return not inttobool($1,$2);
+end;
+$function$
+;]]></string>
+			<input_param jt="-1" type="integer" inOut="1" />
+			<input_param jt="-1" type="boolean" inOut="1" />
+		</function>
+		<function name="notinttobool" id="Function-3b9" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.notinttobool(boolean, integer)
+ RETURNS boolean
+ LANGUAGE plpgsql
+AS $function$
+begin
+  return not inttobool($2,$1);
+end;
+$function$
+;]]></string>
+			<input_param jt="-1" type="boolean" inOut="1" />
+			<input_param jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="plpgsql_call_handler" id="Function-2b5" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.plpgsql_call_handler()
+ RETURNS language_handler
+ LANGUAGE c
+AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
+;]]></string>
+			<result_param jt="-1" />
 		</function>
 	</schema>
 	<layout name="Layout_Autorizacao" id="Layout_93c6439" confirmed="y" show_column_type="y" show_relation="columns" >
@@ -12489,6 +12796,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
@@ -12591,6 +12899,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
@@ -12630,6 +12939,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuariocriacao" />
 			<column name="conferenciaperiodica" />
 			<column name="codestoquelocal" />
+			<column name="comissao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="799" y="884" >
 			<column name="codprodutobarra" />
@@ -12670,6 +12980,50 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 		<entity schema="mgsis.mgsis" name="tbltipotitulo" color="B2CDF7" x="561" y="187" />
 		<entity schema="mgsis.mgsis" name="tbltitulo" color="B2CDF7" x="799" y="459" />
 	</layout>
+	<layout name="Layout_Dominio" id="Layout-137b" confirmed="y" show_relation="columns" >
+		<entity schema="mgsis.mgsis" name="tblcfop" color="3986C1" x="391" y="612" />
+		<entity schema="mgsis.mgsis" name="tbldominioacumulador" color="C1D8EE" x="629" y="629" />
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="901" y="136" />
+		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="3986C1" x="1292" y="221" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscal" color="3986C1" x="68" y="51" >
+			<column name="codnotafiscal" />
+			<column name="codnaturezaoperacao" />
+			<column name="emitida" />
+			<column name="nfechave" />
+			<column name="nfeimpressa" />
+			<column name="serie" />
+			<column name="numero" />
+			<column name="emissao" />
+			<column name="saida" />
+			<column name="codfilial" />
+			<column name="codestoquelocal" />
+			<column name="codpessoa" />
+			<column name="codpessoatransportador" />
+			<column name="codoperacao" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="codestadoplaca" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblnotafiscalduplicatas" color="3986C1" x="51" y="561" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="3986C1" x="374" y="255" >
+			<column name="codnotafiscalprodutobarra" />
+			<column name="codnotafiscal" />
+			<column name="codnotafiscalprodutobarraorigem" />
+			<column name="codprodutobarra" />
+			<column name="codcfop" />
+			<column name="quantidade" />
+			<column name="valorunitario" />
+			<column name="valortotal" />
+			<column name="csosn" />
+			<column name="icmscst" />
+			<column name="icmsbase" />
+			<column name="codnegocioprodutobarra" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tbltributacao" color="3986C1" x="1003" y="799" />
+		<entity schema="mgsis.mgsis" name="tbltributacaonaturezaoperacao" color="3986C1" x="1275" y="731" />
+	</layout>
 	<layout name="Layout_Empresa" id="Layout7239500" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblempresa" color="B2CDF7" x="765" y="51" />
 		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="3986C1" x="459" y="1581" />
@@ -12689,6 +13043,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuariocriacao" />
 			<column name="codestadoplaca" />
 			<column name="cpf" />
+			<column name="ipidevolucaovalor" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="B2CDF7" x="119" y="51" />
 		<entity schema="mgsis.mgsis" name="tbltitulo" color="3986C1" x="51" y="1003" />
@@ -12720,6 +13075,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="inativo" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="observacoes" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="B3CEF5" x="1105" y="51" >
 			<column name="codnotafiscalprodutobarra" />
@@ -12730,6 +13086,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codnegocioprodutobarra" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
+			<column name="ipidevolucaovalor" />
+			<column name="devolucaopercentual" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="B3CEF5" x="68" y="51" />
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="B3CEF5" x="51" y="816" />
@@ -13092,6 +13450,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="uuid" />
 			<column name="codpdv" />
 			<column name="justificativa" />
+			<column name="confissao" />
+			<column name="codusuarioconfissao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="391" y="102" />
 		<script name="SQL_Editor" id="Editor_4e0" language="SQL" >
@@ -13134,6 +13494,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="codcidadenascimento" />
@@ -13189,6 +13550,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 			<column name="codestadoplaca" />
+			<column name="ipidevolucaovalor" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="68" y="68" >
 			<column name="codpessoa" />
@@ -13198,6 +13560,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="rntrc" />
@@ -13417,6 +13780,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
@@ -13437,6 +13801,100 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codusuarioalteracao" />
 		</entity>
 	</layout>
+	<layout name="Layout_Meta_Nova" id="Layout-1c07" confirmed="y" show_relation="columns" >
+		<entity schema="mgsis.mgsis" name="mwvendas" color="3986C1" x="68" y="51" />
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="391" y="187" >
+			<column name="codfilial" />
+			<column name="codempresa" />
+			<column name="codpessoa" />
+			<column name="acbrnfemonitorcodusuario" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblmeta" color="3986C1" x="51" y="459" />
+		<entity schema="mgsis.mgsis" name="tblmetafilial" color="3986C1" x="85" y="187" />
+		<entity schema="mgsis.mgsis" name="tblmetavendedor" color="C1D8EE" x="459" y="459" />
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="1105" y="136" >
+			<column name="codnegocio" />
+			<column name="codpessoa" />
+			<column name="codfilial" />
+			<column name="codestoquelocal" />
+			<column name="codpessoavendedor" />
+			<column name="codoperacao" />
+			<column name="codnegociostatus" />
+			<column name="codusuario" />
+			<column name="codusuarioacertoentrega" />
+			<column name="codnaturezaoperacao" />
+			<column name="codestoquelocaldestino" />
+			<column name="codusuariorecebimento" />
+			<column name="codpessoatransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="codpdv" />
+			<column name="confissao" />
+			<column name="codusuarioconfissao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="3986C1" x="1088" y="527" >
+			<column name="codnegocioprodutobarra" />
+			<column name="codnegocio" />
+			<column name="codprodutobarra" />
+			<column name="codnegocioprodutobarradevolucao" />
+			<column name="codusuarioconferencia" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="observacoes" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="765" y="187" >
+			<column name="codpessoa" />
+			<column name="pessoa" />
+			<column name="fantasia" />
+			<column name="cliente" />
+			<column name="fornecedor" />
+			<column name="fisica" />
+			<column name="codsexo" />
+			<column name="cnpj" />
+			<column name="ie" />
+			<column name="consumidor" />
+			<column name="contato" />
+			<column name="codestadocivil" />
+			<column name="codcidade" />
+			<column name="codcidadecobranca" />
+			<column name="codformapagamento" />
+			<column name="comissao" />
+			<column name="codgrupocliente" />
+			<column name="codgrupoeconomico" />
+			<column name="codcidadenascimento" />
+			<column name="codestadoctps" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="731" y="646" >
+			<column name="codproduto" />
+			<column name="codncm" />
+			<column name="codcest" />
+			<column name="codunidademedida" />
+			<column name="codsubgrupoproduto" />
+			<column name="codmarca" />
+			<column name="codtributacao" />
+			<column name="codtipoproduto" />
+			<column name="codprodutoimagem" />
+			<column name="codprodutoembalagemcompra" />
+			<column name="codprodutoembalagemtransferencia" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+			<column name="codestoquelocal" />
+			<column name="comissao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="3986C1" x="1122" y="765" >
+			<column name="codprodutobarra" />
+			<column name="codprodutovariacao" />
+			<column name="codproduto" />
+			<column name="codmarca" />
+			<column name="codprodutoembalagem" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+		</entity>
+	</layout>
 	<layout name="Layout_NCM" id="Layout9248750" confirmed="y" show_column_type="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblcest" color="B2CDF7" x="646" y="51" />
 		<entity schema="mgsis.mgsis" name="tblibptax" color="B2CDF7" x="221" y="323" />
@@ -13452,21 +13910,21 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tbltributacaonaturezaoperacao" color="3986C1" x="459" y="85" />
 	</layout>
 	<layout name="Layout_Negocio" id="Layout2983189" confirmed="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="B2CDF7" x="51" y="1173" />
-		<entity schema="mgsis.mgsis" name="tblfilial" color="B2CDF7" x="731" y="1003" />
-		<entity schema="mgsis.mgsis" name="tblformapagamento" color="B2CDF7" x="68" y="612" />
-		<entity schema="mgsis.mgsis" name="tblgrupoproduto" color="B2CDF7" x="476" y="1445" />
-		<entity schema="mgsis.mgsis" name="tblmarca" color="B2CDF7" x="1037" y="1224" />
-		<entity schema="mgsis.mgsis" name="tblnegocio" color="B2CDF7" x="629" y="136" />
-		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="B2CDF7" x="51" y="1003" />
-		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="B2CDF7" x="68" y="323" />
-		<entity schema="mgsis.mgsis" name="tblnegociostatus" color="B2CDF7" x="255" y="867" />
-		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="B2CDF7" x="374" y="136" />
-		<entity schema="mgsis.mgsis" name="tbloperacao" color="B2CDF7" x="255" y="1020" />
-		<entity schema="mgsis.mgsis" name="tblpessoa" color="B2CDF7" x="1003" y="51" />
-		<entity schema="mgsis.mgsis" name="tblproduto" color="B2CDF7" x="833" y="136" />
-		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="B2CDF7" x="51" y="1377" />
-		<entity schema="mgsis.mgsis" name="tblsubgrupoproduto" color="B2CDF7" x="459" y="1156" />
+		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="C7F4BE" x="1479" y="1207" />
+		<entity schema="mgsis.mgsis" name="tblfilial" color="BED3F4" x="374" y="51" />
+		<entity schema="mgsis.mgsis" name="tblformapagamento" color="BED3F4" x="374" y="816" />
+		<entity schema="mgsis.mgsis" name="tblgrupoproduto" color="C7F4BE" x="1479" y="323" />
+		<entity schema="mgsis.mgsis" name="tblmarca" color="C7F4BE" x="1173" y="51" />
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="BED3F4" x="374" y="1326" />
+		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="BED3F4" x="731" y="1326" />
+		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="C7F4BE" x="1819" y="680" />
+		<entity schema="mgsis.mgsis" name="tblnegociostatus" color="BED3F4" x="374" y="2108" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="C7F4BE" x="2210" y="680" />
+		<entity schema="mgsis.mgsis" name="tbloperacao" color="BED3F4" x="731" y="2108" />
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="BED3F4" x="51" y="51" />
+		<entity schema="mgsis.mgsis" name="tblproduto" color="C7F4BE" x="1071" y="680" />
+		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C7F4BE" x="1479" y="680" />
+		<entity schema="mgsis.mgsis" name="tblsubgrupoproduto" color="C7F4BE" x="1479" y="1581" />
 	</layout>
 	<layout name="Layout_Nfe_Terceiro" id="Layout462291" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
@@ -13494,7 +13952,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblnfeterceiropagamento" color="3986C1" x="459" y="391" />
 	</layout>
 	<layout name="Layout_Nota_Fiscal" id="Layout_364e738" confirmed="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblcidade" color="C1D8EE" x="1530" y="391" >
+		<entity schema="mgsis.mgsis" name="tblcidade" color="C1D8EE" x="1547" y="391" >
 			<column name="codcidade" />
 			<column name="codestado" />
 			<column name="codusuarioalteracao" />
@@ -13505,7 +13963,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 		</entity>
-		<entity schema="mgsis.mgsis" name="tblestado" color="C1D8EE" x="1343" y="697" >
+		<entity schema="mgsis.mgsis" name="tblestado" color="C1D8EE" x="1343" y="731" >
 			<column name="codestado" />
 			<column name="codpais" />
 			<column name="codusuarioalteracao" />
@@ -13536,14 +13994,14 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcontacontabil" />
 			<column name="preco" />
 		</entity>
-		<entity schema="mgsis.mgsis" name="tblnotafiscal" color="008000" x="697" y="68" />
-		<entity schema="mgsis.mgsis" name="tblnotafiscalcartacorrecao" color="008000" x="1258" y="901" />
-		<entity schema="mgsis.mgsis" name="tblnotafiscalduplicatas" color="008000" x="1513" y="850" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscal" color="008000" x="731" y="68" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalcartacorrecao" color="008000" x="1275" y="901" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalduplicatas" color="008000" x="1547" y="850" />
 		<entity schema="mgsis.mgsis" name="tblnotafiscalpagamento" color="008000" x="1003" y="935" />
 		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="008000" x="357" y="51" />
-		<entity schema="mgsis.mgsis" name="tblnotafiscalreferenciada" color="008000" x="714" y="1054" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalreferenciada" color="008000" x="731" y="1054" />
 		<entity schema="mgsis.mgsis" name="tbloperacao" color="C1D8EE" x="1309" y="51" />
-		<entity schema="mgsis.mgsis" name="tblpais" color="C1D8EE" x="1598" y="697" >
+		<entity schema="mgsis.mgsis" name="tblpais" color="C1D8EE" x="1598" y="731" >
 			<column name="codpais" />
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
@@ -13555,6 +14013,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="pai" />
@@ -13576,7 +14035,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
 		</entity>
-		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="51" y="697" >
+		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="51" y="731" >
 			<column name="codproduto" />
 			<column name="codncm" />
 			<column name="codcest" />
@@ -13591,6 +14050,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 			<column name="codestoquelocal" />
+			<column name="comissao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="85" y="51" >
 			<column name="codprodutobarra" />
@@ -13625,19 +14085,19 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="oauth_personal_access_clients" color="3986C1" x="51" y="51" />
 		<entity schema="mgsis.mgsis" name="oauth_refresh_tokens" color="3986C1" x="323" y="51" />
 	</layout>
-	<layout name="Layout_PDV" id="Layout-2151" show_relation="columns" >
+	<layout name="Layout_PDV" id="Layout-2151" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="3986C1" x="187" y="646" />
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="68" y="935" />
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="765" y="204" />
 		<entity schema="mgsis.mgsis" name="tblmovimentotitulo" color="3986C1" x="1428" y="884" />
 		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="3986C1" x="51" y="1598" />
-		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="476" y="408" />
-		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="765" y="697" />
-		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="3986C1" x="391" y="1071" />
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="476" y="459" />
+		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="765" y="731" />
+		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="3986C1" x="425" y="1190" />
 		<entity schema="mgsis.mgsis" name="tblpagarmebandeira" color="3986C1" x="782" y="1683" />
-		<entity schema="mgsis.mgsis" name="tblpagarmepagamento" color="3986C1" x="425" y="1530" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepagamento" color="3986C1" x="459" y="1547" />
 		<entity schema="mgsis.mgsis" name="tblpagarmepedido" color="3986C1" x="782" y="1207" />
-		<entity schema="mgsis.mgsis" name="tblpagarmepos" color="3986C1" x="1071" y="1530" />
+		<entity schema="mgsis.mgsis" name="tblpagarmepos" color="3986C1" x="1071" y="1547" />
 		<entity schema="mgsis.mgsis" name="tblpdv" color="C1D8EE" x="119" y="238" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="476" y="51" >
 			<column name="codpessoa" />
@@ -13646,6 +14106,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidade" />
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="codcidadenascimento" />
@@ -13658,8 +14119,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblpixcobstatus" color="3986C1" x="1071" y="1156" />
 		<entity schema="mgsis.mgsis" name="tbltitulo" color="3986C1" x="1377" y="51" />
 		<entity schema="mgsis.mgsis" name="tmpdiasmes" color="3986C1" x="1632" y="510" />
-		<entity schema="mgsis.mgsis" name="tmpestoquelocalprodutovariacaovenda" color="3986C1" x="1428" y="697" />
-		<entity schema="mgsis.mgsis" name="tmpvendainicio" color="3986C1" x="1632" y="408" />
+		<entity schema="mgsis.mgsis" name="tmpestoquelocalprodutovariacaovenda" color="3986C1" x="1428" y="731" />
+		<entity schema="mgsis.mgsis" name="tmpvendainicio" color="3986C1" x="1632" y="459" />
 	</layout>
 	<layout name="Layout_PagarMe" id="Layout-26c6" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
@@ -13696,6 +14157,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="inativo" />
@@ -13726,12 +14188,12 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<entity schema="mgsis.mgsis" name="tblcidade" color="3986C1" x="85" y="1122" />
 		<entity schema="mgsis.mgsis" name="tblcobrancahistorico" color="C13939" x="1054" y="748" />
 		<entity schema="mgsis.mgsis" name="tblestado" color="3986C1" x="680" y="1088" />
-		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="714" y="357" />
+		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="731" y="357" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="EEC1C1" x="391" y="51" />
-		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="EEC1C1" x="697" y="51" />
-		<entity schema="mgsis.mgsis" name="tblpessoaconta" color="C1D8EE" x="697" y="646" />
+		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="EEC1C1" x="731" y="51" />
+		<entity schema="mgsis.mgsis" name="tblpessoaconta" color="C1D8EE" x="731" y="646" />
 		<entity schema="mgsis.mgsis" name="tblpessoaemail" color="3986C1" x="68" y="374" />
-		<entity schema="mgsis.mgsis" name="tblpessoaendereco" color="3986C1" x="51" y="697" />
+		<entity schema="mgsis.mgsis" name="tblpessoaendereco" color="3986C1" x="51" y="731" />
 		<entity schema="mgsis.mgsis" name="tblpessoatelefone" color="C1D8EE" x="68" y="51" />
 		<entity schema="mgsis.mgsis" name="tblregistrospc" color="C13939" x="1054" y="493" />
 	</layout>
@@ -13748,24 +14210,24 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 	</layout>
 	<layout name="Layout_Portador" id="Layout_91c" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[PostgreSQL]]></comment>
-		<entity schema="mgsis.mgsis" name="tblbanco" color="3986C1" x="68" y="833" />
-		<entity schema="mgsis.mgsis" name="tblextratobancario" color="C6EEC1" x="374" y="51" />
-		<entity schema="mgsis.mgsis" name="tblextratobancarioportadormovimento" color="EEC1C1" x="731" y="255" />
+		<entity schema="mgsis.mgsis" name="tblbanco" color="3986C1" x="68" y="867" />
+		<entity schema="mgsis.mgsis" name="tblextratobancario" color="C6EEC1" x="357" y="51" />
+		<entity schema="mgsis.mgsis" name="tblextratobancarioportadormovimento" color="EEC1C1" x="731" y="289" />
 		<entity schema="mgsis.mgsis" name="tblextratobancariotipomovimento" color="C6EEC1" x="765" y="51" />
-		<entity schema="mgsis.mgsis" name="tblmovimentotitulo" color="3986C1" x="459" y="595" />
-		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="51" y="1054" />
-		<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="748" y="1020" />
-		<entity schema="mgsis.mgsis" name="tblpixcob" color="3986C1" x="459" y="1003" />
-		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="85" y="289" />
-		<entity schema="mgsis.mgsis" name="tblportadormovimento" color="EEC1C1" x="731" y="459" />
-		<entity schema="mgsis.mgsis" name="tblportadortransferencia" color="EEC1C1" x="459" y="340" />
-		<entity schema="mgsis.mgsis" name="tbltipomovimentotitulo" color="3986C1" x="731" y="731" />
+		<entity schema="mgsis.mgsis" name="tblmovimentotitulo" color="3986C1" x="459" y="629" />
+		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="51" y="1088" />
+		<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="731" y="1105" />
+		<entity schema="mgsis.mgsis" name="tblpixcob" color="3986C1" x="459" y="1088" />
+		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="85" y="323" />
+		<entity schema="mgsis.mgsis" name="tblportadormovimento" color="EEC1C1" x="731" y="493" />
+		<entity schema="mgsis.mgsis" name="tblportadortransferencia" color="EEC1C1" x="1139" y="476" />
+		<entity schema="mgsis.mgsis" name="tbltipomovimentotitulo" color="3986C1" x="1071" y="833" />
 	</layout>
 	<layout name="Layout_Prancheta" id="Layout_2e976812" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblprancheta" color="C1D8EE" x="731" y="629" />
-		<entity schema="mgsis.mgsis" name="tblpranchetacategoria" color="C1D8EE" x="714" y="357" />
+		<entity schema="mgsis.mgsis" name="tblpranchetacategoria" color="C1D8EE" x="731" y="357" />
 		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="51" y="51" />
-		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="408" y="629" />
+		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="459" y="629" />
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="C1D8EE" x="391" y="51" />
 	</layout>
 	<layout name="Layout_ProdutoBarra" id="Layout_26dd18a" confirmed="y" show_column_type="y" show_relation="columns" >
@@ -13776,14 +14238,14 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="B3CEF5" x="459" y="51" />
 	</layout>
 	<layout name="Layout_Produtos" id="Layout_1a34eed8" confirmed="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="3986C1" x="391" y="1241" />
+		<entity schema="mgsis.mgsis" name="tblestoquelocal" color="3986C1" x="391" y="1275" />
 		<entity schema="mgsis.mgsis" name="tblfamiliaproduto" color="94C3EA" x="850" y="187" />
 		<entity schema="mgsis.mgsis" name="tblgrupoproduto" color="94C3EA" x="595" y="187" />
 		<entity schema="mgsis.mgsis" name="tblimagem" color="3986C1" x="1292" y="204" />
 		<entity schema="mgsis.mgsis" name="tblmarca" color="94C3EA" x="1020" y="459" />
 		<entity schema="mgsis.mgsis" name="tblncm" color="94C3EA" x="731" y="1003" />
 		<entity schema="mgsis.mgsis" name="tblncmtributacao" color="94C3EA" x="1275" y="680" />
-		<entity schema="mgsis.mgsis" name="tblproduto" color="94C3EA" x="374" y="442" />
+		<entity schema="mgsis.mgsis" name="tblproduto" color="94C3EA" x="374" y="459" />
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="94C3EA" x="1054" y="1020" />
 		<entity schema="mgsis.mgsis" name="tblprodutoembalagem" color="94C3EA" x="85" y="918" />
 		<entity schema="mgsis.mgsis" name="tblprodutohistoricopreco" color="94C3EA" x="68" y="527" />
@@ -13797,10 +14259,83 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<comment><![CDATA[Layout_RH]]></comment>
 		<entity schema="mgsis.mgsis" name="tblcargo" color="3986C1" x="680" y="782" />
 		<entity schema="mgsis.mgsis" name="tblcolaborador" color="C1D8EE" x="306" y="51" />
-		<entity schema="mgsis.mgsis" name="tblcolaboradorcargo" color="C1D8EE" x="663" y="408" />
+		<entity schema="mgsis.mgsis" name="tblcolaboradorcargo" color="C1D8EE" x="663" y="459" />
 		<entity schema="mgsis.mgsis" name="tblferias" color="C1D8EE" x="680" y="51" />
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="323" y="459" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="51" y="51" />
+	</layout>
+	<layout name="Layout_Saurus" id="Layout-1430" confirmed="y" show_relation="columns" >
+		<comment><![CDATA[Layout_Saurus]]></comment>
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="51" y="391" >
+			<column name="codfilial" />
+			<column name="codempresa" />
+			<column name="codpessoa" />
+			<column name="acbrnfemonitorcodusuario" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="765" y="986" />
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="459" y="340" >
+			<column name="codnegocio" />
+			<column name="codpessoa" />
+			<column name="codfilial" />
+			<column name="codestoquelocal" />
+			<column name="codpessoavendedor" />
+			<column name="codoperacao" />
+			<column name="codnegociostatus" />
+			<column name="codusuario" />
+			<column name="codusuarioacertoentrega" />
+			<column name="codnaturezaoperacao" />
+			<column name="codestoquelocaldestino" />
+			<column name="codusuariorecebimento" />
+			<column name="codpessoatransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="codpdv" />
+			<column name="codusuarioconfissao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="459" y="748" >
+			<column name="codnegocioformapagamento" />
+			<column name="codnegocio" />
+			<column name="codformapagamento" />
+			<column name="codpessoa" />
+			<column name="codpagarmepedido" />
+			<column name="codliopedido" />
+			<column name="codpixcob" />
+			<column name="codstonetransacao" />
+			<column name="codtitulo" />
+			<column name="codsauruspedido" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblpdv" color="3986C1" x="374" y="136" >
+			<column name="codpdv" />
+			<column name="codfilial" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="codportador" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="51" y="646" >
+			<column name="codpessoa" />
+			<column name="pessoa" />
+			<column name="codsexo" />
+			<column name="cnpj" />
+			<column name="codestadocivil" />
+			<column name="codcidade" />
+			<column name="codcidadecobranca" />
+			<column name="codformapagamento" />
+			<column name="codgrupocliente" />
+			<column name="codgrupoeconomico" />
+			<column name="codcidadenascimento" />
+			<column name="codestadoctps" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblsaurusbandeira" color="008000" x="1105" y="272" />
+		<entity schema="mgsis.mgsis" name="tblsauruspagamento" color="008000" x="782" y="527" />
+		<entity schema="mgsis.mgsis" name="tblsauruspdv" color="008000" x="68" y="51" />
+		<entity schema="mgsis.mgsis" name="tblsauruspedido" color="008000" x="799" y="85" />
+		<entity schema="mgsis.mgsis" name="tblsauruspinpad" color="008000" x="1139" y="561" />
 	</layout>
 	<layout name="Layout_Stone" id="Layout_7c4" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="68" y="51" >
@@ -13816,10 +14351,11 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1003" y="374" >
 			<column name="codformapagamento" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="stone" />
 			<column name="integracao" />
+			<column name="safrapay" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="1003" y="51" >
 			<column name="codnegocio" />
@@ -13843,6 +14379,8 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="uuid" />
 			<column name="codpdv" />
 			<column name="justificativa" />
+			<column name="confissao" />
+			<column name="codusuarioconfissao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="1003" y="561" >
 			<column name="codnegocioformapagamento" />
@@ -13864,9 +14402,10 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codliopedido" />
 			<column name="codpixcob" />
 			<column name="codstonetransacao" />
+			<column name="codtitulo" />
+			<column name="codsauruspedido" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
-			<column name="codtitulo" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblstonebandeira" color="C4EEC1" x="68" y="255" />
 		<entity schema="mgsis.mgsis" name="tblstonefilial" color="C4EEC1" x="391" y="68" />
@@ -13901,6 +14440,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
@@ -13940,6 +14480,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codusuariocriacao" />
 			<column name="conferenciaperiodica" />
 			<column name="codestoquelocal" />
+			<column name="comissao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="306" y="561" >
 			<column name="codprodutobarra" />
@@ -13987,12 +14528,13 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="C1D8EE" x="51" y="918" >
 			<column name="codformapagamento" />
 			<column name="valecompra" />
-			<column name="codusuarioalteracao" />
-			<column name="codusuariocriacao" />
 			<column name="lio" />
 			<column name="pix" />
 			<column name="stone" />
 			<column name="integracao" />
+			<column name="safrapay" />
+			<column name="codusuarioalteracao" />
+			<column name="codusuariocriacao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="C1D8EE" x="51" y="68" >
 			<column name="codpessoa" />
@@ -14002,6 +14544,7 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codcidadecobranca" />
 			<column name="codformapagamento" />
 			<column name="nascimento" />
+			<column name="comissao" />
 			<column name="codgrupocliente" />
 			<column name="codgrupoeconomico" />
 			<column name="crt" />
