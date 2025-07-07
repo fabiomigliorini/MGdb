@@ -11,6 +11,8 @@ where tblestoquesaldoconferencia.codestoquesaldoconferencia in (
 	where pv.codproduto = :codproduto
 );
 
+
+
 -- marca como nao conferido
 update tblestoquesaldo 
 set ultimaconferencia = null
@@ -47,7 +49,7 @@ and tblestoquemovimento.codestoquemovimento in (
 );
 
 -- esses tem que apagar  na mao (envolve outros produtos)
-select mov.codestoquemovimento, mov.codestoquemes
+select mov.codestoquemovimento, mov.codestoquemes, ' google-chrome https://sistema.mgpapelaria.com.br/MGLara/estoque-mes/' || mov.codestoquemes
 from tblestoquemovimento mov
 inner join tblestoquemes mes on (mes.codestoquemes = mov.codestoquemes )
 inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
@@ -73,7 +75,7 @@ and tblestoquemovimento.codestoquemovimento in (
 	and pv.codproduto = :codproduto
 );
 
-select ' time curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || '  '
+select ' time curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || mes.codestoquemes || '&  '
 from tblestoquemes mes
 inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codestoquelocalprodutovariacao = sld.codestoquelocalprodutovariacao)

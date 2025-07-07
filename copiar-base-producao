@@ -3,13 +3,13 @@
 BASEDIR=$(dirname "$0")
 
 echo
-echo "Digite a senha do super@mercurio"
+echo "Digite a senha do super@saturno"
 read -s SSHPASS
 echo
 echo
 
-echo "DESCOBRINDO ULTIMO BACKUP (senha super@mercurio)"
-BACKUP=$(sshpass -p "$SSHPASS" ssh -o StrictHostKeyChecking=no super@mercurio.mgpapelaria.com.br "ls -1 -t /media/sdc1/backup/postgres | head -1")
+echo "DESCOBRINDO ULTIMO BACKUP (senha super@saturno)"
+BACKUP=$(sshpass -p "$SSHPASS" ssh -o StrictHostKeyChecking=no super@saturno.mgpapelaria.com.br "ls -1 -t /opt/backup/postgres | head -1")
 if [ $? != 0 ] ; then
   echo erro
   exit
@@ -18,8 +18,8 @@ echo $BACKUP
 echo
 echo
 
-echo "COPIANDO ULTIMO BACKUP (senha super@mercurio)"
-sshpass -p "$SSHPASS" rsync -avP super@mercurio.mgpapelaria.com.br:/media/sdc1/backup/postgres/$BACKUP /tmp/$BACKUP --progress
+echo "COPIANDO ULTIMO BACKUP (senha super@saturno)"
+sshpass -p "$SSHPASS" rsync -avP super@saturno.mgpapelaria.com.br:/opt/backup/postgres/$BACKUP /tmp/$BACKUP --progress
 if [ $? != 0 ] ; then
   echo erro
   exit

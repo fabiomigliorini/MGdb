@@ -10,4 +10,4 @@ FROM pg_stat_activity
 --where state = 'active'
 order by state, pg_stat_activity.query_start
 
-SELECT pg_cancel_backend(3828180)
+SELECT pg_cancel_backend(1942304)

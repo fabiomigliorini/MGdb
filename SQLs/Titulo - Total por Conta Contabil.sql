@@ -11,8 +11,8 @@ with totais as (
 	inner join tblcontacontabil cc on (cc.codcontacontabil = t.codcontacontabil)
 	where t.codcontacontabil in (:codcontacontabil) 
 	and t.estornado is null
-	--and t.emissao  <= '2020-12-31 23:59:59'
-	--and t.criacao >= '2022-05-01 00:00:00'
+	--and t.emissao  <= '2025-12-31 23:59:59'
+	--and t.criacao >= '2025-01-01 00:00:00'
 	group by p.codpessoa, p.fantasia, cc.contacontabil 
 ) 
 select 

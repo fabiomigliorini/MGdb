@@ -40,3 +40,14 @@ select * from tblpixcob t where valororiginal  = 26.9 order by criacao desc
 
 
 select * from tblnaturezaoperacao t 
+
+select p.codpessoa, mc.codmercoscliente as mercos, p.cnpj, p.fantasia, p.pessoa 
+from tblpessoa p
+inner join tblmercoscliente mc on (mc.codpessoa = p.codpessoa)
+where p.cnpj in (
+	select pd.cnpj
+	from tblpessoa pd
+	group by pd.cnpj
+	having count(*) > 1
+)
+order by p.codpessoa

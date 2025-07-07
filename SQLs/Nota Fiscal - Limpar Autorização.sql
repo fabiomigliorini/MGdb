@@ -31,7 +31,7 @@ from tblnotafiscal
 where codfilial = :codfilial
 and modelo = :modelo
 and serie = :serie
-and numero in :numero
+and numero in :numeros
 and emitida = true
 
 
@@ -45,4 +45,46 @@ and serie = :serie
 and numero in :numero
 and emitida = true
 
+
+INSERT INTO mgsis.tblnotafiscal (
+	codnaturezaoperacao, 
+	emitida, 
+	nfechave, 
+	nfeimpressa, 
+	serie, 
+	numero, 
+	emissao, 
+	saida, 
+	codfilial, 
+	codpessoa, 
+	codoperacao, 
+	modelo, 
+	valorprodutos, 
+	valortotal, 
+	tpemis, 
+	codestoquelocal
+)
+select 
+	codnaturezaoperacao, 
+	emitida, 
+	null as nfechave, 
+	nfeimpressa, 
+	serie, 
+	numero - 1, 
+	emissao, 
+	saida, 
+	codfilial, 
+	1 as codpessoa, 
+	codoperacao, 
+	modelo, 
+	0 as valorprodutos, 
+	0 as valortotal, 
+	tpemis, 
+	codestoquelocal 
+from tblnotafiscal t 
+where codfilial = :codfilial
+and modelo = :modelo
+and serie = :serie
+and numero = (:numero +1)
+and emitida = true
 

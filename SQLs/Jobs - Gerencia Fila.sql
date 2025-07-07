@@ -8,6 +8,12 @@ select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa g
 
 
 /*
+ * 
+update tbljobs set queue='parado' where attempts > 1
+
+select * from tbljobs where queue = 'parado'
+ 
+ 
 --select * from tblnegocio where codnegocio = 2714461
 
 select * from tblnegocioprodutobarra t where codnegocioprodutobarra = 2667894
@@ -67,6 +73,8 @@ select * from tblnegocioformapagamento nfp where codnegocio = 2501536
 
 update tbljobsspa set queue = 'default' where id in (select j.id from tbljobsspa j where queue = 'parado' order by j.id limit 10)
 
+update tbljobs set queue = 'parado' 
+
 select * from tbljobs where queue = 'urgent'
 
 delete from tbljobs where id = 7882014
@@ -99,7 +107,7 @@ where tbljobs.id in (
 	from tbljobs j2 
 	where j2.queue = 'parado_cm' 
 	order by j2.payload 
-	limit 10
+	limit 1
 )
 
 ﻿delete from tbljobs where payload ilike '%EstoqueCalculaEstatisticas%';
