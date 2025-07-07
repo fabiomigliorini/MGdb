@@ -11,6 +11,7 @@ select
 from tblnegocio nf
 left join tot on (tot.codnegocio = nf.codnegocio)
 where nf.valorprodutos != coalesce(tot.total, 0)
+and nf.codnegocio = 4029712
 ORDER BY lancamento desc
 --limit 50
 

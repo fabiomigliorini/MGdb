@@ -61,7 +61,7 @@ with pendentes as (
 	--and nf.codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
 	and nf.valortotal < 1000
 )
-select * from pendentes order by codnotafiscal asc --offset 50;
+select * from pendentes order by codnotafiscal desc --offset 50;
 
 update tblnotafiscal 
 set modelo = 55,
