@@ -1,0 +1,97 @@
+#!/bin/bash
+
+BASEDIR=$(dirname "$0")
+
+# Arquivo para guardar o nome do último backup restaurado
+LAST_BACKUP_FILE="/tmp/last_restored_backup.txt"
+
+# --- VERIFICAÇÃO INICIAL ---
+echo "DESCOBRINDO ULTIMO BACKUP LOCAL"
+# Busca o arquivo de backup mais recente
+BACKUP=$(ls -1 -t /opt/backup/saturno/postgres/ | head -1)
+
+if [ -z "$BACKUP" ]; then
+  echo "Erro: Nenhum arquivo de backup encontrado em /opt/backup/saturno/postgres/"
+  exit 1
+fi
+
+echo "Último backup encontrado: $BACKUP"
+
+# Verifica se o arquivo de controle existe e lê o nome do último backup restaurado
+if [ -f "$LAST_BACKUP_FILE" ]; then
+  LAST_RESTORED_BACKUP=$(cat "$LAST_BACKUP_FILE")
+  echo "Último backup restaurado: $LAST_RESTORED_BACKUP"
+  if [ "$BACKUP" == "$LAST_RESTORED_BACKUP" ]; then
+    echo "O backup já foi restaurado. Saindo."
+    exit 0
+  fi
+fi
+echo
+echo
+
+# --- INÍCIO DO PROCESSO DE RESTAURAÇÃO (SÓ EXECUTA SE O BACKUP FOR NOVO) ---
+
+echo "COPIANDO ULTIMO BACKUP PARA PASTA TEMPORARIA"
+rsync -av /opt/backup/saturno/postgres/$BACKUP /tmp/$BACKUP
+if [ $? != 0 ]; then
+  echo "Erro ao copiar o arquivo de backup com rsync"
+  exit 1
+fi
+echo
+echo
+
+echo "PARANDO CONTAINER"
+./$BASEDIR/stop
+if [ $? != 0 ]; then
+  echo "Erro ao parar o container"
+  exit 1
+fi
+echo
+echo
+
+echo "LIMPANDO CONTAINER (senha sudo maquina local)"
+rm -rf ./$BASEDIR/.db
+if [ $? != 0 ]; then
+  echo "Erro ao limpar o container"
+  exit 1
+fi
+echo
+echo
+
+echo "INICIANDO CONTAINER"
+./$BASEDIR/start-prod
+if [ $? != 0 ]; then
+  echo "Erro ao iniciar o container"
+  exit 1
+fi
+echo
+echo
+
+echo "ESPERANDO 5 SEGUNDOS PARA O CONTAINER TERMINAR DE CARREGAR"
+sleep 5
+echo
+echo
+
+echo "VOLTANDO BACKUP"
+docker compose exec mgdb su - postgres -c "zcat /tmp/host/$BACKUP | psql"
+
+echo
+echo
+
+echo "AJUSTANDO CADASTROS PARA MODO DESENVOLVIMENTO"
+###docker compose exec mgdb su - postgres -c "psql -U mgsis -f /opt/www/MGdb/ajusta-cadastros.sql"
+echo
+echo
+
+echo "LIMPANDO ARQUIVO DE BACKUP TEMPORÁRIO"
+rm -f /tmp/$BACKUP
+if [ $? != 0 ]; then
+  echo "Aviso: Não foi possível remover o arquivo temporário."
+fi
+echo
+echo
+
+# --- ATUALIZAÇÃO DO ARQUIVO DE CONTROLE ---
+echo "$BACKUP" > "$LAST_BACKUP_FILE"
+echo "Backup restaurado salvo no arquivo de controle."
+echo
