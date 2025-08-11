@@ -1,9 +1,22 @@
 #!/bin/bash
 
-BASEDIR=$(dirname "$0")
+BASEDIR="/opt/www/MGdb"
+LOG_DIR="/opt/www/MGdb/logs"
+MAX_LOGS=100
 
-# Arquivo para guardar o nome do último backup restaurado
-LAST_BACKUP_FILE="/tmp/last_restored_backup.txt"
+# Garante que o diretório de logs exista
+mkdir -p "$LOG_DIR"
+
+# Cria um nome de arquivo de log com timestamp
+LOG_FILE="$LOG_DIR/restauracao_$(date +'%Y-%m-%d_%H-%M-%S').log"
+
+# Redireciona toda a saída (stdout e stderr) para o arquivo de log
+exec > >(tee "$LOG_FILE") 2>&1
+
+# --- CONTEÚDO ORIGINAL DO SEU SCRIPT ABAIXO ---
+
+# Arquivo para guardar o nome do último backup restaurado, agora na pasta de logs
+LAST_BACKUP_FILE="$LOG_DIR/last_restored_backup.txt"
 
 # --- VERIFICAÇÃO INICIAL ---
 echo "DESCOBRINDO ULTIMO BACKUP LOCAL"
@@ -41,7 +54,7 @@ echo
 echo
 
 echo "PARANDO CONTAINER"
-./$BASEDIR/stop
+$BASEDIR/stop
 if [ $? != 0 ]; then
   echo "Erro ao parar o container"
   exit 1
@@ -50,7 +63,7 @@ echo
 echo
 
 echo "LIMPANDO CONTAINER (senha sudo maquina local)"
-rm -rf ./$BASEDIR/.db
+rm -rf $BASEDIR/.db
 if [ $? != 0 ]; then
   echo "Erro ao limpar o container"
   exit 1
@@ -59,7 +72,7 @@ echo
 echo
 
 echo "INICIANDO CONTAINER"
-./$BASEDIR/start-prod
+$BASEDIR/start-prod
 if [ $? != 0 ]; then
   echo "Erro ao iniciar o container"
   exit 1
@@ -95,3 +108,7 @@ echo
 echo "$BACKUP" > "$LAST_BACKUP_FILE"
 echo "Backup restaurado salvo no arquivo de controle."
 echo
+
+# --- ROTAÇÃO DOS LOGS ---
+echo "Verificando e limpando logs antigos..."
+ls -1t "$LOG_DIR"/restauracao_*.log | tail -n +$((MAX_LOGS+1)) | xargs -r rm -f
