@@ -54,6 +54,7 @@ echo
 echo
 
 echo "PARANDO CONTAINER"
+cd $BASEDIR
 $BASEDIR/stop
 if [ $? != 0 ]; then
   echo "Erro ao parar o container"
