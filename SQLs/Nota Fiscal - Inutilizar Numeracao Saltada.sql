@@ -132,23 +132,17 @@ update tblnotafiscal
 set nfeautorizacao = null, 
 nfedataautorizacao = null 
 where emitida = true 
-and codfilial = 102
-and modelo = 65
-and numero in (720889)
+and codfilial = :codfilial
+and modelo = :modelo
+and numero in (:numero)
 returning *
 
-update tblnegocio set codfilial = :codfilial, codestoquelocal = :codestoquelocal where codnegocio = :codnegocio 
 
-delete from tblmercosproduto
-
-delete from tblmercosprodutoimagem 
-
-
-
-
-select * from tblproduto where codproduto  = 67305
-
-
-select * from tblnotafiscal where codnotafiscal between 02362954 and 02362977
+select * 
+from tblnotafiscal 
+where emitida = true 
+and codfilial = :codfilial
+and modelo = :modelo
+and numero in (:numero)
 
 

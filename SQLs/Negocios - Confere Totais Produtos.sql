@@ -1,26 +1,59 @@
 ﻿with tot as (
-	select nfpb.codnegocio, sum(nfpb.valortotal) as total
-	from tblnegocioprodutobarra nfpb
-	group by nfpb.codnegocio
+	select npb.codnegocio, sum(npb.valorprodutos) as valorprodutos
+	from tblnegocioprodutobarra npb
+	where npb.inativo is null
+	group by npb.codnegocio
 ) 
 select 
-	nf.codnegocio,
-	nf.valorprodutos,
-	tot.total,
-	nf.*
-from tblnegocio nf
-left join tot on (tot.codnegocio = nf.codnegocio)
-where nf.valorprodutos != coalesce(tot.total, 0)
-and nf.codnegocio = 4029712
+	n.codnegocio,
+	n.valorprodutos,
+	tot.valorprodutos
+from tblnegocio n
+left join tot on (tot.codnegocio = n.codnegocio)
+where n.valorprodutos != coalesce(tot.valorprodutos, 0)
+and n.codnegociostatus = 2
+--and n.codnegocio = 4029712
 ORDER BY lancamento desc
 --limit 50
 
-/*
-update tblnegocioprodutobarra set valortotal = valortotal where codnegocio = 1998179
+with tot as (
+	select 
+		npb.codnegocio,
+		sum(npb.valorprodutos) as valorprodutos,
+		sum(npb.valordesconto) as valordesconto,
+		sum(npb.valorfrete ) as valorfrete,
+		sum(npb.valoroutras ) as valoroutras,
+		sum(npb.valorseguro) as valorseguro,
+		sum(npb.valortotal) as valortotal
+	from tblnegocioprodutobarra npb
+	where npb.codnegocio in (:codnegocios)
+	and npb.inativo is null
+	group by codnegocio
+)
+update tblnegocio
+set valorprodutos = tot.valorprodutos,
+    valordesconto = tot.valordesconto,
+    valorfrete = tot.valorfrete,
+    valoroutras = tot.valoroutras,
+    valorseguro = tot.valorseguro,
+    valortotal = tot.valortotal
+from tot
+where tblnegocio.codnegocio in (:codnegocios)
+and tblnegocio.codnegocio = tot.codnegocio
 
-update tblnegocio set valorprodutos = 0, valordesconto = null where codnegocio = 10236046
 
-commit
-*/
-
-update tblnegocio set codnegociostatus  = 2 where codnegocio = 2137384
+select 
+	t.codnegocio, 
+	t.codnegocioprodutobarra, 
+	t.quantidade, 
+	t.valorunitario, 
+	t.valorprodutos, 
+	t.valordesconto,
+	t.valorfrete,
+	t.valoroutras,
+	t.valorseguro,
+	t.valortotal, 
+	t.alteracao,
+	t.inativo
+from tblnegocioprodutobarra t 
+where codnegocio = :codnegocio
