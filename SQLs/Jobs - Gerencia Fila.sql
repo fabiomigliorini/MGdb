@@ -11,7 +11,7 @@ select 'spa', queue, count(*), min(id), max(id), max(attempts) from tbljobsspa g
  * 
 update tbljobs set queue='parado' where attempts > 1
 
-select * from tbljobs where queue = 'parado'
+select * from tblspajobs where queue = 'parado'
  
  
 --select * from tblnegocio where codnegocio = 2714461

@@ -35,7 +35,7 @@ left join tblnegocioprodutobarra dev on (dev.codnegocioprodutobarradevolucao = n
 where n.codnegociostatus = 2
 and nat.venda = true
 and npb.inativo is null
-and n.lancamento >= now () - '365 days'::interval
+and n.lancamento >= now () - '30 days'::interval
 and dev.codnegocioprodutobarra is null
 --and n.codnegocio  = 03856154
 and nfs.codnegocioprodutobarra is null
@@ -61,10 +61,10 @@ with pendentes as (
 	--and nf.codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
 	and nf.valortotal < 1000
 )
-select * from pendentes order by codnotafiscal desc --offset 50;
+select * from pendentes order by codnotafiscal asc --offset 50;
 
 update tblnotafiscal 
-set modelo = 55,
+set modelo = 55,			
 codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
 where numero = 0
 and codpessoa = 1

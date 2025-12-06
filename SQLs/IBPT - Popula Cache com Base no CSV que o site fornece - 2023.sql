@@ -200,3 +200,5 @@ update tblibptcache set vigenciainicio = (select min(c.vigenciainicio) from tbli
 update tblibptcache set vigenciafim = (select max(c.vigenciafim) from tblibptcache c where c.vigenciafim is not null) where vigenciafim is null;
 
 select vigenciainicio, vigenciafim, count(*) from tblibptcache group by vigenciainicio, vigenciafim ;
+
+update tblibptcache set vigenciafim = '2025-11-07'
