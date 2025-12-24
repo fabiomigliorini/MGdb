@@ -20,6 +20,15 @@ ALTER TABLE tblnotafiscalprodutobarra
     ADD COLUMN isbase NUMERIC(15,2),
     ADD COLUMN ispercentual NUMERIC(15,4),
     ADD COLUMN isvalor NUMERIC(15,2);
+
+ALTER TABLE tblnotafiscalprodutobarra 
+    -- IBS
+    ADD COLUMN ibscst VARCHAR(3),
+    -- CBS
+    ADD COLUMN cbscst VARCHAR(3),
+    -- IS (Imposto Seletivo)
+    ADD COLUMN iscst VARCHAR(3);
+
     
 ALTER TABLE tbltributacaonaturezaoperacao 
     ADD COLUMN ibspercentual NUMERIC(15,4),
