@@ -9439,12 +9439,13 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			<column name="id" type="integer" length="32" mandatory="y" />
 			<column name="status" type="varchar" length="50" mandatory="y" />
 			<column name="criacaowoo" type="timestamp" length="0" mandatory="y" />
-			<column name="valortotal" prior="total" type="decimal" length="14" decimal="2" mandatory="y" />
-			<column name="nome" type="varchar" length="200" mandatory="y" />
-			<column name="cidade" type="varchar" length="150" mandatory="y" />
-			<column name="pagamento" type="varchar" length="100" mandatory="y" />
-			<column name="entrega" type="varchar" length="150" mandatory="y" />
-			<column name="valorfrete" type="decimal" length="14" decimal="2" mandatory="y" />
+			<column name="alteracaowoo" prior="alteracaowoogmt" type="timestamp" length="0" />
+			<column name="valorfrete" type="decimal" length="14" decimal="2" />
+			<column name="valortotal" prior="total" type="decimal" length="14" decimal="2" />
+			<column name="nome" type="varchar" length="200" />
+			<column name="cidade" type="varchar" length="150" />
+			<column name="pagamento" type="varchar" length="100" />
+			<column name="entrega" type="varchar" length="150" />
 			<column name="jsonwoo" type="json" mandatory="y" />
 			<column name="criacao" type="timestamp" length="0" mandatory="y" >
 				<defo><![CDATA[NOW()]]></defo>
@@ -9461,6 +9462,34 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tblwoopedido_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblwoopedidonegocio" prior="tblwoopedidone" >
+			<column name="codwoopedidonegocio" type="bigserial" mandatory="y" />
+			<column name="codwoopedido" type="bigint" mandatory="y" />
+			<column name="codnegocio" type="bigint" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
+			<column name="alteracao" type="timestamp" length="0" />
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
+			<index name="pk_tblwoopedidonegocio" unique="PRIMARY_KEY" >
+				<column name="codwoopedidonegocio" />
+			</index>
+			<index name="unq_tblwoopedidonegocio" unique="UNIQUE_KEY" >
+				<column name="codwoopedido" />
+				<column name="codnegocio" />
+			</index>
+			<fk name="fk_tblwoopedidonegocio_tblwoopedido" to_schema="mgsis.mgsis" to_table="tblwoopedido" delete_action="cascade" update_action="cascade" >
+				<fk_column name="codwoopedido" pk="codwoopedido" />
+			</fk>
+			<fk name="fk_tblwoopedidonegocio_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
+				<fk_column name="codnegocio" pk="codnegocio" />
+			</fk>
+			<fk name="fk_tblwoopedidonegocio_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblwoopedidonegocio_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -12594,7 +12623,6 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutoimagem" color="3986C1" x="1121" y="133" />
 		<entity schema="mgsis.mgsis" name="tblwooprodutoimagem" color="C1EEC3" x="494" y="95" />
-		<entity schema="mgsis.mgsis" name="tblwooproduto" color="008000" x="836" y="209" />
 		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="57" y="57" >
 			<column name="codproduto" />
 			<column name="codncm" />
@@ -12620,7 +12648,28 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 		</entity>
-		<entity schema="mgsis.mgsis" name="tblwoopedido" color="3986C1" x="95" y="570" />
+		<entity schema="mgsis.mgsis" name="tblwooproduto" color="008000" x="836" y="209" />
+		<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="342" y="646" >
+			<column name="codnegocio" />
+			<column name="codpessoa" />
+			<column name="codfilial" />
+			<column name="codestoquelocal" />
+			<column name="codpessoavendedor" />
+			<column name="codoperacao" />
+			<column name="codnegociostatus" />
+			<column name="codusuario" />
+			<column name="codusuarioacertoentrega" />
+			<column name="codnaturezaoperacao" />
+			<column name="codestoquelocaldestino" />
+			<column name="codusuariorecebimento" />
+			<column name="codpessoatransportador" />
+			<column name="codusuariocriacao" />
+			<column name="codusuarioalteracao" />
+			<column name="codpdv" />
+			<column name="codusuarioconfissao" />
+		</entity>
+		<entity schema="mgsis.mgsis" name="tblwoopedidonegocio" color="C1D8EE" x="76" y="969" />
+		<entity schema="mgsis.mgsis" name="tblwoopedido" color="3986C1" x="76" y="551" />
 	</layout>
 	<layout name="Layout_Autorizacao" id="Layout_93c6439" confirmed="y" show_column_type="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblfilial" color="B7C8E3" x="741" y="76" />
