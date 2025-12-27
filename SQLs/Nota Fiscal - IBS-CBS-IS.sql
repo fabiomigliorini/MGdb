@@ -3,6 +3,16 @@ select column_name, column_default, c.is_nullable, c.data_type, c.numeric_precis
 from information_schema."columns" c 
 where c.table_name = 'tblnotafiscalprodutobarra'
 
+select column_name, column_default, c.is_nullable, c.data_type, c.numeric_precision, c.numeric_scale 
+from information_schema."columns" c 
+where c.table_name = 'tblcidade'
+
+select column_name, column_default, c.is_nullable, c.data_type, c.numeric_precision, c.numeric_scale 
+from information_schema."columns" c 
+where c.table_name = 'tblnaturezaoperacao'
+
+
+
 select codnaturezaoperacao, naturezaoperacao, codoperacao, finnfe, venda, compra, vendadevolucao, transferencia from tblnaturezaoperacao
 
 */
@@ -80,6 +90,6 @@ WHERE codnaturezaoperacao IN (15, 12, 8, 19);
 
 
     
-    
+alter table     
     
 
