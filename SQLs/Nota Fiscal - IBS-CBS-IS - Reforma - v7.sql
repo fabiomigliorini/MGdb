@@ -232,3 +232,7 @@ JOIN tblnaturezaoperacao n
  ON n.codnaturezaoperacao IN (8,17)
 WHERE t.codigo IN ('CBS','IBS','IS');
 
+--update tbltributacaoregra set vigenciainicio = '2025-01-01'
+
+select * from tblnotafiscalitemtributo
+
