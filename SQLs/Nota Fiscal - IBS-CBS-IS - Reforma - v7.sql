@@ -31,11 +31,17 @@ CREATE TABLE tbltributacaoregra (
         REFERENCES tblnaturezaoperacao (codnaturezaoperacao),
 
     ncm VARCHAR(10),
-    codtipoproduto BIGINT,
 
-    codestadodestino BIGINT,
-    codcidadedestino BIGINT,
-    tipocliente CHAR(2),
+    codtipoproduto BIGINT
+        REFERENCES tbltipoproduto (codtipoproduto),
+
+    codestadodestino BIGINT
+        REFERENCES tblestado (codestado),
+
+    codcidadedestino BIGINT
+        REFERENCES tblcidade (codcidade),
+
+    tipocliente CHAR(3),
 
     basepercentual NUMERIC(7,4) NOT NULL DEFAULT 100,
     aliquota NUMERIC(7,4) NOT NULL,
@@ -53,8 +59,23 @@ CREATE TABLE tbltributacaoregra (
     criacao TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
     codusuariocriacao BIGINT REFERENCES tblusuario (codusuario),
     alteracao TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-    codusuarioalteracao BIGINT REFERENCES tblusuario (codusuario)
+    codusuarioalteracao BIGINT REFERENCES tblusuario (codusuario),
+
+    -- 🔒 Validação do tipo de cliente
+    CONSTRAINT chk_tbltributacaoregra_tipocliente
+        CHECK (
+            tipocliente IS NULL
+            OR tipocliente IN ('PFN', 'PFC', 'PJN', 'PJC')
+        )
 );
+
+COMMENT ON COLUMN tbltributacaoregra.tipocliente IS
+'Perfil fiscal do destinatário da operação:
+ PFC = Pessoa Física Contribuinte (ex: produtor rural)
+ PFN = Pessoa Física Não Contribuinte
+ PJC = Pessoa Jurídica Contribuinte
+ PJN = Pessoa Jurídica Não Contribuinte
+ NULL = regra genérica aplicável a qualquer cliente';
 
 -- 🟦 4️⃣ ÍNDICES DO MOTOR DE REGRAS
 CREATE INDEX idxtributacaoregra_busca
@@ -234,5 +255,6 @@ WHERE t.codigo IN ('CBS','IBS','IS');
 
 --update tbltributacaoregra set vigenciainicio = '2025-01-01'
 
-select * from tblnotafiscalitemtributo
+--select * from tblnotafiscalitemtributo
 
+select * from tbltributacaoregra
