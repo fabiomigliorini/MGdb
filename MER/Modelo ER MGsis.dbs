@@ -5129,6 +5129,16 @@ Peso em KG]]></comment>
 			<column name="codestadoplaca" type="bigint" length="19" decimal="0" />
 			<column name="cpf" type="decimal" length="11" />
 			<column name="ipidevolucaovalor" type="decimal" length="14" decimal="2" />
+			<column name="status" type="varchar" mandatory="y" >
+				<defo><![CDATA['DIG'::character varying]]></defo>
+				<comment><![CDATA[Status da nota fiscal:
+LAN = Lançada (emitida = false)
+DIG = Em Digitação (emitida = true e numero vazio)
+ERR = Não Autorizada (emitida = true, tem número, sem autorização)
+AUT = Autorizada (nfeautorizacao preenchido e não cancelada/inutilizada)
+CAN = Cancelada (nfecancelamento preenchido)
+INU = Inutilizada (nfeinutilizacao preenchido)]]></comment>
+			</column>
 			<index name="tblnotafiscal_pkey" unique="PRIMARY_KEY" >
 				<column name="codnotafiscal" />
 			</index>
@@ -5162,9 +5172,38 @@ Peso em KG]]></comment>
 			<index name="idx_tblnotafiscal_codusuariocriacao_fkey" unique="NORMAL" >
 				<column name="codusuariocriacao" />
 			</index>
-			<index name="idx_tblnotafiscal_nfechave" unique="NORMAL" >
+			<index name="idx_tblnotafiscal_sort" unique="NORMAL" >
+				<column name="saida" />
+				<column name="codnotafiscal" />
+			</index>
+			<index name="idx_tblnotafiscal_busca_principal" unique="NORMAL" options="WHERE (emitida = true)" >
+				<column name="codfilial" />
+				<column name="modelo" />
+				<column name="codpessoa" />
+				<column name="codnaturezaoperacao" />
+				<column name="serie" />
+				<column name="numero" />
+				<column name="saida" />
+				<column name="codnotafiscal" />
+			</index>
+			<index name="idx_tblnotafiscal_emissao" unique="NORMAL" options="WHERE (emitida = true)" >
+				<column name="codfilial" />
+				<column name="modelo" />
+				<column name="emissao" />
+			</index>
+			<index name="idx_tblnotafiscal_status" unique="NORMAL" >
+				<column name="codfilial" />
+				<column name="modelo" />
+				<column name="status" />
+				<column name="saida" />
+				<column name="codnotafiscal" />
+			</index>
+			<index name="idx_tblnotafiscal_nfechave_trgm" unique="NORMAL" >
 				<column name="nfechave" />
 			</index>
+			<constraint name="chk_notafiscal_status" type="CHECK" options="" >
+				<string><![CDATA[status)::text = ANY ((ARRAY['LAN'::character varying, 'DIG'::character varying, 'ERR'::character varying, 'AUT'::character varying, 'CAN'::character varying, 'INU'::character varying])::text[]]]></string>
+			</constraint>
 			<fk name="tblnotafiscal_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
 				<fk_column name="codfilial" pk="codfilial" />
 			</fk>
@@ -5285,13 +5324,13 @@ Peso em KG]]></comment>
 			<column name="basereducao" type="decimal" length="14" decimal="2" >
 				<comment><![CDATA[Valor reduzido da base de cálculo]]></comment>
 			</column>
-			<column name="base" type="decimal" length="14" decimal="2" mandatory="y" >
+			<column name="base" type="decimal" length="14" decimal="2" >
 				<comment><![CDATA[Base de cálculo tributável (já com redução aplicada)]]></comment>
 			</column>
-			<column name="aliquota" type="decimal" length="7" decimal="4" mandatory="y" />
-			<column name="valor" type="decimal" length="14" decimal="2" mandatory="y" />
-			<column name="cst" type="varchar" length="3" mandatory="y" />
-			<column name="cclasstrib" type="varchar" length="20" mandatory="y" />
+			<column name="aliquota" type="decimal" length="7" decimal="4" />
+			<column name="valor" type="decimal" length="14" decimal="2" />
+			<column name="cst" type="varchar" length="3" />
+			<column name="cclasstrib" type="varchar" length="20" />
 			<column name="geracredito" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
@@ -5319,7 +5358,7 @@ Peso em KG]]></comment>
 			<index name="idxitemtributo_tributo" unique="NORMAL" >
 				<column name="codtributo" />
 			</index>
-			<fk name="tblnotafiscalitemtributo_codnotafiscalprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" >
+			<fk name="tblnotafiscalitemtributo_codnotafiscalprodutobarra_fkey" to_schema="mgsis.mgsis" to_table="tblnotafiscalprodutobarra" delete_action="cascade" >
 				<fk_column name="codnotafiscalprodutobarra" pk="codnotafiscalprodutobarra" />
 			</fk>
 			<fk name="tblnotafiscalitemtributo_codtributo_fkey" to_schema="mgsis.mgsis" to_table="tbltributo" >
@@ -9005,10 +9044,8 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
  PJN = Pessoa Jurídica Não Contribuinte
  NULL = regra genérica aplicável a qualquer cliente]]></comment>
 			</column>
-			<column name="basepercentual" type="decimal" length="7" decimal="4" mandatory="y" >
-				<defo><![CDATA[100]]></defo>
-			</column>
-			<column name="aliquota" type="decimal" length="7" decimal="4" mandatory="y" />
+			<column name="basepercentual" type="decimal" length="7" decimal="4" />
+			<column name="aliquota" type="decimal" length="7" decimal="4" />
 			<column name="cst" type="varchar" length="3" mandatory="y" />
 			<column name="cclasstrib" type="varchar" length="20" mandatory="y" />
 			<column name="geracredito" type="boolean" mandatory="y" >
@@ -10607,8 +10644,9 @@ P - Parcial (Estoque e Valor)]]></comment>
     tblfamiliaproduto.familiaproduto,
     tblsecaoproduto.codsecaoproduto,
     tblsecaoproduto.secaoproduto,
-    tblprodutovariacao.descontinuado
-   FROM (((((((((((tblprodutobarra
+    tblprodutovariacao.descontinuado,
+    tblimagem.observacoes AS imagem
+   FROM (((((((((((((tblprodutobarra
      JOIN tblprodutovariacao ON ((tblprodutovariacao.codprodutovariacao = tblprodutobarra.codprodutovariacao)))
      JOIN tblproduto ON ((tblproduto.codproduto = tblprodutovariacao.codproduto)))
      LEFT JOIN tblprodutoembalagem ON ((tblprodutoembalagem.codprodutoembalagem = tblprodutobarra.codprodutoembalagem)))
@@ -10619,7 +10657,9 @@ P - Parcial (Estoque e Valor)]]></comment>
      JOIN tblsubgrupoproduto ON ((tblsubgrupoproduto.codsubgrupoproduto = tblproduto.codsubgrupoproduto)))
      JOIN tblgrupoproduto ON ((tblgrupoproduto.codgrupoproduto = tblsubgrupoproduto.codgrupoproduto)))
      JOIN tblfamiliaproduto ON ((tblfamiliaproduto.codfamiliaproduto = tblgrupoproduto.codfamiliaproduto)))
-     JOIN tblsecaoproduto ON ((tblsecaoproduto.codsecaoproduto = tblfamiliaproduto.codsecaoproduto)))]]></view_script>
+     JOIN tblsecaoproduto ON ((tblsecaoproduto.codsecaoproduto = tblfamiliaproduto.codsecaoproduto)))
+     LEFT JOIN tblprodutoimagem ON ((tblprodutoimagem.codprodutoimagem = tblprodutovariacao.codprodutoimagem)))
+     LEFT JOIN tblimagem ON ((tblimagem.codimagem = tblprodutoimagem.codimagem)))]]></view_script>
 			<column name="codprodutobarra" type="bigint" />
 			<column name="codprodutoembalagem" type="bigint" />
 			<column name="codproduto" type="bigint" />
@@ -10649,6 +10689,7 @@ P - Parcial (Estoque e Valor)]]></comment>
 			<column name="codsecaoproduto" type="bigint" />
 			<column name="secaoproduto" type="varchar" />
 			<column name="descontinuado" type="timestamp" />
+			<column name="imagem" type="varchar" />
 		</view>
 		<view name="vwprodutotributacao" >
 			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblproduto.codproduto,
@@ -12528,6 +12569,126 @@ END;
 $function$
  ;]]></string>
 		</function>
+		<function name="gin_extract_query_trgm" id="7779c543-ae67-4e63-a882-d94ef85b654f" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gin_extract_query_trgm(text, internal, smallint, internal, internal, internal, internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gin_extract_query_trgm$function$
+ ;]]></string>
+		</function>
+		<function name="gin_extract_value_trgm" id="11bbe319-f910-4adb-a16e-2fbd351a37cc" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gin_extract_value_trgm(text, internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gin_extract_value_trgm$function$
+ ;]]></string>
+		</function>
+		<function name="gin_trgm_consistent" id="a7d0c45c-8b20-4088-92c0-6489e5534588" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gin_trgm_consistent(internal, smallint, text, integer, internal, internal, internal, internal)
+ RETURNS boolean
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gin_trgm_consistent$function$
+ ;]]></string>
+		</function>
+		<function name="gin_trgm_triconsistent" id="ac8fbcd0-203e-4939-82ca-dca473f41eea" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gin_trgm_triconsistent(internal, smallint, text, integer, internal, internal, internal)
+ RETURNS "char"
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gin_trgm_triconsistent$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_compress" id="1bd13e5e-dfe3-4ee1-8b98-25983a2d0917" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_compress(internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_compress$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_consistent" id="ee46b6d2-e74e-48de-bf1d-03951509ee69" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_consistent(internal, text, smallint, oid, internal)
+ RETURNS boolean
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_consistent$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_decompress" id="9c6d82f7-ac6f-4068-9ee2-2bc7f7de7261" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_decompress(internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_decompress$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_distance" id="5d366279-c5a5-47b6-931d-4e1288ccc796" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_distance(internal, text, smallint, oid, internal)
+ RETURNS double precision
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_distance$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_in" id="01ef1ea9-0101-408d-a8b2-63b0f19d9626" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_in(cstring)
+ RETURNS gtrgm
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_in$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_options" id="2e441715-a9b1-432b-82a4-40154f024b4c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_options(internal)
+ RETURNS void
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE
+AS '$libdir/pg_trgm', $function$gtrgm_options$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_out" id="500658d2-b94a-414d-8219-de91f5bf78c8" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_out(gtrgm)
+ RETURNS cstring
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_out$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_penalty" id="4952ce88-832d-49e5-b84b-1db0dc17ba48" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_penalty(internal, internal, internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_penalty$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_picksplit" id="e16a7842-6cb6-4fe6-bc99-1f319b370d0d" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_picksplit(internal, internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_picksplit$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_same" id="be7e75f9-479c-45b4-8c7b-9646ac69e947" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_same(gtrgm, gtrgm, internal)
+ RETURNS internal
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_same$function$
+ ;]]></string>
+		</function>
+		<function name="gtrgm_union" id="5a1facb4-9cfb-4def-aedb-c35537c900bc" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.gtrgm_union(internal, internal)
+ RETURNS gtrgm
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$gtrgm_union$function$
+ ;]]></string>
+		</function>
 		<function name="normal_rand" id="Function_ac3" isSystem="false" params_known="y" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.normal_rand(integer, double precision, double precision)
  RETURNS SETOF double precision
@@ -12595,6 +12756,14 @@ END;
 $function$
  ;]]></string>
 		</function>
+		<function name="set_limit" id="b7a29c0d-607d-432f-9624-d14ac6c46010" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.set_limit(real)
+ RETURNS real
+ LANGUAGE c
+ STRICT
+AS '$libdir/pg_trgm', $function$set_limit$function$
+ ;]]></string>
+		</function>
 		<function name="set_ordem_nf_produto" id="14702683-ce7c-4f1f-ada2-f351f59fe83f" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.set_ordem_nf_produto()
  RETURNS trigger
@@ -12608,6 +12777,86 @@ BEGIN
     RETURN NEW;
 END;
 $function$
+ ;]]></string>
+		</function>
+		<function name="show_limit" id="4ebdd06e-d8c3-4bfa-b593-cbc15925e3b2" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.show_limit()
+ RETURNS real
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$show_limit$function$
+ ;]]></string>
+		</function>
+		<function name="show_trgm" id="09999a84-ad26-44f0-bb69-51f344c61576" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.show_trgm(text)
+ RETURNS text[]
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$show_trgm$function$
+ ;]]></string>
+		</function>
+		<function name="similarity" id="e2b4d06c-fafe-42bb-be67-41ce24ff2a2b" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.similarity(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$similarity$function$
+ ;]]></string>
+		</function>
+		<function name="similarity_dist" id="76723a46-86c7-433d-b539-c660f13d9b4e" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.similarity_dist(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$similarity_dist$function$
+ ;]]></string>
+		</function>
+		<function name="similarity_op" id="c0acac1b-5cc3-42cc-87d0-28a3051d9b2c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.similarity_op(text, text)
+ RETURNS boolean
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$similarity_op$function$
+ ;]]></string>
+		</function>
+		<function name="strict_word_similarity" id="2f961ce9-84f7-4167-a09d-59c3cde26787" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.strict_word_similarity(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$strict_word_similarity$function$
+ ;]]></string>
+		</function>
+		<function name="strict_word_similarity_commutator_op" id="1ea3aa31-7620-4079-980e-299b0946868d" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.strict_word_similarity_commutator_op(text, text)
+ RETURNS boolean
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$strict_word_similarity_commutator_op$function$
+ ;]]></string>
+		</function>
+		<function name="strict_word_similarity_dist_commutator_op" id="8c1af780-2be1-480b-8e3e-4f5d2431553e" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.strict_word_similarity_dist_commutator_op(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$strict_word_similarity_dist_commutator_op$function$
+ ;]]></string>
+		</function>
+		<function name="strict_word_similarity_dist_op" id="104c3549-50a0-4507-9368-e276ec04715f" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.strict_word_similarity_dist_op(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$strict_word_similarity_dist_op$function$
+ ;]]></string>
+		</function>
+		<function name="strict_word_similarity_op" id="6693ca05-ab98-4270-b151-75b77e9a8386" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.strict_word_similarity_op(text, text)
+ RETURNS boolean
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$strict_word_similarity_op$function$
  ;]]></string>
 		</function>
 		<function name="unaccent" id="Function_26c8" isSystem="false" params_known="y" >
@@ -12649,6 +12898,46 @@ AS '$libdir/unaccent', $function$unaccent_lexize$function$
 			<input_param jt="-1" type="internal" inOut="-1" />
 			<input_param jt="-1" type="internal" inOut="-1" />
 			<input_param jt="-1" type="internal" inOut="-1" />
+		</function>
+		<function name="word_similarity" id="b236b8c9-b4ea-4a58-bdfb-be328dd4c58c" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.word_similarity(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$word_similarity$function$
+ ;]]></string>
+		</function>
+		<function name="word_similarity_commutator_op" id="8c8b363f-c0a8-4bc1-80f8-cd4f99541265" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.word_similarity_commutator_op(text, text)
+ RETURNS boolean
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$word_similarity_commutator_op$function$
+ ;]]></string>
+		</function>
+		<function name="word_similarity_dist_commutator_op" id="43468f06-ec78-4cd1-9768-24a29adb8021" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.word_similarity_dist_commutator_op(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$word_similarity_dist_commutator_op$function$
+ ;]]></string>
+		</function>
+		<function name="word_similarity_dist_op" id="455b999a-6858-451e-b91b-f7aa96037bda" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.word_similarity_dist_op(text, text)
+ RETURNS real
+ LANGUAGE c
+ IMMUTABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$word_similarity_dist_op$function$
+ ;]]></string>
+		</function>
+		<function name="word_similarity_op" id="7e914bc2-f4a3-4737-a713-0222ca385fa8" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.word_similarity_op(text, text)
+ RETURNS boolean
+ LANGUAGE c
+ STABLE PARALLEL SAFE STRICT
+AS '$libdir/pg_trgm', $function$word_similarity_op$function$
+ ;]]></string>
 		</function>
 		<trigger name="tblmovimentotituloaiauad" table="tblmovimentotitulo" id="Trigger4846959" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER tblmovimentotituloaiauad AFTER INSERT OR DELETE OR UPDATE ON mgsis.tblmovimentotitulo FOR EACH ROW EXECUTE FUNCTION fntblmovimentotituloaiauad();]]></string>
@@ -12816,9 +13105,9 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 		</entity>
-		<entity schema="mgsis.mgsis" name="tblnotafiscalitemtributo" color="BED3F4" x="893" y="57" />
 		<entity schema="mgsis.mgsis" name="tbltributo" color="BED3F4" x="513" y="95" />
 		<entity schema="mgsis.mgsis" name="tbltributacaoregra" color="BED3F4" x="57" y="76" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalitemtributo" color="BED3F4" x="893" y="57" />
 	</layout>
 	<layout name="Diagram_Woo" id="935edc37-4ff5-4269-b64b-515261398ec5" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblprodutovariacao" color="3986C1" x="608" y="741" >
@@ -13235,6 +13524,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuarioalteracao" />
 			<column name="codusuariocriacao" />
 			<column name="codestadoplaca" />
+			<column name="status" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnotafiscalduplicatas" color="3986C1" x="57" y="551" />
 		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="3986C1" x="380" y="247" >
@@ -13277,6 +13567,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codestadoplaca" />
 			<column name="cpf" />
 			<column name="ipidevolucaovalor" />
+			<column name="status" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="B2CDF7" x="114" y="57" />
 		<entity schema="mgsis.mgsis" name="tbltitulo" color="3986C1" x="57" y="1007" />
@@ -13788,6 +14079,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codusuariocriacao" />
 			<column name="codestadoplaca" />
 			<column name="ipidevolucaovalor" />
+			<column name="status" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="76" y="76" >
 			<column name="codpessoa" />
@@ -14240,7 +14532,6 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 		<entity schema="mgsis.mgsis" name="tblnotafiscalcartacorrecao" color="008000" x="1273" y="893" />
 		<entity schema="mgsis.mgsis" name="tblnotafiscalduplicatas" color="008000" x="1539" y="855" />
 		<entity schema="mgsis.mgsis" name="tblnotafiscalprodutobarra" color="008000" x="361" y="57" />
-		<entity schema="mgsis.mgsis" name="tblnotafiscalreferenciada" color="008000" x="722" y="1045" />
 		<entity schema="mgsis.mgsis" name="tbloperacao" color="C1D8EE" x="1311" y="57" />
 		<entity schema="mgsis.mgsis" name="tblpais" color="C1D8EE" x="1596" y="722" >
 			<column name="codpais" />
@@ -14320,6 +14611,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codprodutoimagem" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnotafiscalpagamento" color="008000" x="1007" y="931" />
+		<entity schema="mgsis.mgsis" name="tblnotafiscalreferenciada" color="008000" x="722" y="1235" />
 	</layout>
 	<layout name="Layout_OAuth" id="Layout-2bf" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="oauth_access_tokens" color="3986C1" x="76" y="228" />
