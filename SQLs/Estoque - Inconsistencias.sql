@@ -70,7 +70,7 @@ left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotaf
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
 --and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2025-01-01 00:00:00'
-and n.saida >= now() - '45 days'::interval 
+and n.saida >= now() - '30 days'::interval 
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true

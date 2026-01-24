@@ -4,7 +4,7 @@ select
 	nf.codfilial, 
 	nf.emissao, 
 	nf.numero, 
-	' curl https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/inutilizar?justificativa=Falha+de+cominicacao+com+Sefaz%2C+falha+de+rede.+Sera+reemitida. &' as comando
+	' curl https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/inutilizar?justificativa=Falha+de+cominicacao+com+Sefaz%2C+falha+de+rede.+Sera+reemitida. ' as comando
 from tblnotafiscal nf
 where nf.codfilial in (101, 102, 103, 104, 105)
 and nf.emitida
@@ -25,7 +25,7 @@ with nfs as (
 	and nf.nfeinutilizacao is null
 	and nf.nfecancelamento is null
 )
-select distinct n.codnegocio, n.lancamento, ' time curl "https://api-mgspa.mgpapelaria.com.br/api/v1/pdv/negocio/' || n.codnegocio || '/nota-fiscal" -H "Authorization: ' || :bearer || '" -H "Accept: application/json, text/plain, */*" -H "Content-Type: application/json" --data-raw ''{"pdv":"' || :pdv || '","modelo":65}'' &'
+select distinct n.codnegocio, n.lancamento, ' time curl "https://api-mgspa.mgpapelaria.com.br/api/v1/pdv/negocio/' || n.codnegocio || '/nota-fiscal" -H "Authorization: ' || :bearer || '" -H "Accept: application/json, text/plain, */*" -H "Content-Type: application/json" --data-raw ''{"pdv":"' || :pdv || '","modelo":65}'' '
 from tblnegocio n
 inner join tblnaturezaoperacao nat on (nat.codnaturezaoperacao = n.codnaturezaoperacao)
 inner join tblnegocioprodutobarra npb on (npb.codnegocio = n.codnegocio)
@@ -61,8 +61,9 @@ with pendentes as (
 	--and nf.codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
 	and nf.valortotal < 1000
 )
-select * from pendentes order by codnotafiscal asc --offset 50;
+select * from pendentes order by codnotafiscal desc --offset 50;
 
+/*
 update tblnotafiscal 
 set modelo = 55,			
 codpessoa = (select p.codpessoa from tblpessoa p where p.cnpj = 08954952000156)
@@ -97,3 +98,33 @@ inner join tblnaturezaoperacao nat on (nat.codnaturezaoperacao = n.codnaturezaop
 where codprodutobarra = 960418
 and nat.venda = true
 order by t.codnegocio desc
+
+
+
+*/
+
+
+
+-- consultar as notas
+with pendentes as (
+	select 
+	codfilial, 
+	valortotal,
+	nf.codnotafiscal,
+	nf.emissao,
+	' time curl --max-time 2 "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/consultar" -H "Accept: application/json" | head -n 10'
+	--' && curl "https://api-mgspa.mgpapelaria.com.br/api/v1/nfe-php/' || nf.codnotafiscal || '/mail?destinatario=centralfarmafinanceiro%40gmail.com" -H "Accept: application/json"'
+	from tblnotafiscal nf
+	where nf.emitida = true
+	and nf.status = 'ERR'
+	--and nf.nfechave is not null
+)
+select * 
+from pendentes 
+order by codnotafiscal asc 
+offset 0;
+
+
+
+
+
