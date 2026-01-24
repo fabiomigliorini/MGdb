@@ -1,7 +1,12 @@
+
 services:
     mgdb:
         image: "postgres:14.1-alpine"
         restart: unless-stopped
+
+        mem_limit: 24g
+        cpus: 24
+
         environment:
             POSTGRES_PASSWORD: postgres
         volumes:
@@ -16,3 +21,4 @@ services:
             - "5432:5432"
         extra_hosts:
             - "host.docker.internal:host-gateway"
+
