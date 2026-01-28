@@ -78,6 +78,8 @@ and em.codestoquemovimento is null
 order by n.saida, n.codfilial, n.codnotafiscal, p.produto
 limit 300
 
+-- http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-periodo/2026-01-07%2000:00:00/2050-12-31%2023:59:59?fisico=false
+
 --Notas Canceladas/Inutilizadas/Nao Autorizadas Com Movimentacao de estoque
 select n.codfilial, n.codnotafiscal, npb.codnotafiscalprodutobarra, n.saida, em.codestoquemovimento, p.codproduto, p.produto, ' curl http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-nota-fiscal-produto-barra/' || cast(npb.codnotafiscalprodutobarra as varchar)
 from tblnotafiscal n
