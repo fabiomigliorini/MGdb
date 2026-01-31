@@ -1020,6 +1020,7 @@ padrao: experiencia + 45d]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
+			<column name="googledrivefolderid" type="varchar" length="200" />
 			<index name="pk_tblcolaborador" unique="PRIMARY_KEY" >
 				<column name="codcolaborador" />
 			</index>
@@ -1047,6 +1048,7 @@ padrao: experiencia + 45d]]></comment>
 			<column name="comissaovenda" type="decimal" length="4" decimal="2" />
 			<column name="comissaoxerox" type="decimal" length="4" decimal="2" />
 			<column name="gratificacao" type="decimal" length="14" decimal="2" />
+			<column name="salario" type="decimal" length="14" decimal="2" />
 			<column name="observacoes" type="text" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" />
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
@@ -2042,6 +2044,28 @@ padrao: experiencia + 45d]]></comment>
 			<column name="codncm" type="bigint" length="19" decimal="0" />
 			<column name="codprodutovariacao" type="bigint" length="19" decimal="0" />
 		</table>
+		<table name="tbletnia" prior="tbletni" >
+			<column name="codetnia" type="bigserial" mandatory="y" />
+			<column name="etnia" type="varchar" length="100" mandatory="y" />
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
+			<column name="criacao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
+			<column name="alteracao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="inativo" type="timestamp" length="0" decimal="0" />
+			<index name="pk_tbletnia" unique="PRIMARY_KEY" >
+				<column name="codetnia" />
+			</index>
+			<fk name="fk_tbletnia_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tbletnia_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
 		<table name="tblextratobancario" prior="tblportadorextratobancario" >
 			<column name="codextratobancario" type="bigserial" mandatory="y" />
 			<column name="codportador" type="bigint" mandatory="y" />
@@ -2388,6 +2412,28 @@ false - efetiva]]></comment>
 			</fk>
 			<fk name="tblformapagamento_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblgrauinstrucao" prior="tblgrauinstru" >
+			<column name="codgrauinstrucao" type="bigserial" mandatory="y" />
+			<column name="grauinstrucao" type="varchar" length="100" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
+			<column name="alteracao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
+			<column name="inativo" type="timestamp" length="0" decimal="0" />
+			<index name="pk_tblgrauinstrucao" unique="PRIMARY_KEY" >
+				<column name="codgrauinstrucao" />
+			</index>
+			<fk name="fk_tblgrauinstrucao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblgrauinstrucao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblgrupocliente" >
@@ -4247,6 +4293,7 @@ Peso em KG]]></comment>
 			<column name="confissao" prior="conferencia" type="timestamp" length="0" />
 			<column name="codusuarioconfissao" type="bigint" />
 			<column name=" date_trunc(&#039;month&#039;::text, lancamento)" type="varchar" spec="functional" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" type="text" spec="functional" />
 			<index name="tblnegocio_pkey" unique="PRIMARY_KEY" >
 				<column name="codnegocio" />
 			</index>
@@ -4319,7 +4366,7 @@ Peso em KG]]></comment>
 			</index>
 			<index name="tblnegocio_codnegociostatus_ano_confissao_mes" unique="NORMAL" >
 				<column name="codnegociostatus" />
-				<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
+				<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 				<column name="confissao" />
 			</index>
 			<fk name="tblnegocio_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
@@ -4621,6 +4668,10 @@ Peso em KG]]></comment>
 			<index name="idx_tblnegocioprodutobarra_ordenacao" unique="NORMAL" >
 				<column name="codnegocio" options=" ASC  " />
 				<column name="ordenacao" options=" DESC  " />
+			</index>
+			<index name="idx_npb_codnegocio_inativo_ordenacao" unique="NORMAL" options="WHERE (inativo IS NULL)" >
+				<column name="codnegocio" />
+				<column name="ordenacao" />
 			</index>
 			<fk name="tblnegocioprodutobarra_codnegocio_fkey" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
@@ -6214,6 +6265,10 @@ false=issuer]]></comment>
 			<index name="pk_tblpagarmepedido" unique="PRIMARY_KEY" >
 				<column name="codpagarmepedido" />
 			</index>
+			<index name="idx_pmp_codnegocio_criacao_desc" unique="NORMAL" >
+				<column name="codnegocio" />
+				<column name="criacao" />
+			</index>
 			<fk name="fk_tblpagarmepedido_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
 				<fk_column name="codnegocio" pk="codnegocio" />
 			</fk>
@@ -6581,6 +6636,8 @@ false=issuer]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
 			<column name="alteracao" type="timestamp" length="0" decimal="0" />
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
+			<column name="codetnia" type="bigint" />
+			<column name="codgrauinstrucao" type="bigint" />
 			<index name="tblpessoa_pkey" unique="PRIMARY_KEY" >
 				<column name="codpessoa" />
 			</index>
@@ -6649,6 +6706,12 @@ false=issuer]]></comment>
 			</fk>
 			<fk name="fk_tblpessoa_tblcidade" to_schema="mgsis.mgsis" to_table="tblcidade" update_action="cascade" >
 				<fk_column name="codcidadenascimento" pk="codcidade" />
+			</fk>
+			<fk name="fk_tblpessoa_tbletnia" to_schema="mgsis.mgsis" to_table="tbletnia" update_action="cascade" >
+				<fk_column name="codetnia" pk="codetnia" />
+			</fk>
+			<fk name="fk_tblpessoa_tblgrauinstrucao" to_schema="mgsis.mgsis" to_table="tblgrauinstrucao" update_action="cascade" >
+				<fk_column name="codgrauinstrucao" pk="codgrauinstrucao" />
 			</fk>
 		</table>
 		<table name="tblpessoacertidao" >
@@ -9785,6 +9848,82 @@ P - Parcial (Estoque e Valor)]]></comment>
 			<column name="n" type="text" />
 			<options><![CDATA[as vendainicio  from tblnegocio n  inner join tblnegocioprodutobarra npb on (npb.codnegocio = n.codnegocio)  inner join tblprodutobarra pb on (pb.codprodutobarra = npb.codprodutobarra)  where n.codnegociostatus = 2 group by pb.codprodutovariacao;  update tmpvendainicio  set vendainicio = '2012-01-01'::date  where vendainicio < '2012-01-01'::date;  update tblprodutovariacao   set vendainicio = tmpvendainicio.vendainicio  from tmpvendainicio  where tblprodutovariacao.codprodutovariacao = tmpvendainicio.codprodutovariacao ;  update tblprodutovariacao   set vendainicio = now()  where tblprodutovariacao.codprodutovariacao not in (select codprodutovariacao from tmpvendainicio)]]></options>
 		</table>
+		<view name="pg_stat_statements" >
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT ${view}.userid,
+    ${view}.dbid,
+    ${view}.toplevel,
+    ${view}.queryid,
+    ${view}.query,
+    ${view}.plans,
+    ${view}.total_plan_time,
+    ${view}.min_plan_time,
+    ${view}.max_plan_time,
+    ${view}.mean_plan_time,
+    ${view}.stddev_plan_time,
+    ${view}.calls,
+    ${view}.total_exec_time,
+    ${view}.min_exec_time,
+    ${view}.max_exec_time,
+    ${view}.mean_exec_time,
+    ${view}.stddev_exec_time,
+    ${view}.rows,
+    ${view}.shared_blks_hit,
+    ${view}.shared_blks_read,
+    ${view}.shared_blks_dirtied,
+    ${view}.shared_blks_written,
+    ${view}.local_blks_hit,
+    ${view}.local_blks_read,
+    ${view}.local_blks_dirtied,
+    ${view}.local_blks_written,
+    ${view}.temp_blks_read,
+    ${view}.temp_blks_written,
+    ${view}.blk_read_time,
+    ${view}.blk_write_time,
+    ${view}.wal_records,
+    ${view}.wal_fpi,
+    ${view}.wal_bytes
+   FROM ${view}(true) ${view}(userid, dbid, toplevel, queryid, query, plans, total_plan_time, min_plan_time, max_plan_time, mean_plan_time, stddev_plan_time, calls, total_exec_time, min_exec_time, max_exec_time, mean_exec_time, stddev_exec_time, rows, shared_blks_hit, shared_blks_read, shared_blks_dirtied, shared_blks_written, local_blks_hit, local_blks_read, local_blks_dirtied, local_blks_written, temp_blks_read, temp_blks_written, blk_read_time, blk_write_time, wal_records, wal_fpi, wal_bytes)]]></view_script>
+			<column name="userid" type="oid" />
+			<column name="dbid" type="oid" />
+			<column name="toplevel" type="boolean" />
+			<column name="queryid" type="bigint" />
+			<column name="query" type="text" />
+			<column name="plans" type="bigint" />
+			<column name="total_plan_time" type="double precision" />
+			<column name="min_plan_time" type="double precision" />
+			<column name="max_plan_time" type="double precision" />
+			<column name="mean_plan_time" type="double precision" />
+			<column name="stddev_plan_time" type="double precision" />
+			<column name="calls" type="bigint" />
+			<column name="total_exec_time" type="double precision" />
+			<column name="min_exec_time" type="double precision" />
+			<column name="max_exec_time" type="double precision" />
+			<column name="mean_exec_time" type="double precision" />
+			<column name="stddev_exec_time" type="double precision" />
+			<column name="rows" type="bigint" />
+			<column name="shared_blks_hit" type="bigint" />
+			<column name="shared_blks_read" type="bigint" />
+			<column name="shared_blks_dirtied" type="bigint" />
+			<column name="shared_blks_written" type="bigint" />
+			<column name="local_blks_hit" type="bigint" />
+			<column name="local_blks_read" type="bigint" />
+			<column name="local_blks_dirtied" type="bigint" />
+			<column name="local_blks_written" type="bigint" />
+			<column name="temp_blks_read" type="bigint" />
+			<column name="temp_blks_written" type="bigint" />
+			<column name="blk_read_time" type="double precision" />
+			<column name="blk_write_time" type="double precision" />
+			<column name="wal_records" type="bigint" />
+			<column name="wal_fpi" type="bigint" />
+			<column name="wal_bytes" type="decimal" />
+		</view>
+		<view name="pg_stat_statements_info" >
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT ${view}.dealloc,
+    ${view}.stats_reset
+   FROM ${view}() ${view}(dealloc, stats_reset)]]></view_script>
+			<column name="dealloc" type="bigint" />
+			<column name="stats_reset" type="timestamptz" />
+		</view>
 		<view name="vwboleto" >
 			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tblbanco.numerobanco,
     tblportador.agencia,
@@ -12700,6 +12839,30 @@ AS '$libdir/tablefunc', $function$normal_rand$function$
 			<input_param jt="-1" type="double precision" inOut="-1" />
 			<input_param jt="-1" type="double precision" inOut="-1" />
 		</function>
+		<function name="pg_stat_statements" id="3a8a267f-c3d3-456e-b325-14cec6f10293" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.pg_stat_statements(showtext boolean, OUT userid oid, OUT dbid oid, OUT toplevel boolean, OUT queryid bigint, OUT query text, OUT plans bigint, OUT total_plan_time double precision, OUT min_plan_time double precision, OUT max_plan_time double precision, OUT mean_plan_time double precision, OUT stddev_plan_time double precision, OUT calls bigint, OUT total_exec_time double precision, OUT min_exec_time double precision, OUT max_exec_time double precision, OUT mean_exec_time double precision, OUT stddev_exec_time double precision, OUT rows bigint, OUT shared_blks_hit bigint, OUT shared_blks_read bigint, OUT shared_blks_dirtied bigint, OUT shared_blks_written bigint, OUT local_blks_hit bigint, OUT local_blks_read bigint, OUT local_blks_dirtied bigint, OUT local_blks_written bigint, OUT temp_blks_read bigint, OUT temp_blks_written bigint, OUT blk_read_time double precision, OUT blk_write_time double precision, OUT wal_records bigint, OUT wal_fpi bigint, OUT wal_bytes numeric)
+ RETURNS SETOF record
+ LANGUAGE c
+ PARALLEL SAFE STRICT
+AS '$libdir/pg_stat_statements', $function$pg_stat_statements_1_9$function$
+ ;]]></string>
+		</function>
+		<function name="pg_stat_statements_info" id="f8d47f32-170e-4a9c-80a7-f4fe87b4db77" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.pg_stat_statements_info(OUT dealloc bigint, OUT stats_reset timestamp with time zone)
+ RETURNS record
+ LANGUAGE c
+ PARALLEL SAFE STRICT
+AS '$libdir/pg_stat_statements', $function$pg_stat_statements_info$function$
+ ;]]></string>
+		</function>
+		<function name="pg_stat_statements_reset" id="7695f61a-72a7-49cf-a8b4-fbe117fb00c8" isSystem="false" params_known="n" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.pg_stat_statements_reset(userid oid DEFAULT 0, dbid oid DEFAULT 0, queryid bigint DEFAULT 0)
+ RETURNS void
+ LANGUAGE c
+ PARALLEL SAFE STRICT
+AS '$libdir/pg_stat_statements', $function$pg_stat_statements_reset_1_7$function$
+ ;]]></string>
+		</function>
 		<function name="processa_ordem_notafiscal_loop" id="6b51f5e0-29c7-453f-96d8-5333b67a3491" isSystem="false" params_known="n" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION mgsis.processa_ordem_notafiscal_loop()
  RETURNS void
@@ -12973,15 +13136,21 @@ AS '$libdir/pg_trgm', $function$word_similarity_op$function$
 	<schema name="public" >
 		<comment><![CDATA[standard public schema]]></comment>
 		<function name="inttobool" id="Function-e03" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION public.inttobool(boolean, integer)
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.inttobool(integer, boolean)
  RETURNS boolean
  LANGUAGE plpgsql
 AS $function$
 begin
-  return inttobool($2, $1);
+  if $1=0 and not $2 then
+  return true;
+  elsif $1<>0 and $2 then
+  return true;
+  else
+          return false;
+  end if;
 end;
 $function$
-;]]></string>
+ ;]]></string>
 			<input_param jt="-1" type="boolean" inOut="1" />
 			<input_param jt="-1" type="integer" inOut="1" />
 		</function>
@@ -13005,15 +13174,15 @@ $function$
 			<input_param jt="-1" type="boolean" inOut="1" />
 		</function>
 		<function name="notinttobool" id="Function-3b9" isSystem="false" params_known="y" >
-			<string><![CDATA[CREATE OR REPLACE FUNCTION public.notinttobool(boolean, integer)
+			<string><![CDATA[CREATE OR REPLACE FUNCTION public.notinttobool(integer, boolean)
  RETURNS boolean
  LANGUAGE plpgsql
 AS $function$
 begin
-  return not inttobool($2,$1);
+return not inttobool($1,$2);
 end;
 $function$
-;]]></string>
+ ;]]></string>
 			<input_param jt="-1" type="boolean" inOut="1" />
 			<input_param jt="-1" type="integer" inOut="1" />
 		</function>
@@ -13074,6 +13243,8 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 			<column name="codestoquelocal" />
 			<column name="titulosite" />
 		</entity>
+		<entity schema="mgsis.mgsis" name="pg_stat_statements" color="3986C1" x="855" y="437" />
+		<entity schema="mgsis.mgsis" name="pg_stat_statements_info" color="3986C1" x="855" y="437" />
 	</layout>
 	<layout name="Diagram_Reforma" id="a6f693fe-73c6-4f3e-9d09-08fd231eaece" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="3986C1" x="57" y="608" >
@@ -13164,6 +13335,7 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 			<column name="codusuarioalteracao" />
 			<column name="codpdv" />
 			<column name="codusuarioconfissao" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblwoopedidonegocio" color="C1D8EE" x="76" y="969" />
 		<entity schema="mgsis.mgsis" name="tblwoopedido" color="3986C1" x="76" y="551" />
@@ -13334,6 +13506,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblportador" color="C1D8EE" x="1197" y="285" >
 			<column name="codportador" />
@@ -13438,6 +13612,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="95" y="779" >
 			<column name="codproduto" />
@@ -13979,6 +14155,7 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="confissao" />
 			<column name="codusuarioconfissao" />
 			<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="399" y="95" />
 		<script name="SQL_Editor" id="Editor_4e0" language="SQL" >
@@ -14028,6 +14205,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="codestadoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="76" y="494" />
 		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="57" y="57" >
@@ -14107,6 +14286,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblveiculo" color="EEC1C1" x="1026" y="760" />
 		<entity schema="mgsis.mgsis" name="tblveiculoconjunto" color="EEC1C1" x="1007" y="304" />
@@ -14328,6 +14509,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 	</layout>
 	<layout name="Layout_Meta_Nova" id="Layout-1c07" confirmed="y" show_relation="columns" >
@@ -14363,6 +14546,7 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="confissao" />
 			<column name="codusuarioconfissao" />
 			<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioprodutobarra" color="3986C1" x="1083" y="532" >
 			<column name="codnegocioprodutobarra" />
@@ -14398,6 +14582,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codestadoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="722" y="646" >
 			<column name="codproduto" />
@@ -14561,6 +14747,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprefixogs1" color="C1D8EE" x="1311" y="266" >
 			<column name="codprefixogs1" />
@@ -14648,6 +14836,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="codestadoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="1083" y="760" />
 		<entity schema="mgsis.mgsis" name="tblpixcob" color="3986C1" x="1026" y="323" />
@@ -14709,6 +14899,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<script name="SQL_Editor" id="Editor-106" language="SQL" >
 			<string><![CDATA[ALTER TABLE mgsis.tblpagarmepagamento ADD CONSTRAINT fk_tblpagarmepagamento_tblpagarmepos FOREIGN KEY (  ) REFERENCES mgsis.tblpagarmepos(  )  ON UPDATE CASCADE ;
@@ -14718,19 +14910,22 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 		</script>
 	</layout>
 	<layout name="Layout_Pessoa" id="Layout_156d02e" confirmed="y" show_relation="columns" >
-		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="EEC1C1" x="1026" y="76" />
-		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="EEC1C1" x="1045" y="285" />
-		<entity schema="mgsis.mgsis" name="tblcidade" color="3986C1" x="76" y="1121" />
-		<entity schema="mgsis.mgsis" name="tblcobrancahistorico" color="C13939" x="1045" y="741" />
-		<entity schema="mgsis.mgsis" name="tblestado" color="3986C1" x="684" y="1083" />
-		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="722" y="361" />
-		<entity schema="mgsis.mgsis" name="tblpessoa" color="EEC1C1" x="399" y="57" />
-		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="EEC1C1" x="722" y="57" />
-		<entity schema="mgsis.mgsis" name="tblpessoaconta" color="C1D8EE" x="722" y="646" />
-		<entity schema="mgsis.mgsis" name="tblpessoaemail" color="3986C1" x="76" y="380" />
-		<entity schema="mgsis.mgsis" name="tblpessoaendereco" color="3986C1" x="57" y="722" />
+		<entity schema="mgsis.mgsis" name="tblcidade" color="3986C1" x="76" y="1178" />
+		<entity schema="mgsis.mgsis" name="tblestado" color="3986C1" x="684" y="1140" />
+		<entity schema="mgsis.mgsis" name="tblgrupoeconomico" color="3986C1" x="722" y="418" />
+		<entity schema="mgsis.mgsis" name="tblpessoaconta" color="C1D8EE" x="722" y="703" />
+		<entity schema="mgsis.mgsis" name="tblpessoaemail" color="3986C1" x="76" y="437" />
+		<entity schema="mgsis.mgsis" name="tblpessoaendereco" color="3986C1" x="57" y="779" />
+		<entity schema="mgsis.mgsis" name="tblpessoacertidao" color="EEC1C1" x="741" y="76" />
+		<entity schema="mgsis.mgsis" name="tblcertidaoemissor" color="EEC1C1" x="1064" y="57" />
+		<entity schema="mgsis.mgsis" name="tblcertidaotipo" color="EEC1C1" x="1083" y="304" />
+		<entity schema="mgsis.mgsis" name="tblregistrospc" color="C13939" x="1083" y="532" />
+		<entity schema="mgsis.mgsis" name="tblcobrancahistorico" color="C13939" x="1064" y="817" />
 		<entity schema="mgsis.mgsis" name="tblpessoatelefone" color="C1D8EE" x="76" y="57" />
-		<entity schema="mgsis.mgsis" name="tblregistrospc" color="C13939" x="1045" y="494" />
+		<entity schema="mgsis.mgsis" name="tblpessoa" color="EEC1C1" x="399" y="114" />
+		<entity schema="mgsis.mgsis" name="tblestadocivil" color="3986C1" x="1349" y="247" />
+		<entity schema="mgsis.mgsis" name="tbletnia" color="C1D8EE" x="1349" y="475" />
+		<entity schema="mgsis.mgsis" name="tblgrauinstrucao" color="C1D8EE" x="1349" y="722" />
 	</layout>
 	<layout name="Layout_Pix" id="Layout_1b31" confirmed="y" show_relation="columns" >
 		<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="76" y="95" />
@@ -14753,6 +14948,8 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 			<column name="codestadoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="1064" y="76" />
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="57" y="646" />
@@ -14830,12 +15027,12 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 	</layout>
 	<layout name="Layout_RH" id="Layout-247c" show_relation="columns" >
 		<comment><![CDATA[Layout_RH]]></comment>
-		<entity schema="mgsis.mgsis" name="tblcargo" color="3986C1" x="684" y="779" />
-		<entity schema="mgsis.mgsis" name="tblcolaborador" color="C1D8EE" x="304" y="57" />
-		<entity schema="mgsis.mgsis" name="tblcolaboradorcargo" color="C1D8EE" x="665" y="456" />
-		<entity schema="mgsis.mgsis" name="tblferias" color="C1D8EE" x="684" y="57" />
-		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="323" y="456" />
 		<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="57" y="57" />
+		<entity schema="mgsis.mgsis" name="tblferias" color="C1D8EE" x="836" y="57" />
+		<entity schema="mgsis.mgsis" name="tblcolaborador" color="C1D8EE" x="494" y="57" />
+		<entity schema="mgsis.mgsis" name="tblcargo" color="3986C1" x="1026" y="475" />
+		<entity schema="mgsis.mgsis" name="tblcolaboradorcargo" color="C1D8EE" x="741" y="475" />
+		<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="399" y="475" />
 	</layout>
 	<layout name="Layout_Saurus" id="Layout-1430" confirmed="y" show_relation="columns" >
 		<comment><![CDATA[Layout_Saurus]]></comment>
@@ -14867,6 +15064,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<column name="codpdv" />
 			<column name="codusuarioconfissao" />
 			<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="456" y="741" >
 			<column name="codnegocioformapagamento" />
@@ -14905,6 +15103,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<column name="codestadoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblsaurusbandeira" color="008000" x="1102" y="266" />
 		<entity schema="mgsis.mgsis" name="tblsauruspagamento" color="008000" x="779" y="532" />
@@ -14957,6 +15157,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<column name="confissao" />
 			<column name="codusuarioconfissao" />
 			<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
+			<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="1007" y="551" >
 			<column name="codnegocioformapagamento" />
@@ -15036,6 +15237,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="836" y="684" >
 			<column name="codproduto" />
@@ -15141,6 +15344,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<column name="emissaoctps" />
 			<column name="codusuariocriacao" />
 			<column name="codusuarioalteracao" />
+			<column name="codetnia" />
+			<column name="codgrauinstrucao" />
 		</entity>
 		<entity schema="mgsis.mgsis" name="tblprodutobarra" color="C1D8EE" x="817" y="741" >
 			<column name="codprodutobarra" />
