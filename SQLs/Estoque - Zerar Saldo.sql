@@ -1,4 +1,4 @@
-﻿refresh materialized view mvwestoque2024;
+﻿refresh materialized view mvwestoque2025;
 
 -- 1) Seleciona Produtos para zerar (inativos)
 drop table tmpestoquezerar;
@@ -19,13 +19,13 @@ select
 	CASE WHEN coalesce(mes.customedio, 0) = 0 THEN p.preco * 0.7
 	     ELSE mes.customedio 
 	END	as custoutilizar
-from mvwestoque2024 e
+from mvwestoque2025 e
 inner join tblprodutovariacao pv on (pv.codproduto = e.codproduto)
 inner join tblproduto p on (p.codproduto = pv.codproduto)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
-inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2024-12-31' order by iq.mes desc limit 1) )
+inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2025-12-31' order by iq.mes desc limit 1) )
 where p.inativo is not null
 and mes.saldoquantidade != 0
 
@@ -49,13 +49,13 @@ select
 	CASE WHEN coalesce(mes.customedio, 0) = 0 THEN p.preco * 0.7
 	     ELSE mes.customedio 
 	END	as custoutilizar
-from mvwestoque2024 e
+from mvwestoque2025 e
 inner join tblprodutovariacao pv on (pv.codproduto = e.codproduto)
 inner join tblproduto p on (p.codproduto = pv.codproduto)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
-inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2024-12-31' order by iq.mes desc limit 1) )
+inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2025-12-31' order by iq.mes desc limit 1) )
 where e.quant < 0
 and mes.saldoquantidade < 0
 
@@ -76,7 +76,7 @@ with sld as (
 			select em.codestoquemes 
 			from tblestoquemes em 
 			where em.codestoquesaldo = es.codestoquesaldo
-			and em.mes <= '2024-12-31' -- ano
+			and em.mes <= '2025-12-31' -- ano
 			order by mes desc 
 			limit 1
 		)	
@@ -137,14 +137,14 @@ select
 	     ELSE mes.customedio 
 	END	as custoutilizar
 	--sum (atu.valor)
-from mvwestoque2024 e
-inner join mvwestoque2022 pas on (pas.codproduto = e.codproduto and pas.codfilial = e.codfilial)
+from mvwestoque2025 e
+inner join mvwestoque2023 pas on (pas.codproduto = e.codproduto and pas.codfilial = e.codfilial)
 inner join tblprodutovariacao pv on (pv.codproduto = e.codproduto)
 inner join tblproduto p on (p.codproduto = pv.codproduto)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
-inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2024-12-31' order by iq.mes desc limit 1) )
+inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2025-12-31' order by iq.mes desc limit 1) )
 where e.quant = pas.quant 
 and e.valor = pas.valor
 
@@ -169,37 +169,37 @@ select
 	     ELSE mes.customedio 
 	END	as custoutilizar
 	--sum (atu.valor)
-from mvwestoque2024 e
+from mvwestoque2025 e
 inner join tblprodutovariacao pv on (pv.codproduto = e.codproduto)
 inner join tblproduto p on (p.codproduto = pv.codproduto)
 inner join tblestoquelocalprodutovariacao elpv on (elpv.codprodutovariacao = pv.codprodutovariacao)
 inner join tblestoquelocal el on (el.codestoquelocal = elpv.codestoquelocal and el.codfilial = e.codfilial)
 inner join tblestoquesaldo es on (es.codestoquelocalprodutovariacao = elpv.codestoquelocalprodutovariacao and es.fiscal = true)
-inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2024-12-31' order by iq.mes desc limit 1) )
+inner join tblestoquemes mes on (mes.codestoquemes = (select iq.codestoquemes from tblestoquemes iq where iq.codestoquesaldo = es.codestoquesaldo and iq.mes <= '2025-12-31' order by iq.mes desc limit 1) )
 where e.valor = 0 
 and e.quant != 0
 and e.produto ilike 'Verao %'
 -- *****
 
 
--- 2) Cria o Mes de dez/2024 caso nao exista
+-- 2) Cria o Mes de dez/2025 caso nao exista
 insert into tblestoquemes (codestoquesaldo, mes, codusuariocriacao, codusuarioalteracao, criacao, alteracao)
 select 
 	codestoquesaldo,
-	'2024-12-01' as mes,
+	'2025-12-01' as mes,
 	1 as codusuariocriacao,
 	1 as codusuarioalteracao,
 	date_trunc('second', now()) as criacao,
 	date_trunc('second', now()) as alteracao
 from tmpestoquezerar 
-where mes != '2024-12-01'
+where mes != '2025-12-01'
 
 -- 3) Calcula o saldo dos meses criados
 select 
 	codestoquemes, 
-	' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes || '&' 
+	' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes || ' ' 
 from tblestoquemes 
-where saldoquantidade is null order by mes
+where saldoquantidade is null order by mes desc
 
 
 
@@ -223,15 +223,17 @@ select
 	1 as codusuariocriacao,
 	date_trunc('second', now()) as alteracao,
 	1 as codusuarioalteracao,
-	'Zeramento automatico dos produtos fechamento estoque fiscal dez/2024.' as observacoes
+	'Zeramento automatico dos produtos fechamento estoque fiscal dez/2025.' as observacoes
 from tmpestoquezerar z
 where z.saldoquantidade != 0
 
+select * from tblestoquemovimento order by criacao desc nulls last
 
-select codestoquemes, ' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes  || ' & '
+
+select codestoquemes, ' echo ' || row_number() over (ORDER BY codestoquemes ASC) || ' && curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes  || ' '
 from tmpestoquezerar 
 order by codestoquemes asc
-limit 5000
+--limit 500
 --offset 20000
 
 select ' curl https://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || codestoquemes  --|| '& '

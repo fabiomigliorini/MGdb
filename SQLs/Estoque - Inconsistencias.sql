@@ -70,13 +70,15 @@ left join tblestoquemovimento em on (em.codnotafiscalprodutobarra = npb.codnotaf
 where ((n.emitida = true and n.nfeautorizacao is not null and n.nfeinutilizacao is null and n.nfecancelamento is null) or n.emitida = false)
 --and n.saida >= '2016-01-01 00:00:00'
 --and n.saida >= '2025-01-01 00:00:00'
-and n.saida >= now() - '30 days'::interval 
+and n.saida >= now() - '90 days'::interval 
 and tp.estoque = true
 and no.estoque = true
 and p.estoque = true
 and em.codestoquemovimento is null
 order by n.saida, n.codfilial, n.codnotafiscal, p.produto
 limit 300
+
+-- http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-periodo/2026-01-07%2000:00:00/2050-12-31%2023:59:59?fisico=false
 
 --Notas Canceladas/Inutilizadas/Nao Autorizadas Com Movimentacao de estoque
 select n.codfilial, n.codnotafiscal, npb.codnotafiscalprodutobarra, n.saida, em.codestoquemovimento, p.codproduto, p.produto, ' curl http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-nota-fiscal-produto-barra/' || cast(npb.codnotafiscalprodutobarra as varchar)
@@ -139,12 +141,11 @@ with recalcular as (
 	inner join tblestoquesaldo sld on (sld.codestoquesaldo = mes.codestoquesaldo)
 	where sld.fiscal = true
 	and mov.entradaquantidade > 0
-	and (abs(coalesce(mov.entradavalor, 0) - coalesce(orig.saidavalor, 0)) / coalesce(mov.entradaquantidade, 0)) > 0.01
+	and (abs(coalesce(mov.entradavalor, 0) - coalesce(orig.saidavalor, 0)) / coalesce(mov.entradaquantidade, 0)) > 0.02
 	and coalesce(mov.entradaquantidade, 0) = coalesce(orig.saidaquantidade, 0)
 )
-select ' curl http://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || min(codestoquemes)::varchar, mes
+select ' echo ' || row_number() over (ORDER BY codestoquemes) || ' && curl http://sistema.mgpapelaria.com.br/MGLara/estoque/calcula-custo-medio/' || (codestoquemes)::varchar, codestoquemes, mes
 from recalcular
-group by codestoquesaldo, mes
 order by 2, 1
 
 --Estoque Negativo

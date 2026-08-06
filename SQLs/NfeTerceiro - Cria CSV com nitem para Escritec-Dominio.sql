@@ -47,5 +47,7 @@ and nt.entrada >= '2020-01-01'
 order by 1, 7, 4, 6
 
 
-select * 
-from tblfilial
+select codfilial, f.empresadominio 
+from tblfilial f 
+
+
