@@ -1435,41 +1435,6 @@ padrao: experiencia + 45d]]></comment>
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
-		<table name="tblcolaboradorcartao" spec="" >
-			<column name="codcolaboradorcartao" type="bigint" mandatory="y" >
-				<defo><![CDATA[nextval('tblcolaboradorcartao_codcolaboradorcartao_seq'::regclass)]]></defo>
-			</column>
-			<column name="codcolaborador" type="bigint" mandatory="y" />
-			<column name="numero" type="text" mandatory="y" />
-			<column name="validademes" type="smallint" mandatory="y" />
-			<column name="validadeano" type="smallint" mandatory="y" />
-			<column name="observacao" type="text" />
-			<column name="inativo" type="timestamp" length="0" />
-			<column name="criacao" type="timestamp" length="0" mandatory="y" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" mandatory="y" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="email" type="varchar" length="255" />
-			<index name="tblcolaboradorcartao_pkey" unique="PRIMARY_KEY" >
-				<column name="codcolaboradorcartao" />
-			</index>
-			<index name="idx_cc_colaborador" unique="NORMAL" spec="USING  btree" >
-				<column name="codcolaborador" />
-			</index>
-			<constraint name="chk_cc_validadeano" type="CHECK" options="" >
-				<string><![CDATA[validadeano >= 0) AND (validadeano <= 99]]></string>
-			</constraint>
-			<constraint name="chk_cc_validademes" type="CHECK" options="" >
-				<string><![CDATA[validademes >= 1) AND (validademes <= 12]]></string>
-			</constraint>
-			<fk name="tblcolaboradorcartao_codcolaborador_fkey" to_schema="mgsis.mgsis" to_table="tblcolaborador" update_action="cascade" >
-				<fk_column name="codcolaborador" pk="codcolaborador" />
-			</fk>
-		</table>
 		<table name="tblcolaboradorrubrica" spec="" >
 			<column name="codcolaboradorrubrica" type="bigserial" length="64" mandatory="y" />
 			<column name="codperiodocolaborador" type="bigint" length="64" mandatory="y" />
@@ -3454,7 +3419,6 @@ false - efetiva]]></comment>
 			</column>
 			<column name="pagarmesk" type="varchar" length="50" />
 			<column name="pagarmeid" type="varchar" length="30" />
-			<column name="stonecode" type="numeric" length="9" decimal="0" />
 			<column name="funruralvenda" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
@@ -3523,9 +3487,6 @@ false - efetiva]]></comment>
 			<column name="pix" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
-			<column name="stone" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-			</column>
 			<column name="integracao" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
@@ -3540,6 +3501,9 @@ false - efetiva]]></comment>
 				<defo><![CDATA[now()]]></defo>
 			</column>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
+			<column name="pagarme" type="boolean" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
 			<column name="inativo" type="timestamp" length="0" >
 				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
 			</column>
@@ -6343,7 +6307,6 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 			<column name="codpagarmepedido" type="bigint" />
 			<column name="codliopedido" type="bigint" />
 			<column name="codpixcob" type="bigint" />
-			<column name="codstonetransacao" type="bigint" />
 			<column name="codtitulo" type="bigint" length="64" />
 			<column name="codsauruspedido" type="bigint" />
 			<column name="criacao" type="timestamp" length="0" decimal="0" >
@@ -6376,9 +6339,6 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 			<index name="idx_fk_tblnegocioformapagamento_tblpixcob" unique="UNIQUE_KEY" >
 				<column name="codpixcob" />
 			</index>
-			<index name="idx_fk_tblnegocioformapagamento_tblstonetransacao" unique="NORMAL" >
-				<column name="codstonetransacao" />
-			</index>
 			<index name="idx_tblnegocioformapagamento_codpagarmepedido" unique="UNIQUE_KEY" >
 				<column name="codpagarmepedido" />
 			</index>
@@ -6406,9 +6366,6 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 			</fk>
 			<fk name="fk_tblnegocioformapagamento_tblpixcob" to_schema="mgsis.mgsis" to_table="tblpixcob" update_action="cascade" >
 				<fk_column name="codpixcob" pk="codpixcob" />
-			</fk>
-			<fk name="fk_tblnegocioformapagamento_tblstonetransacao" to_schema="mgsis.mgsis" to_table="tblstonetransacao" update_action="cascade" >
-				<fk_column name="codstonetransacao" pk="codstonetransacao" />
 			</fk>
 			<fk name="fk_tblnegocioformapagamento_tblpagarmepedido" to_schema="mgsis.mgsis" to_table="tblpagarmepedido" update_action="cascade" >
 				<fk_column name="codpagarmepedido" pk="codpagarmepedido" />
@@ -8816,6 +8773,54 @@ E - Encerrado]]></comment>
 				<fk_column name="codgrauinstrucao" pk="codgrauinstrucao" />
 			</fk>
 		</table>
+		<table name="tblpessoacartao" spec="" >
+			<column name="codpessoacartao" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tblpessoacartao_codpessoacartao_seq'::regclass)]]></defo>
+			</column>
+			<column name="codpessoa" type="bigint" mandatory="y" />
+			<column name="tipo" type="char" length="1" mandatory="y" >
+				<defo><![CDATA['B'::bpchar]]></defo>
+			</column>
+			<column name="numero" type="text" mandatory="y" />
+			<column name="validademes" type="smallint" mandatory="y" />
+			<column name="validadeano" type="smallint" mandatory="y" />
+			<column name="email" type="varchar" length="255" />
+			<column name="observacao" type="text" />
+			<column name="inativo" type="timestamp" length="0" />
+			<column name="criacao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" mandatory="y" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<column name="codfilial" type="bigint" mandatory="y" />
+			<index name="tblpessoacartao_pkey" unique="PRIMARY_KEY" >
+				<column name="codpessoacartao" />
+			</index>
+			<index name="idx_pc_pessoa" unique="NORMAL" spec="USING  btree" >
+				<column name="codpessoa" />
+			</index>
+			<index name="idx_pc_filial" unique="NORMAL" >
+				<column name="codfilial" />
+			</index>
+			<constraint name="chk_pc_tipo" type="CHECK" options="" >
+				<string><![CDATA[tipo = ANY (ARRAY['B'::bpchar, 'C'::bpchar])]]></string>
+			</constraint>
+			<constraint name="chk_pc_validadeano" type="CHECK" options="" >
+				<string><![CDATA[validadeano >= 0) AND (validadeano <= 99]]></string>
+			</constraint>
+			<constraint name="chk_pc_validademes" type="CHECK" options="" >
+				<string><![CDATA[validademes >= 1) AND (validademes <= 12]]></string>
+			</constraint>
+			<fk name="tblpessoacartao_codpessoa_fkey" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="tblpessoacartao_codfilial_fkey" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+		</table>
 		<table name="tblpessoacertidao" >
 			<column name="codpessoacertidao" type="bigserial" length="19" decimal="0" mandatory="y" />
 			<column name="codpessoa" type="bigint" mandatory="y" />
@@ -10558,399 +10563,6 @@ E - Encerrado]]></comment>
 			</fk>
 			<fk name="tblsexo_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-		</table>
-		<table name="tblstonebandeira" prior="tbl" >
-			<column name="codstonebandeira" type="bigserial" mandatory="y" />
-			<column name="bandeira" type="varchar" length="100" mandatory="y" >
-				<comment><![CDATA[card_brand]]></comment>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<index name="pk_tblstonebandeira_codstonebandeira" unique="PRIMARY_KEY" >
-				<column name="codstonebandeira" />
-			</index>
-			<index name="unq_tblstonebandeira_bandeira" unique="UNIQUE_KEY" >
-				<column name="bandeira" />
-			</index>
-			<index name="idx_fk_tblstonebandeira_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonebandeira_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<fk name="fk_tblstonebandeira_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonebandeira_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-		</table>
-		<table name="tblstonefilial" prior="tblfilialstone" >
-			<comment><![CDATA[establishment.id]]></comment>
-			<column name="codstonefilial" prior="codfilialstone" type="bigserial" mandatory="y" />
-			<column name="codfilial" type="bigint" mandatory="y" />
-			<column name="chaveprivada" type="varchar" length="100" />
-			<column name="token" type="varchar" length="500" />
-			<column name="datatoken" type="timestamp" length="0" decimal="0" />
-			<column name="stonecode" type="numeric" length="20" decimal="0" />
-			<column name="establishmentid" type="uuid" >
-				<comment><![CDATA[establishment.id]]></comment>
-			</column>
-			<column name="disponivelloja" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-				<comment><![CDATA[mamba_released]]></comment>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<index name="pk_tblfilialstone_codfilialstone" unique="PRIMARY_KEY" >
-				<column name="codstonefilial" />
-			</index>
-			<index name="unq_tblstonefilial_codfilial" unique="UNIQUE_KEY" >
-				<column name="codfilial" />
-			</index>
-			<index name="unq_tblstonefilial_establishmentid" unique="UNIQUE_INDEX" >
-				<column name="establishmentid" />
-			</index>
-			<index name="idx_fk_tblstonefilial_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonefilial_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<fk name="fk_tblfilialstone_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
-				<fk_column name="codfilial" pk="codfilial" />
-			</fk>
-			<fk name="fk_tblstonefilial_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonefilial_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-		</table>
-		<table name="tblstonepos" prior="tblstone" >
-			<column name="codstonepos" type="bigserial" mandatory="y" />
-			<column name="codstonefilial" type="bigint" mandatory="y" />
-			<column name="apelido" prior="nome" type="varchar" length="50" />
-			<column name="referenceid" type="varchar" length="200" >
-				<comment><![CDATA[available_pos_list.pos_reference_id]]></comment>
-			</column>
-			<column name="serialnumber" type="varchar" length="200" >
-				<comment><![CDATA[available_pos_list.pos_serial_number]]></comment>
-			</column>
-			<column name="islinked" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<index name="pk_tblstonepos_codstonepos" unique="PRIMARY_KEY" >
-				<column name="codstonepos" />
-			</index>
-			<index name="unq_tblstonepos_referenceid" unique="UNIQUE_INDEX" >
-				<column name="referenceid" />
-			</index>
-			<index name="idx_fk_tblstonepos_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonepos_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<index name="idx_fk_tblstonepos_tblstonefilial" unique="NORMAL" >
-				<column name="codstonefilial" />
-			</index>
-			<fk name="fk_tblstonepos_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonepos_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonepos_tblstonefilial" to_schema="mgsis.mgsis" to_table="tblstonefilial" update_action="cascade" >
-				<fk_column name="codstonefilial" pk="codstonefilial" />
-			</fk>
-		</table>
-		<table name="tblstonepretransacao" prior="tbl" >
-			<comment><![CDATA[information_title]]></comment>
-			<column name="codstonepretransacao" type="bigserial" mandatory="y" />
-			<column name="codstonefilial" type="bigint" mandatory="y" >
-				<comment><![CDATA[establishment_id]]></comment>
-			</column>
-			<column name="codstonepos" type="bigint" >
-				<comment><![CDATA[pos_reference_id]]></comment>
-			</column>
-			<column name="pretransactionid" type="varchar" length="200" >
-				<comment><![CDATA[pre_transaction_id]]></comment>
-			</column>
-			<column name="valor" type="numeric" length="14" decimal="2" mandatory="y" >
-				<comment><![CDATA[amount]]></comment>
-			</column>
-			<column name="titulo" type="varchar" length="200" >
-				<comment><![CDATA[information_title]]></comment>
-			</column>
-			<column name="tipo" type="smallint" >
-				<comment><![CDATA[payment.type
-1 - Debito
-2 - Credito
-3 - Voucher]]></comment>
-			</column>
-			<column name="parcelas" type="smallint" >
-				<comment><![CDATA[payment.installment
-Somente para tipo 2 - Credito
-Possivel de 2 a 12 vezes]]></comment>
-			</column>
-			<column name="tipoparcelamento" type="smallint" >
-				<comment><![CDATA[somente para tipo 2 - Credito, com numero de parcelas preenchidas
-1 - Sem Juros (Padrao)
-2 - Com Juros]]></comment>
-			</column>
-			<column name="processada" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-				<comment><![CDATA[processed - se ja passou pelo POS]]></comment>
-			</column>
-			<column name="ativa" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-				<comment><![CDATA[is_active]]></comment>
-			</column>
-			<column name="token" type="bigint" >
-				<comment><![CDATA[pre_transaction_token]]></comment>
-			</column>
-			<column name="status" type="varchar" length="10" >
-				<comment><![CDATA[created
-available - disponivel na listagem da maquininha
-processing - selecionada para ser paga
-undone - desfeita, cancelada, desistiu]]></comment>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-				<comment><![CDATA[created_at]]></comment>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<column name="codnegocio" type="bigint" />
-			<index name="pk_tblstonepretransacao_codstonepretransacao" unique="PRIMARY_KEY" >
-				<column name="codstonepretransacao" />
-			</index>
-			<index name="unq_tblstonepretransacao_pretransactionid" unique="UNIQUE_KEY" >
-				<column name="pretransactionid" />
-			</index>
-			<index name="idx_fk_tblstonepretransacao_tblnegocio" unique="NORMAL" >
-				<column name="codnegocio" />
-			</index>
-			<index name="idx_fk_tblstonepretransacao_tblstonefilial" unique="NORMAL" >
-				<column name="codstonefilial" />
-			</index>
-			<index name="idx_fk_tblstonepretransacao_tblstonepos" unique="NORMAL" >
-				<column name="codstonepos" />
-			</index>
-			<index name="idx_fk_tblstonepretransacao_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonepretransacao_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<fk name="fk_tblstonepretransacao_tblstonefilial" to_schema="mgsis.mgsis" to_table="tblstonefilial" update_action="cascade" >
-				<fk_column name="codstonefilial" pk="codstonefilial" />
-			</fk>
-			<fk name="fk_tblstonepretransacao_tblstonepos" to_schema="mgsis.mgsis" to_table="tblstonepos" update_action="cascade" >
-				<fk_column name="codstonepos" pk="codstonepos" />
-			</fk>
-			<fk name="fk_tblstonepretransacao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonepretransacao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonepretransacao_tblnegocio" to_schema="mgsis.mgsis" to_table="tblnegocio" update_action="cascade" >
-				<fk_column name="codnegocio" pk="codnegocio" />
-			</fk>
-		</table>
-		<table name="tblstonetransacao" prior="tbl" >
-			<comment><![CDATA[conciliation - se foi conciliada com a adquirente]]></comment>
-			<column name="codstonetransacao" type="bigserial" mandatory="y" />
-			<column name="codstonefilial" type="bigint" mandatory="y" >
-				<comment><![CDATA[establishment_id]]></comment>
-			</column>
-			<column name="siclostransactionid" type="varchar" length="200" >
-				<comment><![CDATA[siclos_transaction_id]]></comment>
-			</column>
-			<column name="stonetransactionid" type="varchar" length="200" >
-				<comment><![CDATA[stone_transaction_id]]></comment>
-			</column>
-			<column name="codstonepretransacao" type="bigint" >
-				<comment><![CDATA[pre_transaction_id]]></comment>
-			</column>
-			<column name="status" type="smallint" length="1" >
-				<comment><![CDATA[transaction_status
-0 - Rejeitada / Cancelada
-1 - Aprovada]]></comment>
-			</column>
-			<column name="valor" type="numeric" length="14" decimal="2" >
-				<comment><![CDATA[transaction_amount]]></comment>
-			</column>
-			<column name="valorliquido" type="numeric" length="14" decimal="2" >
-				<comment><![CDATA[transaction_net_amount - previsao]]></comment>
-			</column>
-			<column name="parcelas" type="smallint" >
-				<comment><![CDATA[installment_number]]></comment>
-			</column>
-			<column name="codstonebandeira" prior="bandeira" type="bigint" >
-				<comment><![CDATA[card_brand]]></comment>
-			</column>
-			<column name="pagador" type="varchar" length="200" >
-				<comment><![CDATA[card_holder_name]]></comment>
-			</column>
-			<column name="numerocartao" type="varchar" length="20" >
-				<comment><![CDATA[card_number]]></comment>
-			</column>
-			<column name="autorizacao" type="varchar" length="200" >
-				<comment><![CDATA[transaction_authorization_code]]></comment>
-			</column>
-			<column name="tipo" type="smallint" >
-				<comment><![CDATA[payment_type
-1 - Debito
-2 - Credito
-3 - Voucher]]></comment>
-			</column>
-			<column name="conciliada" type="boolean" mandatory="y" >
-				<defo><![CDATA[false]]></defo>
-				<comment><![CDATA[conciliation - se foi conciliada com a adquirente]]></comment>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-				<comment><![CDATA[created_at]]></comment>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<index name="pk_tblstonetransacao_codstonetransacao" unique="PRIMARY_KEY" >
-				<column name="codstonetransacao" />
-			</index>
-			<index name="unq_tblstonetransacao_siclostransactionid" unique="UNIQUE_KEY" >
-				<column name="siclostransactionid" />
-			</index>
-			<index name="unq_tblstonetransacao_stonetransactionid" unique="UNIQUE_KEY" >
-				<column name="stonetransactionid" />
-			</index>
-			<index name="idx_fk_tblstonetransacao_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonetransacao_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<index name="idx_fk_tblstonetransacao_tblstonebandeira" unique="NORMAL" >
-				<column name="codstonebandeira" />
-			</index>
-			<index name="idx_fk_tblstonetransacao_tblstonefilial" unique="NORMAL" >
-				<column name="codstonefilial" />
-			</index>
-			<index name="idx_fk_tblstonetransacao_tblstonepretransacao" unique="NORMAL" >
-				<column name="codstonepretransacao" />
-			</index>
-			<fk name="fk_tblstonetransacao_tblstonepretransacao" to_schema="mgsis.mgsis" to_table="tblstonepretransacao" update_action="cascade" >
-				<fk_column name="codstonepretransacao" pk="codstonepretransacao" />
-			</fk>
-			<fk name="fk_tblstonetransacao_tblstonebandeira" to_schema="mgsis.mgsis" to_table="tblstonebandeira" update_action="cascade" >
-				<fk_column name="codstonebandeira" pk="codstonebandeira" />
-			</fk>
-			<fk name="fk_tblstonetransacao_tblstonefilial" to_schema="mgsis.mgsis" to_table="tblstonefilial" update_action="cascade" >
-				<fk_column name="codstonefilial" pk="codstonefilial" />
-			</fk>
-			<fk name="fk_tblstonetransacao_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonetransacao_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-		</table>
-		<table name="tblstonetransacaoparcela" prior="tbl" >
-			<comment><![CDATA[prevision_liquidation_date
-Pode mudar apos conciliacao]]></comment>
-			<column name="codstonetransacaoparcela" type="bigserial" mandatory="y" />
-			<column name="codstonetransacao" type="bigint" mandatory="y" />
-			<column name="numero" type="smallint" >
-				<comment><![CDATA[actual_installment 
-numero da parcela]]></comment>
-			</column>
-			<column name="valor" type="numeric" length="14" decimal="2" >
-				<comment><![CDATA[gross_amount]]></comment>
-			</column>
-			<column name="valorliquido" type="numeric" length="14" decimal="2" >
-				<comment><![CDATA[net_amount]]></comment>
-			</column>
-			<column name="vencimento" type="date" >
-				<comment><![CDATA[prevision_liquidation_date
-Pode mudar apos conciliacao]]></comment>
-			</column>
-			<column name="criacao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-				<comment><![CDATA[created_at]]></comment>
-			</column>
-			<column name="codusuariocriacao" type="bigint" />
-			<column name="alteracao" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[now()]]></defo>
-			</column>
-			<column name="codusuarioalteracao" type="bigint" />
-			<column name="inativo" type="timestamp" length="0" decimal="0" >
-				<defo><![CDATA[NULL::timestamp without time zone]]></defo>
-			</column>
-			<index name="pk_tblstonetransacaoparcela_codstonetransacaoparcela" unique="PRIMARY_KEY" >
-				<column name="codstonetransacaoparcela" />
-			</index>
-			<index name="unq_tblstonetransacaoparcela_codstonetransacao" unique="UNIQUE_KEY" >
-				<column name="codstonetransacao" />
-				<column name="numero" />
-			</index>
-			<index name="idx_fk_tblstonetransacaoparcela_tblusuario" unique="NORMAL" >
-				<column name="codusuariocriacao" />
-			</index>
-			<index name="idx_fk_tblstonetransacaoparcela_tblusuario_0" unique="NORMAL" >
-				<column name="codusuarioalteracao" />
-			</index>
-			<fk name="fk_tblstonetransacaoparcela_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuariocriacao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonetransacaoparcela_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
-				<fk_column name="codusuarioalteracao" pk="codusuario" />
-			</fk>
-			<fk name="fk_tblstonetransacaoparcela_tblstonetransacao" to_schema="mgsis.mgsis" to_table="tblstonetransacao" update_action="cascade" >
-				<fk_column name="codstonetransacao" pk="codstonetransacao" />
 			</fk>
 		</table>
 		<table name="tblsubgrupoproduto" >
@@ -14185,7 +13797,6 @@ P - Parcial (Estoque e Valor)]]></comment>
 		<sequence name="tblcobranca_codcobranca_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblcobrancahistorico_codcobrancahistorico_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblcobrancahistoricotitulo_codcobrancahistoricotitulo_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
-		<sequence name="tblcolaboradorcartao_codcolaboradorcartao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblcolaboradorrubrica_codcolaboradorrubrica_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblcontacontabil_codcontacontabil_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblcontrato_codcontrato_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
@@ -14333,6 +13944,7 @@ P - Parcial (Estoque e Valor)]]></comment>
 		<sequence name="tblperiodocolaboradoracerto_codperiodocolaboradoracerto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpermissao_codpermissao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoa_codpessoa_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
+		<sequence name="tblpessoacartao_codpessoacartao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoacertidao_codpessoacertidao_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoaconta_codpessoaconta_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblpessoaemail_codpessoaemail_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -14362,12 +13974,6 @@ P - Parcial (Estoque e Valor)]]></comment>
 		<sequence name="tblsecaoproduto_codsecaoproduto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblsetor_codsetor_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblsexo_codsexo_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
-		<sequence name="tblstonebandeira_codstonebandeira_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblstonefilial_codstonefilial_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblstonepos_codstonepos_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblstonepretransacao_codstonepretransacao_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblstonetransacao_codstonetransacao_seq" options="START WITH 1 INCREMENT BY 1" />
-		<sequence name="tblstonetransacaoparcela_codstonetransacaoparcela_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblsubgrupoproduto_codsubgrupoproduto_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tbltabelaclassificacao_codtabelaclassificacao_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbltabelaclassificacaoitem_codtabelaclassificacaoitem_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
@@ -17949,7 +17555,6 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="dfe" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="C1D8EE" x="57" y="589" >
@@ -18505,7 +18110,6 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="codusuariocriacao" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1007" y="57" />
@@ -18626,7 +18230,6 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="nfeambiente" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblmdfe" color="CAEEC1" x="399" y="361" />
@@ -19314,7 +18917,6 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuariocriacao" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="76" y="57" />
@@ -19488,13 +19090,13 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<entity schema="mgsis.mgsis" name="tblcargo" color="3986C1" x="1045" y="893" />
 			<entity schema="mgsis.mgsis" name="tblcolaborador" color="C1D8EE" x="684" y="57" />
 			<entity schema="mgsis.mgsis" name="tblcolaboradorcargo" color="C1D8EE" x="1045" y="494" />
-			<entity schema="mgsis.mgsis" name="tblcolaboradorcartao" color="3986C1" x="950" y="646" />
 			<entity schema="mgsis.mgsis" name="tbldependente" color="3986C1" x="57" y="95" />
 			<entity schema="mgsis.mgsis" name="tbleventocalendario" color="3986C1" x="1311" y="76" />
 			<entity schema="mgsis.mgsis" name="tblferias" color="C1D8EE" x="1007" y="57" />
 			<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="703" y="494" />
 			<entity schema="mgsis.mgsis" name="tblperiodocolaboradoracerto" color="3986C1" x="1311" y="532" />
 			<entity schema="mgsis.mgsis" name="tblpessoa" color="3986C1" x="361" y="76" />
+			<entity schema="mgsis.mgsis" name="tblpessoacartao" color="3986C1" x="76" y="703" />
 		</diagram>
 		<diagram name="Layout_Saurus" id="Layout-1430" confirmed="y" show_relation="columns" >
 			<comment><![CDATA[Layout_Saurus]]></comment>
@@ -19537,7 +19139,6 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codpagarmepedido" />
 				<column name="codliopedido" />
 				<column name="codpixcob" />
-				<column name="codstonetransacao" />
 				<column name="codtitulo" />
 				<column name="codsauruspedido" />
 				<column name="codusuariocriacao" />
@@ -19578,7 +19179,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<entity schema="mgsis.mgsis" name="tblsauruspinpad" color="008000" x="1140" y="551" />
 		</diagram>
 		<diagram name="Layout_Stone" id="Layout_7c4" confirmed="y" show_relation="columns" >
-			<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="76" y="57" >
+			<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="57" y="57" >
 				<column name="codfilial" />
 				<column name="codempresa" />
 				<column name="codpessoa" />
@@ -19587,19 +19188,18 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codusuariocriacao" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
-			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1007" y="380" >
+			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="988" y="380" >
 				<column name="codformapagamento" />
-				<column name="stone" />
 				<column name="integracao" />
 				<column name="safrapay" />
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
+				<column name="pagarme" />
 				<column name="inativo" />
 			</entity>
-			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="1007" y="57" >
+			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="988" y="57" >
 				<column name="codnegocio" />
 				<column name="codpessoa" />
 				<column name="codfilial" />
@@ -19626,7 +19226,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name=" date_trunc(&#039;month&#039;::text, lancamento)" />
 				<column name="date_trunc(&#039;month&#039;::text, lancamento)" />
 			</entity>
-			<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="1007" y="551" >
+			<entity schema="mgsis.mgsis" name="tblnegocioformapagamento" color="3986C1" x="988" y="551" >
 				<column name="codnegocioformapagamento" />
 				<column name="uuid" />
 				<column name="codnegocio" />
@@ -19645,19 +19245,12 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codpagarmepedido" />
 				<column name="codliopedido" />
 				<column name="codpixcob" />
-				<column name="codstonetransacao" />
 				<column name="codtitulo" />
 				<column name="codsauruspedido" />
 				<column name="codusuariocriacao" />
 				<column name="codusuarioalteracao" />
 				<column name="dias" />
 			</entity>
-			<entity schema="mgsis.mgsis" name="tblstonebandeira" color="C4EEC1" x="76" y="247" />
-			<entity schema="mgsis.mgsis" name="tblstonefilial" color="C4EEC1" x="399" y="76" />
-			<entity schema="mgsis.mgsis" name="tblstonepos" color="C4EEC1" x="665" y="57" />
-			<entity schema="mgsis.mgsis" name="tblstonepretransacao" color="C4EEC1" x="684" y="361" />
-			<entity schema="mgsis.mgsis" name="tblstonetransacao" color="C4EEC1" x="380" y="456" />
-			<entity schema="mgsis.mgsis" name="tblstonetransacaoparcela" color="C4EEC1" x="57" y="494" />
 		</diagram>
 		<diagram name="Layout_Transferencia" id="Layout_54b90e3" show_relation="columns" >
 			<entity schema="mgsis.mgsis" name="tblcaixamercadoria" color="FFCCFF" x="57" y="722" />
@@ -19772,7 +19365,6 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="dfe" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
-				<column name="stonecode" />
 				<column name="funruralvenda" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblformapagamento" color="C1D8EE" x="57" y="912" >
@@ -19780,11 +19372,11 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="valecompra" />
 				<column name="lio" />
 				<column name="pix" />
-				<column name="stone" />
 				<column name="integracao" />
 				<column name="safrapay" />
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
+				<column name="pagarme" />
 				<column name="inativo" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblpessoa" color="C1D8EE" x="57" y="76" >
