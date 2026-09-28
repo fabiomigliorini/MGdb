@@ -201,4 +201,4 @@ update tblibptcache set vigenciafim = (select max(c.vigenciafim) from tblibptcac
 
 select vigenciainicio, vigenciafim, count(*) from tblibptcache group by vigenciainicio, vigenciafim ;
 
-update tblibptcache set vigenciafim = '2025-11-07'
+update tblibptcache set vigenciafim = '2026-08-31'
