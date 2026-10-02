@@ -16,13 +16,13 @@ where tblnegocio.codnegocio in (
 ) returning codnegocio;
 
 -- Altera Tipo do Titulo
-update tbltitulo set codtipotitulo = 922 where tbltitulo.codtitulo in (
+update tbltitulo set codtipotitulo = 130 where tbltitulo.codtitulo in (
 	select t.codtitulo
 	from tblnegocio n
 	inner join tblnegocioformapagamento nfp on (nfp.codnegocio = n.codnegocio)
 	inner join tbltitulo t on (t.codnegocioformapagamento = nfp.codnegocioformapagamento)
 	where n.codnaturezaoperacao = 15
-	and t.codtipotitulo != 922
+	and t.codtipotitulo != 130
 )
 returning codtitulo;
 

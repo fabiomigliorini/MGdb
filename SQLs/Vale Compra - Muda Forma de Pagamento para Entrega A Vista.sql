@@ -2,7 +2,7 @@
 INSERT INTO mgsis.tbltitulo
 (codtipotitulo, codfilial, codportador, codpessoa, codcontacontabil, numero, fatura, transacao, sistema, emissao, vencimento, vencimentooriginal, debito, credito, gerencial, observacao, boleto, nossonumero, debitototal, creditototal, saldo, debitosaldo, creditosaldo, transacaoliquidacao, codnegocioformapagamento, codtituloagrupamento, remessa, estornado, alteracao, codusuarioalteracao, criacao, codusuariocriacao, codvalecompraformapagamento)
 SELECT 
-	240 as codtipotitulo,
+	100 as codtipotitulo,
 	vc.codfilial,
 	null as codportador,
 	vc.codpessoa,

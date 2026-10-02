@@ -19,7 +19,7 @@ order by n.lancamento desc, n.codnegocio desc;
 update tblnegocio set codnaturezaoperacao = 15 where codnegocio = :codnegocio;
 
 update tbltitulo 
-set codtipotitulo = 00000922, codcontacontabil = 00000014
+set codtipotitulo = 130, codcontacontabil = 00000014
 where tbltitulo.codnegocioformapagamento in (select nfp.codnegocioformapagamento from tblnegocioformapagamento nfp where nfp.codnegocio = :codnegocio);
 
 select 'curl http://sistema.mgpapelaria.com.br/MGLara/estoque/gera-movimento-negocio/' || :codnegocio;
@@ -39,7 +39,7 @@ where codnegocio in (
 )
 
 update tbltitulo 
-set codtipotitulo = 924, codcontacontabil = 15
+set codtipotitulo = 133, codcontacontabil = 15
 --where tbltitulo.codnegocioformapagamento in (select nfp.codnegocioformapagamento from tblnegocioformapagamento nfp where nfp.codnegocio = :codnegocio);
 where tbltitulo.codnegocioformapagamento in (select nfp.codnegocioformapagamento from tblnegocioformapagamento nfp where nfp.codnegocio in (
 1526796,
@@ -82,7 +82,7 @@ where codnegocio in (
 )
 
 update tbltitulo 
-set codtipotitulo = 00000926, codcontacontabil = 17
+set codtipotitulo = 131, codcontacontabil = 17
 --where tbltitulo.codnegocioformapagamento in (select nfp.codnegocioformapagamento from tblnegocioformapagamento nfp where nfp.codnegocio = :codnegocio);
 where tbltitulo.codnegocioformapagamento in (select nfp.codnegocioformapagamento from tblnegocioformapagamento nfp where nfp.codnegocio in (
 2388681

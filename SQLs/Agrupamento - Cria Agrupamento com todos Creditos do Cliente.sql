@@ -3,7 +3,7 @@ with creditos as (
 	from tbltitulo t 
 	where t.saldo < 0 
 	and t.codpessoa = :codpessoa
-	--and t.codtipotitulo = 3
+	--and t.codtipotitulo = 210
 )
 INSERT INTO 
 	tbltituloagrupamento (
@@ -69,7 +69,7 @@ INSERT INTO tbltitulo (
 	codvalecompraformapagamento
 )
 select 
-	911 as codtipotitulo, --Agrupamento Credito
+	200 as codtipotitulo, --Duplicata a Pagar (agrupamento sem tipo proprio desde o doc-3 M8.1)
 	:codfilial as codfilial, -- Deposito
 	null as codportador, 
 	codpessoa, 
@@ -112,7 +112,7 @@ with creditos as (
 	from tbltitulo t 
 	where t.saldo < 0 
 	and t.codpessoa = :codpessoa 
-	--and t.codtipotitulo = 3
+	--and t.codtipotitulo = 210
 )
 INSERT INTO mgsis.tblmovimentotitulo (
 	codtipomovimentotitulo, 

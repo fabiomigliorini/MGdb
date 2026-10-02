@@ -11,7 +11,7 @@ with listagem as (
 	select p.codpix, p.horario, p.nome, coalesce(p.cnpj, p.cpf) as cpf, p.valor, por.portador, t.codliquidacaotitulo, adto.codtitulo
 	from tblpix p
 	left join totais t on (t.codportador = p.codportador and t.transacao = date_trunc('day', p.horario) and t.credito = p.valor)
-	left join tbltitulo adto on (adto.codportador = p.codportador and adto.transacao = date_trunc('day', p.horario) and adto.credito = p.valor AND adto.codtipotitulo = 220)
+	left join tbltitulo adto on (adto.codportador = p.codportador and adto.transacao = date_trunc('day', p.horario) and adto.credito = p.valor AND adto.codtipotitulo = 211)
 	inner join tblportador por on (por.codportador = p.codportador)
 	where p.codpixcob is null
 	and p.horario > now() - '15 days'::interval
