@@ -1,3 +1,4 @@
 .db
 MER/*.bak
 logs/
+tmp/

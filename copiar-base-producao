@@ -1,6 +1,8 @@
 #!/bin/bash
 
 BASEDIR=$(dirname "$0")
+TMPDIR=/opt/www/MGdb/tmp
+mkdir -p $TMPDIR
 
 echo
 echo "Digite a senha do super@mercurio"
@@ -19,7 +21,7 @@ echo
 echo
 
 echo "COPIANDO ULTIMO BACKUP (senha super@mercurio)"
-sshpass -p "$SSHPASS" rsync -avP super@mercurio.mgpapelaria.com.br:/mnt/backup/mercurio/postgres/$BACKUP /tmp/$BACKUP --progress
+sshpass -p "$SSHPASS" rsync -avP super@mercurio.mgpapelaria.com.br:/mnt/backup/mercurio/postgres/$BACKUP $TMPDIR/$BACKUP --progress
 if [ $? != 0 ] ; then
   echo erro
   exit
@@ -59,9 +61,19 @@ sleep 5
 echo
 echo
 
-echo "VOLTANDO BACKUP"
-docker compose exec mgdb su - postgres -c "zcat /tmp/host/$BACKUP | psql"
+echo "AJUSTANDO PG_HBA.CONF PARA MD5"
+docker compose exec mgdb su - postgres -c "sed -i 's/^host all all all scram-sha-256\$/#&/' /var/lib/postgresql/data/pg_hba.conf && echo 'host all all all md5' >> /var/lib/postgresql/data/pg_hba.conf && psql -c 'select pg_reload_conf()'"
+echo
+echo
 
+echo "VOLTANDO BACKUP"
+docker compose exec mgdb su - postgres -c "zcat $TMPDIR/$BACKUP | psql"
+
+echo
+echo
+
+echo "REMOVENDO ARQUIVO TEMPORARIO DO BACKUP"
+rm -f $TMPDIR/$BACKUP
 echo
 echo
 
