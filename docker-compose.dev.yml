@@ -4,15 +4,13 @@ services:
         restart: unless-stopped
         environment:
             POSTGRES_PASSWORD: postgres
+            TZ: America/Cuiaba
         volumes:
             - /opt/www:/opt/www
             - .:/home/host
             - ./.db/data:/var/lib/postgresql/data
             #- ./pg_hba.dev.conf:/var/lib/postgresql/data/pg_hba.conf
             - /tmp:/tmp/host
-            - /etc/timezone:/etc/timezone:ro
-            - /etc/localtime:/etc/localtime:ro
-            - /usr/share/zoneinfo:/usr/share/zoneinfo
         ports:
             - "5432:5432"
         extra_hosts:
