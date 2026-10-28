@@ -27,8 +27,8 @@ where emitida = true and nfeinutilizacao is null and nfeautorizacao is null and 
 --altera email clientes para envio xml
 update tblpessoa set email = 'nfe@mgpapelaria.com.br', emailnfe = null, emailcobranca = null;
 
---altera senha para "baseteste" e para impressora matricial do deposito
-update tblusuario set senha = '$1$k8wt4L/C$/xxhrvZ2z4DroCR6dUszJ/', impressoramatricial = null, impressoratermica = null, impressoratelanegocio = null;
+--altera senha para "baseteste"
+update tblusuario set senha = '$1$k8wt4L/C$/xxhrvZ2z4DroCR6dUszJ/';
 
 --limpa jobs
 delete from tbljobs;
