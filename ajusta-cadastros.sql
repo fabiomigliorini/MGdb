@@ -3,8 +3,7 @@ update tblfilial
 set acbrnfemonitorcaminho = null
 , acbrnfemonitorcaminhorede = null
 , acbrnfemonitorip = null
-, acbrnfemonitorporta = null
-, nfeambiente = 2;
+, acbrnfemonitorporta = null;
 
 -- altera token nfce
 update tblfilial
