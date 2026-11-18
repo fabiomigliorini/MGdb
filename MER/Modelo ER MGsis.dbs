@@ -1633,6 +1633,7 @@ padrao: experiencia + 45d]]></comment>
 				<defo><![CDATA[now()]]></defo>
 			</column>
 			<column name="codusuarioalteracao" type="bigint" length="64" />
+			<column name="diastrabalhados" type="smallint" />
 			<index name="tblcolaboradorrubrica_pkey" unique="PRIMARY_KEY" >
 				<column name="codcolaboradorrubrica" />
 			</index>
@@ -1650,6 +1651,9 @@ padrao: experiencia + 45d]]></comment>
 			</constraint>
 			<constraint name="chk_colabrub_tipovalor" type="CHECK" options="" >
 				<string><![CDATA[tipovalor = ANY (ARRAY['P'::bpchar, 'F'::bpchar])]]></string>
+			</constraint>
+			<constraint name="ck_tblcolaboradorrubrica_diastrabalhados" type="CHECK" options="" >
+				<string><![CDATA[diastrabalhados >= 0]]></string>
 			</constraint>
 			<fk name="tblcolaboradorrubrica_codperiodocolaborador_fkey" to_schema="mgsis.mgsis" to_table="tblperiodocolaborador" delete_action="cascade" update_action="cascade" >
 				<fk_column name="codperiodocolaborador" pk="codperiodocolaborador" />
@@ -2368,6 +2372,60 @@ padrao: experiencia + 45d]]></comment>
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 			<fk name="fk_tbldistribuicaodfeevento_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tbldistribuicaonfse" spec="" >
+			<column name="coddistribuicaonfse" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tbldistribuicaonfse_coddistribuicaonfse_seq'::regclass)]]></defo>
+			</column>
+			<column name="codfilial" type="bigint" mandatory="y" />
+			<column name="nsu" type="bigint" mandatory="y" />
+			<column name="tipodocumento" type="varchar" length="20" mandatory="y" />
+			<column name="tipoevento" type="varchar" length="50" />
+			<column name="nfsechave" type="varchar" length="50" />
+			<column name="data" type="timestamp" length="0" />
+			<column name="nfsenumero" type="bigint" />
+			<column name="emitentecnpj" type="varchar" length="14" />
+			<column name="emitente" type="varchar" length="300" />
+			<column name="tomadorcnpj" type="varchar" length="14" />
+			<column name="tomador" type="varchar" length="300" />
+			<column name="valorservico" type="numeric" length="14" decimal="2" />
+			<column name="codnotafiscalservico" type="bigint" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<index name="pk_tbldistribuicaonfse" unique="PRIMARY_KEY" >
+				<column name="coddistribuicaonfse" />
+			</index>
+			<index name="uk_tbldistribuicaonfse_filial_nsu" unique="UNIQUE_INDEX" spec="USING  btree" >
+				<column name="codfilial" />
+				<column name="nsu" />
+			</index>
+			<index name="idx_tbldistribuicaonfse_nfsechave" unique="NORMAL" spec="USING  btree" >
+				<column name="nfsechave" />
+			</index>
+			<index name="idx_tbldistribuicaonfse_data" unique="NORMAL" spec="USING  btree" >
+				<column name="data" />
+			</index>
+			<index name="idx_tbldistribuicaonfse_codnotafiscalservico" unique="NORMAL" spec="USING  btree" >
+				<column name="codnotafiscalservico" />
+			</index>
+			<fk name="fk_tbldistribuicaonfse_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tbldistribuicaonfse_tblnotafiscalservico" to_schema="mgsis.mgsis" to_table="tblnotafiscalservico" update_action="cascade" >
+				<fk_column name="codnotafiscalservico" pk="codnotafiscalservico" />
+			</fk>
+			<fk name="fk_tbldistribuicaonfse_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tbldistribuicaonfse_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
@@ -3511,9 +3569,6 @@ false - efetiva]]></comment>
 			<column name="codusuariocriacao" type="bigint" length="19" decimal="0" />
 			<column name="nfcetoken" type="varchar" length="32" />
 			<column name="nfcetokenid" type="varchar" length="6" />
-			<column name="nfeambiente" type="smallint" mandatory="y" >
-				<defo><![CDATA[2]]></defo>
-			</column>
 			<column name="senhacertificado" type="varchar" length="50" decimal="0" />
 			<column name="ultimonsu" type="bigint" length="19" decimal="0" />
 			<column name="tokenibpt" type="varchar" length="200" decimal="0" />
@@ -3523,7 +3578,6 @@ false - efetiva]]></comment>
 			<column name="nfeserie" type="smallint" length="5" decimal="0" mandatory="y" >
 				<defo><![CDATA[1]]></defo>
 			</column>
-			<column name="validadecertificado" type="date" length="13" decimal="0" />
 			<column name="dfe" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
@@ -3532,6 +3586,10 @@ false - efetiva]]></comment>
 			<column name="funruralvenda" type="boolean" mandatory="y" >
 				<defo><![CDATA[false]]></defo>
 			</column>
+			<column name="emitenfse" type="boolean" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="nfseserie" type="integer" />
 			<index name="tblfilial_pkey" unique="PRIMARY_KEY" >
 				<column name="codfilial" />
 			</index>
@@ -3564,6 +3622,39 @@ false - efetiva]]></comment>
 			</fk>
 			<fk name="tblfilial_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblfilialsimples" spec="" >
+			<column name="codfilialsimples" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tblfilialsimples_codfilialsimples_seq'::regclass)]]></defo>
+			</column>
+			<column name="codfilial" type="bigint" mandatory="y" />
+			<column name="competencia" type="date" mandatory="y" />
+			<column name="tributospercentual" type="numeric" length="4" decimal="2" mandatory="y" />
+			<column name="issaliquota" type="numeric" length="5" decimal="2" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<index name="pk_tblfilialsimples" unique="PRIMARY_KEY" >
+				<column name="codfilialsimples" />
+			</index>
+			<index name="uk_tblfilialsimples_codfilial_competencia" unique="UNIQUE_INDEX" spec="USING  btree" >
+				<column name="codfilial" />
+				<column name="competencia" />
+			</index>
+			<fk name="fk_tblfilialsimples_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblfilialsimples_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblfilialsimples_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tblformapagamento" >
@@ -6117,6 +6208,71 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
+		<table name="tblnbs" spec="" >
+			<column name="codnbs" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tblnbs_codnbs_seq'::regclass)]]></defo>
+			</column>
+			<column name="codigo" type="varchar" length="9" mandatory="y" />
+			<column name="descricao" type="text" mandatory="y" />
+			<column name="inativo" type="timestamp" length="0" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<index name="pk_tblnbs" unique="PRIMARY_KEY" >
+				<column name="codnbs" />
+			</index>
+			<index name="uk_tblnbs_codigo" unique="UNIQUE_INDEX" spec="USING  btree" >
+				<column name="codigo" />
+			</index>
+			<constraint name="tblnbs_codigo_check" type="CHECK" options="" >
+				<string><![CDATA[(codigo)::text ~ '^[0-9]{9}$'::text]]></string>
+			</constraint>
+			<fk name="fk_tblnbs_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblnbs_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tblnbsitem" spec="" >
+			<column name="codnbsitem" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tblnbsitem_codnbsitem_seq'::regclass)]]></defo>
+			</column>
+			<column name="item" type="varchar" length="5" mandatory="y" />
+			<column name="codnbs" type="bigint" mandatory="y" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<index name="pk_tblnbsitem" unique="PRIMARY_KEY" >
+				<column name="codnbsitem" />
+			</index>
+			<index name="uk_tblnbsitem_item_codnbs" unique="UNIQUE_INDEX" spec="USING  btree" >
+				<column name="item" />
+				<column name="codnbs" />
+			</index>
+			<index name="idx_tblnbsitem_codnbs" unique="NORMAL" spec="USING  btree" >
+				<column name="codnbs" />
+			</index>
+			<fk name="fk_tblnbsitem_tblnbs" to_schema="mgsis.mgsis" to_table="tblnbs" update_action="cascade" >
+				<fk_column name="codnbs" pk="codnbs" />
+			</fk>
+			<fk name="fk_tblnbsitem_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblnbsitem_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
 		<table name="tblncm" >
 			<column name="codncm" type="bigserial" length="19" decimal="0" mandatory="y" />
 			<column name="codncmpai" type="bigint" />
@@ -6510,6 +6666,9 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 			</column>
 			<column name="codusuarioalteracao" type="bigint" />
 			<column name="codrequisicao" type="bigint" />
+			<column name="etapa" type="char" length="1" mandatory="y" >
+				<defo><![CDATA['E'::bpchar]]></defo>
+			</column>
 			<index name="pk_tblnegocioentrega" unique="PRIMARY_KEY" >
 				<column name="codnegocioentrega" />
 			</index>
@@ -6530,6 +6689,12 @@ GRATIFICACAO = Gratificação diversa]]></comment>
 			</constraint>
 			<constraint name="tblnegocioentrega_recebedor_check" type="CHECK" options="" >
 				<string><![CDATA[resultado = 'N'::bpchar) OR (recebedor IS NOT NULL]]></string>
+			</constraint>
+			<constraint name="tblnegocioentrega_etapa_check" type="CHECK" options="" >
+				<string><![CDATA[etapa = ANY (ARRAY['C'::bpchar, 'E'::bpchar])]]></string>
+			</constraint>
+			<constraint name="tblnegocioentrega_retirada_check" type="CHECK" options="" >
+				<string><![CDATA[etapa = 'E'::bpchar) OR ((codrequisicao IS NOT NULL) AND (resultado = 'E'::bpchar)]]></string>
 			</constraint>
 			<fk name="fk_tblnegocioentrega_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
@@ -7832,6 +7997,97 @@ false = 1]]></comment>
 				<fk_column name="codusuariocriacao" pk="codusuario" />
 			</fk>
 		</table>
+		<table name="tblnotafiscalservico" spec="" >
+			<column name="codnotafiscalservico" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tblnotafiscalservico_codnotafiscalservico_seq'::regclass)]]></defo>
+			</column>
+			<column name="codfilial" type="bigint" mandatory="y" />
+			<column name="codpessoa" type="bigint" />
+			<column name="serie" type="integer" mandatory="y" />
+			<column name="numero" type="integer" />
+			<column name="emissao" type="timestamp" length="0" />
+			<column name="competencia" type="date" mandatory="y" />
+			<column name="codtributacaonacional" type="bigint" mandatory="y" />
+			<column name="codnbs" type="bigint" mandatory="y" />
+			<column name="descricao" type="varchar" length="2000" mandatory="y" />
+			<column name="valorservico" type="numeric" length="14" decimal="2" mandatory="y" />
+			<column name="valordescontoincondicionado" type="numeric" length="14" decimal="2" />
+			<column name="valordescontocondicionado" type="numeric" length="14" decimal="2" />
+			<column name="issaliquota" type="numeric" length="5" decimal="2" />
+			<column name="issretido" type="boolean" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="codcidadeprestacao" type="bigint" mandatory="y" />
+			<column name="observacoes" type="varchar" length="2000" />
+			<column name="status" type="varchar" length="3" mandatory="y" >
+				<defo><![CDATA['DIG'::character varying]]></defo>
+			</column>
+			<column name="nfsechave" type="varchar" length="50" />
+			<column name="nfsenumero" type="bigint" />
+			<column name="nfseautorizacao" type="timestamp" length="0" />
+			<column name="nfsecancelamento" type="timestamp" length="0" />
+			<column name="justificativa" type="varchar" length="255" />
+			<column name="mensagem" type="text" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<column name="tributospercentual" type="numeric" length="4" decimal="2" />
+			<index name="pk_tblnotafiscalservico" unique="PRIMARY_KEY" >
+				<column name="codnotafiscalservico" />
+			</index>
+			<index name="uk_tblnotafiscalservico_filial_serie_numero" unique="UNIQUE_INDEX" spec="USING  btree" options="WHERE (numero IS NOT NULL)" >
+				<column name="codfilial" />
+				<column name="serie" />
+				<column name="numero" />
+			</index>
+			<index name="uk_tblnotafiscalservico_nfsechave" unique="UNIQUE_INDEX" spec="USING  btree" options="WHERE (nfsechave IS NOT NULL)" >
+				<column name="nfsechave" />
+			</index>
+			<index name="idx_tblnotafiscalservico_codfilial" unique="NORMAL" spec="USING  btree" >
+				<column name="codfilial" />
+			</index>
+			<index name="idx_tblnotafiscalservico_codpessoa" unique="NORMAL" spec="USING  btree" >
+				<column name="codpessoa" />
+			</index>
+			<index name="idx_tblnotafiscalservico_emissao" unique="NORMAL" spec="USING  btree" >
+				<column name="emissao" />
+			</index>
+			<index name="idx_tblnotafiscalservico_status" unique="NORMAL" spec="USING  btree" >
+				<column name="status" />
+			</index>
+			<constraint name="tblnotafiscalservico_status_check" type="CHECK" options="" >
+				<string><![CDATA[status)::text = ANY ((ARRAY['DIG'::character varying, 'ERR'::character varying, 'AUT'::character varying, 'CAN'::character varying])::text[]]]></string>
+			</constraint>
+			<constraint name="tblnotafiscalservico_valorservico_check" type="CHECK" options="" >
+				<string><![CDATA[valorservico > (0)::numeric]]></string>
+			</constraint>
+			<fk name="fk_tblnotafiscalservico_tblfilial" to_schema="mgsis.mgsis" to_table="tblfilial" update_action="cascade" >
+				<fk_column name="codfilial" pk="codfilial" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tblpessoa" to_schema="mgsis.mgsis" to_table="tblpessoa" update_action="cascade" >
+				<fk_column name="codpessoa" pk="codpessoa" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tbltributacaonacional" to_schema="mgsis.mgsis" to_table="tbltributacaonacional" update_action="cascade" >
+				<fk_column name="codtributacaonacional" pk="codtributacaonacional" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tblnbs" to_schema="mgsis.mgsis" to_table="tblnbs" update_action="cascade" >
+				<fk_column name="codnbs" pk="codnbs" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tblcidade" to_schema="mgsis.mgsis" to_table="tblcidade" update_action="cascade" >
+				<fk_column name="codcidadeprestacao" pk="codcidade" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tblnotafiscalservico_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
+			</fk>
+		</table>
 		<table name="tblocorrencia" spec="" >
 			<column name="codocorrencia" type="bigint" mandatory="y" >
 				<defo><![CDATA[nextval('tblocorrencia_codocorrencia_seq'::regclass)]]></defo>
@@ -8696,6 +8952,7 @@ E - Encerrado]]></comment>
 				<defo><![CDATA[false]]></defo>
 			</column>
 			<column name="codsetor" type="bigint" />
+			<column name="faltas" type="smallint" />
 			<index name="tblperiodocolaborador_pkey" unique="PRIMARY_KEY" >
 				<column name="codperiodocolaborador" />
 			</index>
@@ -8714,6 +8971,9 @@ E - Encerrado]]></comment>
 			</index>
 			<constraint name="chk_periodocolab_status" type="CHECK" options="" >
 				<string><![CDATA[status = ANY (ARRAY['A'::bpchar, 'E'::bpchar])]]></string>
+			</constraint>
+			<constraint name="ck_tblperiodocolaborador_faltas" type="CHECK" options="" >
+				<string><![CDATA[faltas >= 0]]></string>
 			</constraint>
 			<fk name="tblperiodocolaborador_codperiodo_fkey" to_schema="mgsis.mgsis" to_table="tblperiodo" delete_action="cascade" >
 				<fk_column name="codperiodo" pk="codperiodo" />
@@ -8919,6 +9179,10 @@ E - Encerrado]]></comment>
 			<column name="codusuarioalteracao" type="bigint" length="19" decimal="0" />
 			<column name="codetnia" type="bigint" />
 			<column name="codgrauinstrucao" type="bigint" />
+			<column name="retemiss" type="boolean" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="inscricaomunicipal" type="varchar" length="15" />
 			<index name="tblpessoa_pkey" unique="PRIMARY_KEY" >
 				<column name="codpessoa" />
 			</index>
@@ -10755,6 +11019,7 @@ E - Encerrado]]></comment>
 			</column>
 			<column name="inativo" type="timestamp" length="0" />
 			<column name="codusuarioalteracao" type="bigint" />
+			<column name="descontaabsenteismo" type="boolean" />
 			<index name="tblrubrica_pkey" unique="PRIMARY_KEY" >
 				<column name="codrubrica" />
 			</index>
@@ -11682,6 +11947,41 @@ Os dois últimos: 01 Agencias - Postos tradicionais 02 Terminal de Auto-atendime
 			</fk>
 			<fk name="tbltributacao_codusuariocriacao_fkey" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
 				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+		</table>
+		<table name="tbltributacaonacional" spec="" >
+			<column name="codtributacaonacional" type="bigint" mandatory="y" >
+				<defo><![CDATA[nextval('tbltributacaonacional_codtributacaonacional_seq'::regclass)]]></defo>
+			</column>
+			<column name="codigo" type="varchar" length="6" mandatory="y" />
+			<column name="item" type="varchar" length="5" mandatory="y" />
+			<column name="descricao" type="text" mandatory="y" />
+			<column name="inativo" type="timestamp" length="0" />
+			<column name="criacao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuariocriacao" type="bigint" />
+			<column name="alteracao" type="timestamp" length="0" >
+				<defo><![CDATA[now()]]></defo>
+			</column>
+			<column name="codusuarioalteracao" type="bigint" />
+			<index name="pk_tbltributacaonacional" unique="PRIMARY_KEY" >
+				<column name="codtributacaonacional" />
+			</index>
+			<index name="uk_tbltributacaonacional_codigo" unique="UNIQUE_INDEX" spec="USING  btree" >
+				<column name="codigo" />
+			</index>
+			<index name="idx_tbltributacaonacional_item" unique="NORMAL" spec="USING  btree" >
+				<column name="item" />
+			</index>
+			<constraint name="tbltributacaonacional_codigo_check" type="CHECK" options="" >
+				<string><![CDATA[(codigo)::text ~ '^[0-9]{6}$'::text]]></string>
+			</constraint>
+			<fk name="fk_tbltributacaonacional_tblusuario" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuariocriacao" pk="codusuario" />
+			</fk>
+			<fk name="fk_tbltributacaonacional_tblusuario_0" to_schema="mgsis.mgsis" to_table="tblusuario" update_action="cascade" >
+				<fk_column name="codusuarioalteracao" pk="codusuario" />
 			</fk>
 		</table>
 		<table name="tbltributacaonaturezaoperacao" >
@@ -14105,6 +14405,7 @@ UNION ALL
 		<sequence name="tbldfetipo_coddfetipo_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbldistribuicaodfe_coddistribuicaodfe_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbldistribuicaodfeevento_coddistribuicaodfeevento_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tbldistribuicaonfse_coddistribuicaonfse_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblecf_codecf_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblecfreducaoz_codecfreducaoz_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblempresa_codempresa_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
@@ -14126,6 +14427,7 @@ UNION ALL
 		<sequence name="tblfazenda_codfazenda_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblferiado_codferiado_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblfilial_codfilial_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
+		<sequence name="tblfilialsimples_codfilialsimples_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblformapagamento_codformapagamento_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblgrupocliente_codgrupocliente_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblgrupoeconomico_codgrupoeconomico_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -14179,6 +14481,8 @@ UNION ALL
 		<sequence name="tblmovimentograo_codmovimentograo_seq" options="AS integer START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblmovimentotitulo_codmovimentotitulo_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tblnaturezaoperacao_codnaturezaoperacao_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
+		<sequence name="tblnbs_codnbs_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblnbsitem_codnbsitem_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblncm2020_codncm2020_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblncm_codncm_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblncmtributacao_codncmtributacao_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
@@ -14226,6 +14530,8 @@ UNION ALL
 		<sequence name="tblnotafiscalitemtributo_codnotafiscalitemtributo_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblnotafiscalprodutobarra_codnotafiscalprodutobarra_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 19999999" />
 		<sequence name="tblnotafiscalreferenciada_codnotafiscalreferenciada_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblnotafiscalservico_codnotafiscalservico_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="tblnotafiscalservico_numero_201_1_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblocorrencia_codocorrencia_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tblocorrenciaauditoria_codocorrenciaauditoria_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbloperacao_codoperacao_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
@@ -14305,6 +14611,7 @@ UNION ALL
 		<sequence name="tbltituloboleto_codtituloboleto_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbltitulonfeterceiro_codtitulonfeterceiro_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbltributacao_codtributacao_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
+		<sequence name="tbltributacaonacional_codtributacaonacional_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbltributacaonaturezaoperacao_codtributacaonaturezaoperacao_seq" options="START WITH 1 INCREMENT BY 1 MAXVALUE 9999999" />
 		<sequence name="tbltributacaoregra_codtributacaoregra_seq" options="START WITH 1 INCREMENT BY 1" />
 		<sequence name="tbltributo_codtributo_seq" options="START WITH 1 INCREMENT BY 1" />
@@ -17481,6 +17788,8 @@ AS '$libdir/plpgsql', $function$plpgsql_call_handler$function$
 				<column name="acbrnfemonitorcodusuario" />
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblindicador" color="BED3F4" x="741" y="57" />
 			<entity schema="mgsis.mgsis" name="tblindicadorlancamento" color="BED3F4" x="722" y="437" />
@@ -17774,6 +18083,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblportador" color="C1D8EE" x="1197" y="285" >
 				<column name="codportador" />
@@ -17834,6 +18145,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblnaturezaoperacao" color="C1D8EE" x="57" y="589" >
 				<column name="codnaturezaoperacao" />
@@ -17875,6 +18188,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="95" y="779" >
 				<column name="codproduto" />
@@ -18377,6 +18692,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="1007" y="57" />
 			<entity schema="mgsis.mgsis" name="tblliobandeiracartao" color="C1D8EE" x="1064" y="456" />
@@ -18472,6 +18789,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="76" y="494" />
 			<entity schema="mgsis.mgsis" name="tblportador" color="3986C1" x="57" y="57" >
@@ -18503,10 +18822,11 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="acbrnfemonitorcodusuario" />
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
-				<column name="nfeambiente" />
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblmdfe" color="CAEEC1" x="399" y="361" />
 			<entity schema="mgsis.mgsis" name="tblmdfeenviosefaz" color="CAEEC1" x="133" y="741" />
@@ -18558,6 +18878,8 @@ where codcheque in(select codcheque from tblcheque where cmc7 in (
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblveiculo" color="EEC1C1" x="1026" y="760" />
 			<entity schema="mgsis.mgsis" name="tblveiculoconjunto" color="EEC1C1" x="1007" y="304" />
@@ -18781,6 +19103,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 		</diagram>
 		<diagram name="Layout_Meta_Nova" id="Layout-1c07" confirmed="y" show_relation="columns" >
@@ -18793,6 +19117,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblmeta" color="3986C1" x="57" y="57" />
 			<entity schema="mgsis.mgsis" name="tblmetaunidadenegocio" color="3986C1" x="57" y="551" />
@@ -18856,6 +19182,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblproduto" color="3986C1" x="1501" y="57" >
 				<column name="codproduto" />
@@ -18971,6 +19299,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblibptcache" color="C1D8EE" x="1311" y="513" >
 				<column name="codibptcache" />
@@ -19026,6 +19356,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblprefixogs1" color="C1D8EE" x="1311" y="266" >
 				<column name="codprefixogs1" />
@@ -19143,6 +19475,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblusuario" color="3986C1" x="1026" y="285" />
 		</diagram>
@@ -19175,6 +19509,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblpix" color="3986C1" x="1083" y="760" />
 			<entity schema="mgsis.mgsis" name="tblpixcob" color="3986C1" x="1026" y="323" />
@@ -19193,6 +19529,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="57" y="57" />
 			<entity schema="mgsis.mgsis" name="tblpagarmebandeira" color="EEC1C1" x="760" y="855" />
@@ -19234,6 +19572,8 @@ COMMENT ON COLUMN mgsis.tblpagarmepagamento.valorcancelamento IS 'last_transacti
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<script name="SQL_Editor" id="Editor-106" language="SQL" >
 				<string><![CDATA[ALTER TABLE mgsis.tblpagarmepagamento ADD CONSTRAINT fk_tblpagarmepagamento_tblpagarmepos FOREIGN KEY (  ) REFERENCES mgsis.tblpagarmepos(  )  ON UPDATE CASCADE ;
@@ -19279,6 +19619,8 @@ ALTER TABLE mgsis.tblpagarmepedido ADD CONSTRAINT fk_tblpagarmepedido_tblpagarme
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblpix" color="EEC1C1" x="722" y="247" />
 			<entity schema="mgsis.mgsis" name="tblpixcob" color="EEC1C1" x="399" y="57" />
@@ -19378,6 +19720,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="760" y="988" />
 			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="456" y="342" >
@@ -19434,6 +19778,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblsaurusbandeira" color="008000" x="1102" y="266" />
 			<entity schema="mgsis.mgsis" name="tblsauruspagamento" color="008000" x="779" y="532" />
@@ -19452,6 +19798,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="pagarmesk" />
 				<column name="pagarmeid" />
 				<column name="funruralvenda" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblformapagamento" color="3986C1" x="988" y="380" >
 				<column name="codformapagamento" />
@@ -19534,6 +19882,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblproduto" color="C1D8EE" x="836" y="684" >
 				<column name="codproduto" />
@@ -19604,6 +19954,8 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="codusuarioalteracao" />
 				<column name="codetnia" />
 				<column name="codgrauinstrucao" />
+				<column name="retemiss" />
+				<column name="inscricaomunicipal" />
 			</entity>
 			<entity schema="mgsis.mgsis" name="tblprodutobarra" color="BED3F4" x="1102" y="95" >
 				<column name="codprodutobarra" />
@@ -19699,6 +20051,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 		</diagram>
 		<diagram name="Diagram_Pagamento" id="7af35778-6dea-4568-98d3-065e4f4486da" show_relation="columns" >
 			<entity schema="mgsis.mgsis" name="tblcaixaitem" color="3986C1" x="760" y="1083" />
+			<entity schema="mgsis.mgsis" name="tbldistribuicaonfse" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblfilial" color="3986C1" x="76" y="1083" >
 				<column name="codfilial" />
 				<column name="codempresa" />
@@ -19706,14 +20059,20 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 				<column name="acbrnfemonitorcodusuario" />
 				<column name="codusuarioalteracao" />
 				<column name="codusuariocriacao" />
+				<column name="emitenfse" />
+				<column name="nfseserie" />
 			</entity>
+			<entity schema="mgsis.mgsis" name="tblfilialsimples" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblimpressora" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblmaquineta" color="BED3F4" x="1102" y="1900" />
 			<entity schema="mgsis.mgsis" name="tblmaquinetalote" color="3986C1" x="57" y="152" />
+			<entity schema="mgsis.mgsis" name="tblnbs" color="3986C1" x="798" y="1387" />
+			<entity schema="mgsis.mgsis" name="tblnbsitem" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblnegocio" color="3986C1" x="1444" y="114" />
 			<entity schema="mgsis.mgsis" name="tblnegocioentrega" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblnegocioparcela" color="3986C1" x="418" y="627" />
 			<entity schema="mgsis.mgsis" name="tblnegociorequisicao" color="3986C1" x="798" y="1387" />
+			<entity schema="mgsis.mgsis" name="tblnotafiscalservico" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblpagamento" color="3986C1" x="1444" y="1083" />
 			<entity schema="mgsis.mgsis" name="tblpagarmepedido" color="3986C1" x="418" y="1900" />
 			<entity schema="mgsis.mgsis" name="tblpagarmepos" color="3986C1" x="1121" y="646" />
@@ -19726,6 +20085,7 @@ ALTER TABLE mgsis.tblportadorsaldo ADD CONSTRAINT fk_tblportadorsaldo_tblportado
 			<entity schema="mgsis.mgsis" name="tblrequisicaoitem" color="3986C1" x="798" y="1387" />
 			<entity schema="mgsis.mgsis" name="tblsauruspdv" color="3986C1" x="760" y="1425" />
 			<entity schema="mgsis.mgsis" name="tblsauruspinpad" color="3986C1" x="95" y="646" />
+			<entity schema="mgsis.mgsis" name="tbltributacaonacional" color="3986C1" x="798" y="1387" />
 		</diagram>
 	</diagram_group>
 </project>
